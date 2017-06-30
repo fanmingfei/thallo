@@ -1,43 +1,45 @@
-# Object 游戏内对象的父类
+# Thallo
 
-## scene
+## Object 游戏内对象的父类
+
+### scene
 游戏场景，可将游戏内的其他对象放到游戏场景内。
 
-## canvas
+### canvas
 画布，独立于场景之外，显示在屏幕上，可用于按钮等
 
-## camera
+### camera
 摄像机，摄像机的拍摄到的内容将会显示在屏幕上。
 
-## customObject
+### customObject
 自定义游戏对象，可挂载多个组件
 
 
-# Component 可以挂载到游戏对象上
+## Component 可以挂载到游戏对象上
 
-## rect
-位置
+### transform
+位置大小
 
-## text
+### text
 文字
 
-## animation
+### animation
 动画
 
-## animator
+### animator
 动画管理器
 
-## image
+### image
 图片
 
-## music
+### music
 音乐
 
-## custom
+### custom
 自定义组件，可以自己创建组件，控制对象属性、修改对象上的组件等
 
 
-## Object
+### Object
 	static distroy({name})
 	static find({name})
 
@@ -49,7 +51,7 @@
 	getComponent(component)
 	setActive(flag)
 
-## component
+### component
 	awake()
 	start()
 	preUpdate()
