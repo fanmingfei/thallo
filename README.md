@@ -1,2 +1,2 @@
-# focus
-A simple game engine.
+# thallo
+A simple JavaScript game engine.
