@@ -25,3 +25,17 @@ export function isCollsion(gameObject1, GameObject2) {
 	return true;
 
 }
+
+export function isPointCollsion(point, gameObject) {
+	const x1 = point.x;
+	const y1 = point.y;
+	const x2 = gameObject.transform.position.x;
+	const y2 = gameObject.transform.position.y;
+	const w = gameObject.rect.width;
+	const h = gameObject.rect.height;
+
+	if (x1 >= x2 && x1 <= x2 + w && y1 >= y2 && y1 <= y2 + h) {
+		return true;
+	}
+	return false;
+}

@@ -1,13 +1,20 @@
 import {
-	isCollsion
+	isCollsion,
+	isPointCollsion
 } from '../utils/tools';
 export default class Camera extends GameObject {
 	constructor({
+		name,
 		scene,
 		transform
 	}) {
+		super({
+			name,
+			transform
+		});
 		this.scene = scene;
 	}
+
 	// 获取当前相机可见的gameObject
 	getVisibleGameObject() {
 		const visibleGameObject = this.scene.gameObjects.reduce((prev, curr) => {
@@ -21,4 +28,16 @@ export default class Camera extends GameObject {
 
 	}
 
+	worldToScreen({
+		position
+	}) {
+		const x1y1 = Vector2.minus(transform.position, transform.anchor);
+		return Vector2.minus(position, x1y1);
+	}
+	screenToWorld({
+		position
+	}) {
+		const x1y1 = Vector2.minus(transform.position, transform.anchor);
+		return Vector2.add(position, x1y1);
+	}
 }
