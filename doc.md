@@ -1,6 +1,6 @@
 # Thallo
 
-## Object 游戏内对象的父类
+## GameObject 游戏内对象的父类
 
 ### scene
 游戏场景，可将游戏内的其他对象放到游戏场景内。
@@ -50,6 +50,7 @@
 	removeComponent(component)
 	getComponent(component)
 	setActive(flag)
+	distroy()
 
 ### component
 	awake()
@@ -58,6 +59,14 @@
 	update()
 	lateUpdate()
 	distroy()
+
+## DataTypes
+
+### Vector2 二维坐标向量
+	static minus() 多个Vector相减
+	static add()。 相加
+	x
+	y
 
 
 

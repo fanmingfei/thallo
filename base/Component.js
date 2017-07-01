@@ -1,5 +1,7 @@
-class Component () {
-	construct({targetObject}) {
+class Component() {
+	construct({
+		targetObject
+	}) {
 		this.targetObject = targetObject;
 	}
 	awake() {}

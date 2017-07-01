@@ -1,15 +1,18 @@
-export gameObjectStore = function() {
-    let store = [];
+let store = {};
+export Store = function(name) {
+    if (!store[name]) {
+        store[name] = [];
+    }
     return {
         push(obj) {
-            store.push(obj);
+            store[name].push(obj);
         }
         remove(obj) {
-            const index = store.findIndex(o => o == obj);
-            store.splice(index, 1);
+            const index = store[name].findIndex(o => o == obj);
+            (index !== -1) && store[name].splice(index, 1);
         },
         getAll() {
-        	return store;
+        	return store[name];
         }
     }
 };

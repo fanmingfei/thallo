@@ -1,15 +1,18 @@
-export class GameObject {
+import Transform from '../components/Transform';
+export default class GameObject {
     construct({
         name,
-        components
+        transform = undefined,
+        components = []
     }) {
         this.name = name;
         this.childs = [];
         this.parent = undefined;
         this.components = [];
         this.active = true;
+        this.transform = this.addComponent(Transform)(transform);
         for (let component of this.components) {
-            this.addComponent(component);
+            this.addComponent(component)();
         }
     }
     find({
@@ -28,23 +31,25 @@ export class GameObject {
 
     }
     addComponent(component) {
-        this.components.push(new component({
-            targetObject: this
-        }));
-    }
-    removeComponent(component) {
-        const index = this.components.findIndex(c => c.__proto__ == component.prototype);
-        if (index > -1) {
-            this.component.splice(index, 1);
+        return (obj = {}) => {
+            const index = this.components.push(new component({
+                targetObject: this,
+                ...obj
+            }));
+            return this.components[index];
         }
     }
+    removeComponent(component) {
+        const index = this.components.findIndex(c => c instanceof component);
+        (index !== -1) && this.component.splice(index, 1);
+    }
     getComponent(component) {
-        return this.components.find(c => c.__proto__ == component.prototype);
+        return this.components.find(c => c instanceof component);
     }
     setActive(flag) {
-        this.active = false;
+        this.active = flag;
     }
-    distory() {
+    distroy() {
         for (let component of this.components) {
             component.distory();
         }

@@ -1,5 +1,7 @@
-import gameObjectStore form '../utils/store.js';
+import Store form '../utils/store.js';
 import GameObject from './base/GameObject.js';
+
+const gameObjectStore = Store('gameObject');
 export default {
 	createObject({name, components}) {
 		const gameObject = new GameObject({name, components});
