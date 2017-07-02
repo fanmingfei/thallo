@@ -1,24 +1,32 @@
 {
-  "name": "focus",
+  "name": "thallo",
   "version": "0.0.1",
   "description": "A simple game engine.",
   "main": "index.js",
   "scripts": {
+    "start": "webpack",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/fanmingfei/focus.git"
+    "url": "git+https://github.com/fanmingfei/thallo.git"
   },
   "keywords": [
-    "focus",
+    "thallo",
     "game",
     "engine"
   ],
   "author": "fanmingfei",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/fanmingfei/focus/issues"
+    "url": "https://github.com/fanmingfei/thallo/issues"
   },
-  "homepage": "https://github.com/fanmingfei/focus#readme"
+  "homepage": "https://github.com/fanmingfei/thallo#readme",
+  "devDependencies": {
+    "babel-core": "^6.25.0",
+    "babel-loader": "^7.1.1",
+    "babel-preset-env": "^1.5.2",
+    "babel-preset-stage-0": "^6.24.1",
+    "webpack": "^3.0.0"
+  }
 }

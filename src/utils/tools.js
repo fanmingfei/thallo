@@ -1,7 +1,7 @@
 import {
     Vector2
 } from '../base/types';
-export function isCollsion(gameObject1, GameObject2) {
+export function isCollsion(gameObject1, gameObject2) {
     const transform1 = gameObject1.transform;
     const transform2 = gameObject2.transform;
 
@@ -10,8 +10,13 @@ export function isCollsion(gameObject1, GameObject2) {
     const h1 = transform1.rect.height;
     const h2 = transform2.rect.height;
 
-    const x1 = Vector2.minus(transform1.position, transform1.anchor);
-    const x2 = Vector2.minus(transform2.position, transform2.anchor);
+    const x1y1 = Vector2.minus(transform1.position, transform1.anchor);
+    const x2y2 = Vector2.minus(transform2.position, transform2.anchor);
+
+    const x1 = x1y1.x;
+    const x2 = x2y2.x;
+    const y1 = x1y1.y;
+    const y2 = x2y2.y;
 
     if (x1 >= x2 && x1 >= x2 + w2) {
         return false;

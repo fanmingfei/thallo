@@ -1,8 +1,5 @@
 import { Rect, Vector2 } from '../base/types';
 import Component from '../base/Component';
-import {
-    Vector2
-} from '../base/types';
 export default class Transform extends Component {
     constructor({
         targetObject,

@@ -1,3 +1,4 @@
+import {Vector2} from './types';
 export default class Canvas {
     constructor({ canvas, width, height, camera = undefined }) {
         this.canvas = canvas;
@@ -10,9 +11,9 @@ export default class Canvas {
 
     render() {
         this.clearContext();
-        const gameObjects = this.camera.getVisibleGameObject();
-        for (gameObject of gameObjects) {
-            drawImg(gameObject);
+        const gameObjects = this.camera.getVisibleGameObjects();
+        for (let gameObject of gameObjects) {
+            this.drawImg(gameObject);
         }
         this.frame = requestAnimationFrame(()=>this.render());
     }
@@ -20,9 +21,9 @@ export default class Canvas {
         this.context.clearRect(0, 0, this.width, this.height);
     }
     drawImg(gameObject) {
-        const x1y1 = Vector2.minus(gameObject.position.transform, gameObject.position.anchor);
+        const x1y1 = Vector2.minus(gameObject.transform.position, gameObject.transform.anchor);
         const x2y2 = Vector2.add(x1y1, new Vector2({ x: gameObject.img.rect.x, y: gameObject.img.rect.y }));
-        this.context.drawImg(gameObject.img.image, x2y2.x, x2y2.y, gameObject.img.rect.width, gameObject.img.rect.height);
+        this.context.drawImage(gameObject.img.image, x2y2.x, x2y2.y, gameObject.img.rect.width, gameObject.img.rect.height);
     }
     setCamera(camera) {
         this.camera = camera;

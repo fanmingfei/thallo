@@ -1,17 +1,22 @@
 import { Rect } from '../base/types';
 import Component from '../base/Component';
 export default class Img extends Component {
-    construct({
+    constructor({
         targetObject,
-        url = undefined,
-        rect = new Rect();
     }) {
         super({
             targetObject
         });
-        this.url = url;
+        this.rect = new Rect();
+        this.image = new Image();
+    }
+    setRect({ rect }) {
         this.rect = rect;
-        this.image = new Image(url);
+    }
+    setUrl({ url }) {
+        this.url = url;
+        this.image = new Image();
+        this.image.src=url;
     }
 
 }

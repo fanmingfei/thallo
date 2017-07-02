@@ -2,22 +2,25 @@ import {
     isCollsion,
     isPointCollsion
 } from '../utils/tools';
+import GameObject from './GameObject';
 export default class Camera extends GameObject {
     constructor({
         name,
-        scene,
-        transform
+        transform = undefined,
+        components = [],
+        scene
     }) {
         super({
             name,
-            transform
+            transform,
+            components
         });
         this.scene = scene;
     }
 
     // 获取当前相机可见的gameObject
-    getVisibleGameObject() {
-        const visibleGameObject = this.scene.gameObjects.reduce((prev, curr) => {
+    getVisibleGameObjects() {
+        const visibleGameObject = this.scene.gameObjects.reduce((prev, gameObject) => {
             if (gameObject.active && isCollsion(this, gameObject)) {
                 prev.push(gameObject);
             } else {
@@ -25,6 +28,7 @@ export default class Camera extends GameObject {
             }
             return prev;
         }, []);
+        return visibleGameObject;
     }
 
     isGameObjectVisible(gameObject) {

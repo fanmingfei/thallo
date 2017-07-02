@@ -1,6 +1,6 @@
 import {Transform, Img} from '../components/components';
 export default class GameObject {
-    construct({
+    constructor({
         name,
         transform = undefined,
         components = []
@@ -13,7 +13,7 @@ export default class GameObject {
         this.scene = undefined;
         this.transform = this.addComponent(Transform)(transform);
         this.img = this.addComponent(Img)();
-        for (let component of this.components) {
+        for (let component of components) {
             this.addComponent(component)();
         }
     }
@@ -34,11 +34,12 @@ export default class GameObject {
     }
     addComponent(Component) {
         return (obj = {}) => {
-            const index = this.components.push(new Component({
+            const arg = {
                 targetObject: this,
                 ...obj
-            }));
-            return this.components[index];
+            };
+            const lengh = this.components.push(new Component(arg));
+            return this.components[lengh-1];
         }
     }
     removeComponent(Component) {

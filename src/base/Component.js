@@ -1,5 +1,5 @@
-class Component() {
-    construct({
+export default class Component {
+    constructor({
         targetObject
     }) {
         this.targetObject = targetObject;
