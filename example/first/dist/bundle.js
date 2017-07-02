@@ -279,10 +279,13 @@ var GameObject = _Engine2.default.GameObject,
 
 var canvas = document.getElementById("canvas");
 var canvasObj = new Canvas({ canvas: canvas, width: 800, height: 400 });
-// const a = new Image();
-// a.src = "https://www.baidu.com/img/bd_logo1.png";
-// a.onload = function () {
+
+// 创建一个场景
+// Create a scene
 var scene = new Scene({ width: 2000, height: 2000 });
+
+// 创建一个 相机
+// Create a camera
 var camera = new Camera({
     name: "camera",
     transform: {
@@ -292,7 +295,13 @@ var camera = new Camera({
     },
     scene: scene
 });
+
+// 将相机设置给 canvas, canvas将显示这个相机的内容
+// Set camera to the canvas, canvas will display the camera view.
 canvasObj.setCamera(camera);
+
+// 创建第一个游戏对象
+// create the first game object
 var firstGameObject = new GameObject({
     name: "firstGameObject",
     transform: {
@@ -301,6 +310,9 @@ var firstGameObject = new GameObject({
         anchor: new Vector2({ x: 200, y: 100 })
     }
 });
+
+// 设置这个对象的 img 宽高 和 位置，img 是 gameObject自带的组件
+// Set the game object img's width height, and the img's {x,y} on object, img is the game object default component.
 firstGameObject.img.setRect({
     rect: new Rect({
         x: 0,
@@ -309,15 +321,18 @@ firstGameObject.img.setRect({
         height: 30
     })
 });
-// firstGameObject.img.setUrl({ url: 'https://www.baidu.com/img/bd_logo1.png' });
-firstGameObject.img.setUrl({ url: '/example/first/a.png' });
+
+// 设置图片的 url
+// set img with url
+firstGameObject.img.setUrl({ url: 'https://fanmingfei.github.io/thallo/example/first/a.png' });
+
+// 给游戏对象添加新的组件，第二个参数是要给组件传递到参数，但是我们写的 Move 组件不需要参数
+// add new component to game object, the twice argument is the component needing, but the Move component isn't need argument.
 firstGameObject.addComponent(_Move2.default)();
+
+// 将游戏对象添加到场景，当相机能看到对象的时候，对象将会显示在canvas上
+// add the game object to scene, when the camera see the game object, the object will show on the canvas.
 scene.addGameObject(firstGameObject);
-
-console.log(camera.transform);
-console.log(firstGameObject.transform);
-
-// }
 
 /***/ }),
 /* 4 */
@@ -1327,14 +1342,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var GameObject = _Engine2.default.GameObject,
-    Camera = _Engine2.default.Camera,
-    Canvas = _Engine2.default.Canvas,
-    Component = _Engine2.default.Component,
-    Scene = _Engine2.default.Scene,
-    _Engine$types = _Engine2.default.types,
-    Vector2 = _Engine$types.Vector2,
-    Rect = _Engine$types.Rect;
+// 取出自己想要的类
+// fetch needing class.
+var Component = _Engine2.default.Component,
+    Vector2 = _Engine2.default.types.Vector2;
+
+// 继承 Component 并且 export 
+// extend Component and export it
 
 var Move = function (_Component) {
     _inherits(Move, _Component);
@@ -1352,10 +1366,14 @@ var Move = function (_Component) {
     _createClass(Move, [{
         key: 'update',
         value: function update(e) {
+
+            // 随着时间做圆周运动
+            // Do circle active with time.
             var r = 100;
             var x = r * Math.sin(0.5 * Math.PI * e.time) + 600,
                 y = -r * Math.cos(0.5 * Math.PI * e.time) + 200;
-
+            // 设置位置
+            // set position
             this.targetObject.transform.position = new Vector2({ x: x, y: y });
         }
     }]);
