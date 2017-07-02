@@ -6,7 +6,7 @@ export default class Canvas {
         this.height = height;
         this.context = canvas.getContext('2d');
         this.camera = camera;
-        this.frame = requestAnimationFrame(()=>this.render());
+        this.framer = requestAnimationFrame(()=>this.render());
     }
 
     render() {
@@ -15,7 +15,7 @@ export default class Canvas {
         for (let gameObject of gameObjects) {
             this.drawImg(gameObject);
         }
-        this.frame = requestAnimationFrame(()=>this.render());
+        this.framer = requestAnimationFrame(()=>this.render());
     }
     clearContext() {
         this.context.clearRect(0, 0, this.width, this.height);

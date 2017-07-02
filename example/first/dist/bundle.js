@@ -105,6 +105,12 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _store = __webpack_require__(5);
+
+var _store2 = _interopRequireDefault(_store);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var Component = function () {
@@ -114,26 +120,34 @@ var Component = function () {
         _classCallCheck(this, Component);
 
         this.targetObject = targetObject;
+        this.active = true;
     }
 
     _createClass(Component, [{
-        key: "awake",
+        key: 'awake',
         value: function awake() {}
     }, {
-        key: "start",
+        key: 'start',
         value: function start() {}
     }, {
-        key: "preUpdate",
+        key: 'preUpdate',
         value: function preUpdate() {}
     }, {
-        key: "update",
+        key: 'update',
         value: function update() {}
     }, {
-        key: "lateUpdate",
+        key: 'lateUpdate',
         value: function lateUpdate() {}
     }, {
-        key: "distroy",
-        value: function distroy() {}
+        key: 'setActive',
+        value: function setActive(flag) {
+            this.active = flag;
+        }
+    }, {
+        key: 'distroy',
+        value: function distroy() {
+            (0, _store2.default)(targetObject.scene)('component').remove(this);
+        }
     }]);
 
     return Component;
@@ -252,9 +266,13 @@ var _Engine = __webpack_require__(4);
 
 var _Engine2 = _interopRequireDefault(_Engine);
 
+var _Move = __webpack_require__(16);
+
+var _Move2 = _interopRequireDefault(_Move);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var createObject = _Engine2.default.createObject,
+var GameObject = _Engine2.default.GameObject,
     Camera = _Engine2.default.Camera,
     Canvas = _Engine2.default.Canvas,
     Scene = _Engine2.default.Scene,
@@ -278,7 +296,7 @@ var camera = new Camera({
     scene: scene
 });
 canvasObj.setCamera(camera);
-var firstGameObject = createObject({
+var firstGameObject = new GameObject({
     name: "firstGameObject",
     transform: {
         rect: new Rect({ x: 0, y: 0, width: 30, height: 30 }),
@@ -286,17 +304,17 @@ var firstGameObject = createObject({
         anchor: new Vector2({ x: 200, y: 100 })
     }
 });
-console.log(firstGameObject);
 firstGameObject.img.setRect({
     rect: new Rect({
         x: 0,
         y: 0,
-        width: 250,
-        height: 90
+        width: 30,
+        height: 30
     })
 });
-firstGameObject.img.setUrl({ url: 'https://www.baidu.com/img/bd_logo1.png' });
-
+// firstGameObject.img.setUrl({ url: 'https://www.baidu.com/img/bd_logo1.png' });
+firstGameObject.img.setUrl({ url: '/example/first/a.png' });
+firstGameObject.addComponent(_Move2.default)();
 scene.addGameObject(firstGameObject);
 
 console.log(camera.transform);
@@ -345,7 +363,6 @@ var _Component2 = _interopRequireDefault(_Component);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var gameObjectStore = (0, _store2.default)('gameObject');
 exports.default = {
     createObject: function createObject(_ref) {
         var name = _ref.name,
@@ -357,12 +374,10 @@ exports.default = {
             transform: transform,
             components: components
         });
-        gameObjectStore.push(gameObject);
         return gameObject;
     },
     distroyObject: function distroyObject(gameObject) {
         gameObject.distroy();
-        gameObjectStore.remove(gameObject);
     },
     find: function find(_ref2) {
         var name = _ref2.name;
@@ -407,7 +422,7 @@ exports.default = {
         return gameObject;
     },
 
-
+    GameObject: _GameObject2.default,
     Canvas: _Canvas2.default,
     Scene: _Scene2.default,
     Camera: _Camera2.default,
@@ -426,24 +441,60 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 exports.default = store;
-var store = {};
-function store(name) {
-    if (!store[name]) {
-        store[name] = [];
+var cache = new Map();
+function store(id) {
+    if (!cache.has(id)) {
+        cache.set(id, new Map());
     }
-    return {
-        push: function push(obj) {
-            store[name].push(obj);
-        },
-        remove: function remove(obj) {
-            var index = store[name].findIndex(function (o) {
-                return o == obj;
-            });
-            index !== -1 && store[name].splice(index, 1);
-        },
-        getAll: function getAll() {
-            return store[name];
+    return function (name) {
+        if (!cache.get(id).has(name)) {
+            cache.get(id).set(name, []);
         }
+        var store = cache.get(id).get(name);
+        return {
+            push: function push() {
+                store.push.apply(store, arguments);
+            },
+            remove: function remove() {
+                for (var _len = arguments.length, objs = Array(_len), _key = 0; _key < _len; _key++) {
+                    objs[_key] = arguments[_key];
+                }
+
+                var _iteratorNormalCompletion = true;
+                var _didIteratorError = false;
+                var _iteratorError = undefined;
+
+                try {
+                    for (var _iterator = objs[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                        obj = _step.value;
+
+                        var index = store.findIndex(function (o) {
+                            return o == obj;
+                        });
+                        index !== -1 && store.splice(index, 1);
+                    }
+                } catch (err) {
+                    _didIteratorError = true;
+                    _iteratorError = err;
+                } finally {
+                    try {
+                        if (!_iteratorNormalCompletion && _iterator.return) {
+                            _iterator.return();
+                        }
+                    } finally {
+                        if (_didIteratorError) {
+                            throw _iteratorError;
+                        }
+                    }
+                }
+            },
+            getAll: function getAll() {
+                return store;
+            },
+            clear: function clear() {
+                store.clear();
+            }
+        };
     };
 };
 
@@ -463,6 +514,14 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _components = __webpack_require__(7);
+
+var _store = __webpack_require__(5);
+
+var _store2 = _interopRequireDefault(_store);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -560,8 +619,12 @@ var GameObject = function () {
                 var arg = _extends({
                     targetObject: _this
                 }, obj);
-                var lengh = _this.components.push(new Component(arg));
-                return _this.components[lengh - 1];
+                var component = new Component(arg);
+                if (_this.componentsStore) {
+                    _this.componentsStore.push(component);
+                }
+                _this.components.push(component);
+                return component;
             };
         }
     }, {
@@ -586,8 +649,14 @@ var GameObject = function () {
         }
     }, {
         key: 'setScene',
-        value: function setScene(scene) {
+        value: function setScene(_ref3) {
+            var _componentsStore;
+
+            var scene = _ref3.scene;
+
             this.scene = scene;
+            this.componentsStore = (0, _store2.default)(scene)('component');
+            (_componentsStore = this.componentsStore).push.apply(_componentsStore, _toConsumableArray(this.components));
         }
     }, {
         key: 'distroy',
@@ -711,6 +780,9 @@ var Img = function (_Component) {
             this.image = new Image();
             this.image.src = url;
         }
+    }, {
+        key: 'update',
+        value: function update(e) {}
     }]);
 
     return Img;
@@ -903,7 +975,7 @@ var Canvas = function () {
         this.height = height;
         this.context = canvas.getContext('2d');
         this.camera = camera;
-        this.frame = requestAnimationFrame(function () {
+        this.framer = requestAnimationFrame(function () {
             return _this.render();
         });
     }
@@ -940,7 +1012,7 @@ var Canvas = function () {
                 }
             }
 
-            this.frame = requestAnimationFrame(function () {
+            this.framer = requestAnimationFrame(function () {
                 return _this2.render();
             });
         }
@@ -985,6 +1057,14 @@ var _Camera = __webpack_require__(2);
 
 var _Camera2 = _interopRequireDefault(_Camera);
 
+var _store = __webpack_require__(5);
+
+var _store2 = _interopRequireDefault(_store);
+
+var _Frame = __webpack_require__(15);
+
+var _Frame2 = _interopRequireDefault(_Frame);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1000,14 +1080,17 @@ var Scene = function () {
         this.height = height;
         this.camera = [];
         this.gameObjects = [];
+        this.frame = new _Frame2.default({ scene: this });
+        this.gameObjectStore = (0, _store2.default)(this)('gameObject');
     }
 
     _createClass(Scene, [{
         key: 'addGameObject',
         value: function addGameObject(gameObject) {
             gameObject instanceof _Camera2.default && this.camera.push(gameObject);
-            gameObject.setScene(this);
+            gameObject.setScene({ scene: this });
             this.gameObjects.push(gameObject);
+            this.gameObjectStore.push(gameObject);
         }
     }]);
 
@@ -1073,6 +1156,215 @@ function isPointCollsion(point, gameObject) {
     }
     return false;
 }
+
+/***/ }),
+/* 15 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _store = __webpack_require__(5);
+
+var _store2 = _interopRequireDefault(_store);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Frame = function () {
+    function Frame(_ref) {
+        var _this = this;
+
+        var scene = _ref.scene;
+
+        _classCallCheck(this, Frame);
+
+        this.scene = scene;
+        this.componentStore = (0, _store2.default)(scene)('component');
+        this.sceneStartTime = performance.now();
+        this.lastFrameTime = performance.now();
+        this.frameCount = 0;
+        requestAnimationFrame(function () {
+            return _this.frame();
+        });
+    }
+
+    _createClass(Frame, [{
+        key: 'frame',
+        value: function frame() {
+            var _this2 = this;
+
+            var components = this.componentStore.getAll();
+            var currentTime = performance.now();
+            var e = {
+                deltaTime: (currentTime - this.lastFrameTime) / 1000,
+                frameCount: this.frameCount,
+                time: (currentTime - this.sceneStartTime) / 1000
+            };
+
+            this.lastFrameTime = performance.now();
+            this.frameCount++;
+            var _iteratorNormalCompletion = true;
+            var _didIteratorError = false;
+            var _iteratorError = undefined;
+
+            try {
+                for (var _iterator = components[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                    var component = _step.value;
+
+                    if (component.active == true) {
+                        component.preUpdate && component.preUpdate(e);
+                    }
+                }
+            } catch (err) {
+                _didIteratorError = true;
+                _iteratorError = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion && _iterator.return) {
+                        _iterator.return();
+                    }
+                } finally {
+                    if (_didIteratorError) {
+                        throw _iteratorError;
+                    }
+                }
+            }
+
+            var _iteratorNormalCompletion2 = true;
+            var _didIteratorError2 = false;
+            var _iteratorError2 = undefined;
+
+            try {
+                for (var _iterator2 = components[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+                    var _component = _step2.value;
+
+                    if (_component.active == true) {
+                        _component.update && _component.update(e);
+                    }
+                }
+            } catch (err) {
+                _didIteratorError2 = true;
+                _iteratorError2 = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion2 && _iterator2.return) {
+                        _iterator2.return();
+                    }
+                } finally {
+                    if (_didIteratorError2) {
+                        throw _iteratorError2;
+                    }
+                }
+            }
+
+            var _iteratorNormalCompletion3 = true;
+            var _didIteratorError3 = false;
+            var _iteratorError3 = undefined;
+
+            try {
+                for (var _iterator3 = components[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+                    var _component2 = _step3.value;
+
+                    if (_component2.active == true) {
+                        _component2.lateUpdate && _component2.lateUpdate(e);
+                    }
+                }
+            } catch (err) {
+                _didIteratorError3 = true;
+                _iteratorError3 = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion3 && _iterator3.return) {
+                        _iterator3.return();
+                    }
+                } finally {
+                    if (_didIteratorError3) {
+                        throw _iteratorError3;
+                    }
+                }
+            }
+
+            requestAnimationFrame(function () {
+                return _this2.frame();
+            });
+        }
+    }]);
+
+    return Frame;
+}();
+
+exports.default = Frame;
+
+/***/ }),
+/* 16 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _Engine = __webpack_require__(4);
+
+var _Engine2 = _interopRequireDefault(_Engine);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var GameObject = _Engine2.default.GameObject,
+    Camera = _Engine2.default.Camera,
+    Canvas = _Engine2.default.Canvas,
+    Component = _Engine2.default.Component,
+    Scene = _Engine2.default.Scene,
+    _Engine$types = _Engine2.default.types,
+    Vector2 = _Engine$types.Vector2,
+    Rect = _Engine$types.Rect;
+
+var Move = function (_Component) {
+    _inherits(Move, _Component);
+
+    function Move(_ref) {
+        var targetObject = _ref.targetObject;
+
+        _classCallCheck(this, Move);
+
+        return _possibleConstructorReturn(this, (Move.__proto__ || Object.getPrototypeOf(Move)).call(this, {
+            targetObject: targetObject
+        }));
+    }
+
+    _createClass(Move, [{
+        key: 'update',
+        value: function update(e) {
+            var r = 100;
+            var x = r * Math.sin(0.5 * Math.PI * e.time) + 600,
+                y = -r * Math.cos(0.5 * Math.PI * e.time) + 200;
+
+            this.targetObject.transform.position = new Vector2({ x: x, y: y });
+        }
+    }]);
+
+    return Move;
+}(Component);
+
+exports.default = Move;
 
 /***/ })
 /******/ ]);

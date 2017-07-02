@@ -1,5 +1,6 @@
 import Engine from '../../src/Engine.js';
-const { createObject, Camera, Canvas, Scene, types: { Vector2, Rect } } = Engine;
+import Move from './Move.js';
+const { GameObject, Camera, Canvas, Scene, types: { Vector2, Rect } } = Engine;
 const canvas = document.getElementById("canvas");
 const canvasObj = new Canvas({ canvas: canvas, width: 800, height: 400 });
 // const a = new Image();
@@ -16,7 +17,7 @@ const camera = new Camera({
     scene
 });
 canvasObj.setCamera(camera);
-const firstGameObject = createObject({
+const firstGameObject = new GameObject({
     name: "firstGameObject",
     transform: {
         rect: new Rect({ x: 0, y: 0, width: 30, height: 30 }),
@@ -24,17 +25,17 @@ const firstGameObject = createObject({
         anchor: new Vector2({ x: 200, y: 100 }),
     }
 });
-console.log(firstGameObject)
 firstGameObject.img.setRect({
     rect: new Rect({
         x: 0,
         y: 0,
-        width: 250,
-        height: 90
+        width: 30,
+        height: 30
     })
 });
-firstGameObject.img.setUrl({ url: 'https://www.baidu.com/img/bd_logo1.png' });
-
+// firstGameObject.img.setUrl({ url: 'https://www.baidu.com/img/bd_logo1.png' });
+firstGameObject.img.setUrl({ url: '/example/first/a.png' });
+firstGameObject.addComponent(Move)();
 scene.addGameObject(firstGameObject);
 
 console.log(camera.transform)

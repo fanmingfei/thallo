@@ -1,4 +1,5 @@
-import {Transform, Img} from '../components/components';
+import { Transform, Img } from '../components/components';
+import store from '../utils/store';
 export default class GameObject {
     constructor({
         name,
@@ -16,6 +17,7 @@ export default class GameObject {
         for (let component of components) {
             this.addComponent(component)();
         }
+
     }
     find({
         name
@@ -38,8 +40,12 @@ export default class GameObject {
                 targetObject: this,
                 ...obj
             };
-            const lengh = this.components.push(new Component(arg));
-            return this.components[lengh-1];
+            const component = new Component(arg);
+            if (this.componentsStore) {
+                this.componentsStore.push(component);
+            }
+            this.components.push(component);
+            return component;
         }
     }
     removeComponent(Component) {
@@ -52,8 +58,10 @@ export default class GameObject {
     setActive(flag) {
         this.active = flag;
     }
-    setScene(scene) {
+    setScene({ scene }) {
         this.scene = scene;
+        this.componentsStore = store(scene)('component');
+        this.componentsStore.push(...this.components);
     }
     distroy() {
         for (let component of this.components) {

@@ -18,5 +18,7 @@ export default class Img extends Component {
         this.image = new Image();
         this.image.src=url;
     }
+    update(e){
+    }
 
 }

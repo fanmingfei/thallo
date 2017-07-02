@@ -6,8 +6,7 @@ import Camera from './base/Camera';
 import types from './base/types';
 import Component from './base/Component';
 
-const gameObjectStore = store('gameObject');
-export default{
+export default {
     createObject({
             name,
             transform,
@@ -18,12 +17,10 @@ export default{
                 transform,
                 components
             });
-            gameObjectStore.push(gameObject);
             return gameObject;
         },
         distroyObject(gameObject) {
             gameObject.distroy();
-            gameObjectStore.remove(gameObject)
         },
         find({
             name
@@ -45,7 +42,7 @@ export default{
             }
             return gameObject;
         },
-
+        GameObject,
         Canvas,
         Scene,
         Camera,
