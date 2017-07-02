@@ -3,15 +3,38 @@ import GameObject from './base/GameObject.js';
 
 const gameObjectStore = Store('gameObject');
 export default {
-    createObject({name, components}) {
-        const gameObject = new GameObject({name, components});
+    createObject({
+        name,
+        components
+    }) {
+        const gameObject = new GameObject({
+            name,
+            components
+        });
         gameObjectStore.push(gameObject);
     }
     distroyObject(gameObject) {
         gameObject.distroy();
-        gameObjectStore.remove()
+        gameObjectStore.remove(gameObject)
     }
-    find({name}) {
-        return store.findAll().find(obj=>obj.name==name);
+    find({
+        name
+    }) {
+        let gameObject;
+        const all = store.findAll();
+        for (let obj of all) {
+            if (obj.name == name) {
+                gameObject = obj;
+                break;
+            } else {
+                gameObject = obj.find({
+                    name
+                });
+                if (gameObject) {
+                    break;
+                }
+            }
+        }
+        return gameObject;
     }
 }

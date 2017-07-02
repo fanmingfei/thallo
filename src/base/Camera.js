@@ -25,7 +25,14 @@ export default class Camera extends GameObject {
             }
             return prev;
         }, []);
+    }
 
+    isGameObjectVisible(gameObject) {
+        if (gameObject.active && isCollsion(this, gameObject)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     worldToScreen({

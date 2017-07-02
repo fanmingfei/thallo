@@ -1,4 +1,4 @@
-import Component form '../base/Component';
+import Component from '../base/Component';
 import {
     Vector2
 } from '../base/types';
