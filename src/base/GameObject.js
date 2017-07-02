@@ -30,21 +30,21 @@ export default class GameObject {
         return obj;
 
     }
-    addComponent(component) {
+    addComponent(Component) {
         return (obj = {}) => {
-            const index = this.components.push(new component({
+            const index = this.components.push(new Component({
                 targetObject: this,
                 ...obj
             }));
             return this.components[index];
         }
     }
-    removeComponent(component) {
-        const index = this.components.findIndex(c => c instanceof component);
+    removeComponent(Component) {
+        const index = this.components.findIndex(c => c instanceof Component);
         (index !== -1) && this.component.splice(index, 1);
     }
-    getComponent(component) {
-        return this.components.find(c => c instanceof component);
+    getComponent(Component) {
+        return this.components.find(c => c instanceof Component);
     }
     setActive(flag) {
         this.active = flag;

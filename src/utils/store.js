@@ -12,7 +12,7 @@ export Store = function(name) {
             (index !== -1) && store[name].splice(index, 1);
         },
         getAll() {
-        	return store[name];
+            return store[name];
         }
     }
 };
