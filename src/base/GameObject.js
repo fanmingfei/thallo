@@ -1,4 +1,4 @@
-import Transform from '../components/Transform';
+import {Transform, Img} from '../components/components';
 export default class GameObject {
     construct({
         name,
@@ -10,7 +10,9 @@ export default class GameObject {
         this.parent = undefined;
         this.components = [];
         this.active = true;
+        this.scene = undefined;
         this.transform = this.addComponent(Transform)(transform);
+        this.img = this.addComponent(Img)();
         for (let component of this.components) {
             this.addComponent(component)();
         }
@@ -48,6 +50,9 @@ export default class GameObject {
     }
     setActive(flag) {
         this.active = flag;
+    }
+    setScene(scene) {
+        this.scene = scene;
     }
     distroy() {
         for (let component of this.components) {

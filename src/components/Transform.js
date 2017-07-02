@@ -1,3 +1,4 @@
+import { Rect, Vector2 } from '../base/types';
 import Component from '../base/Component';
 import {
     Vector2
@@ -5,9 +6,9 @@ import {
 export default class Transform extends Component {
     constructor({
         targetObject,
-        rect,
-        position,
-        anchor
+        rect = new Rect(),
+        position = new Vector2(),
+        anchor = new Vector2()
     }) {
         super({
             targetObject

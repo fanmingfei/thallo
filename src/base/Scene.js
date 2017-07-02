@@ -11,6 +11,7 @@ export default class Scene {
     }
     addGameObject(gameObject) {
         gameObject instanceof Camera && this.camera.push(gameObject);
+        gameObject.setScene(this);
         this.gameObjects.push(gameObject);
     }
 }

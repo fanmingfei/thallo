@@ -14,6 +14,19 @@
 ### customObject
 自定义游戏对象，可挂载多个组件
 
+### Object
+	static distroy({name})
+	static find({name})
+
+	construct({name, gameObject, components})
+
+	find({name})
+	addComponent(component)
+	removeComponent(component)
+	getComponent(component)
+	setActive(flag)
+	distroy()
+
 
 ## Component 可以挂载到游戏对象上
 
@@ -35,22 +48,8 @@
 ### music
 音乐
 
-### custom
+### customComponent
 自定义组件，可以自己创建组件，控制对象属性、修改对象上的组件等
-
-
-### Object
-	static distroy({name})
-	static find({name})
-
-	construct({name, gameObject, components})
-
-	find({name})
-	addComponent(component)
-	removeComponent(component)
-	getComponent(component)
-	setActive(flag)
-	distroy()
 
 ### component
 	awake()
@@ -68,5 +67,19 @@
 	x
 	y
 
+### Rect 矩形
+	x
+	y
+	width
+	height
+
+
+
+## 游戏组件依赖
+Canvas > Scene > Camera > GameObjects
+
+Canvas 显示一个 Camera 的内容
+
+Camera 需要一个 Scene
 
 
