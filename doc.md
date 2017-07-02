@@ -52,7 +52,6 @@
 自定义组件，可以自己创建组件，控制对象属性、修改对象上的组件等
 
 ### component
-	awake()
 	start()
 	preUpdate()
 	update()

@@ -124,9 +124,6 @@ var Component = function () {
     }
 
     _createClass(Component, [{
-        key: 'awake',
-        value: function awake() {}
-    }, {
         key: 'start',
         value: function start() {}
     }, {
@@ -624,6 +621,7 @@ var GameObject = function () {
                     _this.componentsStore.push(component);
                 }
                 _this.components.push(component);
+                component.start();
                 return component;
             };
         }
@@ -1219,7 +1217,8 @@ var Frame = function () {
                 for (var _iterator = components[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
                     var component = _step.value;
 
-                    if (component.active == true) {
+
+                    if (component.targetObject && component.active == true) {
                         component.preUpdate && component.preUpdate(e);
                     }
                 }
@@ -1246,7 +1245,7 @@ var Frame = function () {
                 for (var _iterator2 = components[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
                     var _component = _step2.value;
 
-                    if (_component.active == true) {
+                    if (_component.targetObject && _component.active == true) {
                         _component.update && _component.update(e);
                     }
                 }
@@ -1273,7 +1272,7 @@ var Frame = function () {
                 for (var _iterator3 = components[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
                     var _component2 = _step3.value;
 
-                    if (_component2.active == true) {
+                    if (_component2.targetObject && _component2.active == true) {
                         _component2.lateUpdate && _component2.lateUpdate(e);
                     }
                 }

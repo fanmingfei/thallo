@@ -21,17 +21,18 @@ export default class Frame {
         this.lastFrameTime = performance.now();
         this.frameCount++;
         for (let component of components) {
-            if (component.active == true) {
+
+            if (component.targetObject && component.active == true) {
                 component.preUpdate && component.preUpdate(e)
             }
         }
         for (let component of components) {
-            if (component.active == true) {
+            if (component.targetObject &&  component.active == true) {
                 component.update && component.update(e)
             }
         }
         for (let component of components) {
-            if (component.active == true) {
+            if (component.targetObject &&  component.active == true) {
                 component.lateUpdate && component.lateUpdate(e)
             }
         }

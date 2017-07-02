@@ -45,6 +45,7 @@ export default class GameObject {
                 this.componentsStore.push(component);
             }
             this.components.push(component);
+            component.start();
             return component;
         }
     }

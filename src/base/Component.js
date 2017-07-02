@@ -6,7 +6,6 @@ export default class Component {
         this.targetObject = targetObject;
         this.active = true;
     }
-    awake() {}
     start() {}
     preUpdate() {}
     update() {}
