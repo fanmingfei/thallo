@@ -1,4 +1,4 @@
-import { Transform, Img } from '../components/components';
+import { Transform, Renderer } from '../components/components';
 import store from '../utils/store';
 export default class GameObject {
     constructor({
@@ -13,11 +13,10 @@ export default class GameObject {
         this.active = true;
         this.scene = undefined;
         this.transform = this.addComponent(Transform)(transform);
-        this.img = this.addComponent(Img)();
+        this.renderer = this.addComponent(Renderer)();
         for (let component of components) {
-            this.addComponent(component)();
+            this.addComponent(component.component)(component.arguments);
         }
-
     }
     find({
         name

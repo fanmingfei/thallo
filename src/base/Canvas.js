@@ -22,8 +22,8 @@ export default class Canvas {
     }
     drawImg(gameObject) {
         const x1y1 = Vector2.minus(gameObject.transform.position, gameObject.transform.anchor);
-        const x2y2 = Vector2.add(x1y1, new Vector2({ x: gameObject.img.rect.x, y: gameObject.img.rect.y }));
-        this.context.drawImage(gameObject.img.image, x2y2.x, x2y2.y, gameObject.img.rect.width, gameObject.img.rect.height);
+        const x2y2 = Vector2.add(x1y1, new Vector2({ x: gameObject.renderer.rect.x, y: gameObject.renderer.rect.y }));
+        this.context.drawImage(gameObject.renderer.image, x2y2.x, x2y2.y, gameObject.renderer.rect.width, gameObject.renderer.rect.height);
     }
     setCamera(camera) {
         this.camera = camera;

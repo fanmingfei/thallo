@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 3);
+/******/ 	return __webpack_require__(__webpack_require__.s = 7);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -94,356 +94,6 @@ exports.default = {
 
 /***/ }),
 /* 1 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _store = __webpack_require__(5);
-
-var _store2 = _interopRequireDefault(_store);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var Component = function () {
-    function Component(_ref) {
-        var targetObject = _ref.targetObject;
-
-        _classCallCheck(this, Component);
-
-        this.targetObject = targetObject;
-        this.active = true;
-    }
-
-    _createClass(Component, [{
-        key: 'start',
-        value: function start() {}
-    }, {
-        key: 'preUpdate',
-        value: function preUpdate() {}
-    }, {
-        key: 'update',
-        value: function update() {}
-    }, {
-        key: 'lateUpdate',
-        value: function lateUpdate() {}
-    }, {
-        key: 'setActive',
-        value: function setActive(flag) {
-            this.active = flag;
-        }
-    }, {
-        key: 'distroy',
-        value: function distroy() {
-            (0, _store2.default)(targetObject.scene)('component').remove(this);
-        }
-    }]);
-
-    return Component;
-}();
-
-exports.default = Component;
-
-/***/ }),
-/* 2 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _tools = __webpack_require__(14);
-
-var _GameObject2 = __webpack_require__(6);
-
-var _GameObject3 = _interopRequireDefault(_GameObject2);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var Camera = function (_GameObject) {
-    _inherits(Camera, _GameObject);
-
-    function Camera(_ref) {
-        var name = _ref.name,
-            _ref$transform = _ref.transform,
-            transform = _ref$transform === undefined ? undefined : _ref$transform,
-            _ref$components = _ref.components,
-            components = _ref$components === undefined ? [] : _ref$components,
-            scene = _ref.scene;
-
-        _classCallCheck(this, Camera);
-
-        var _this = _possibleConstructorReturn(this, (Camera.__proto__ || Object.getPrototypeOf(Camera)).call(this, {
-            name: name,
-            transform: transform,
-            components: components
-        }));
-
-        _this.scene = scene;
-        return _this;
-    }
-
-    // 获取当前相机可见的gameObject
-
-
-    _createClass(Camera, [{
-        key: 'getVisibleGameObjects',
-        value: function getVisibleGameObjects() {
-            var _this2 = this;
-
-            var visibleGameObject = this.scene.gameObjects.reduce(function (prev, gameObject) {
-                if (gameObject.active && (0, _tools.isCollsion)(_this2, gameObject)) {
-                    prev.push(gameObject);
-                } else {
-                    return prev;
-                }
-                return prev;
-            }, []);
-            return visibleGameObject;
-        }
-    }, {
-        key: 'isGameObjectVisible',
-        value: function isGameObjectVisible(gameObject) {
-            if (gameObject.active && (0, _tools.isCollsion)(this, gameObject)) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-    }, {
-        key: 'worldToScreen',
-        value: function worldToScreen(_ref2) {
-            var position = _ref2.position;
-
-            var x1y1 = Vector2.minus(this.transform.position, this.transform.anchor);
-            return Vector2.minus(position, x1y1);
-        }
-    }, {
-        key: 'screenToWorld',
-        value: function screenToWorld(_ref3) {
-            var position = _ref3.position;
-
-            var x1y1 = Vector2.minus(this.transform.position, this.transform.anchor);
-            return Vector2.add(position, x1y1);
-        }
-    }]);
-
-    return Camera;
-}(_GameObject3.default);
-
-exports.default = Camera;
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _Engine = __webpack_require__(4);
-
-var _Engine2 = _interopRequireDefault(_Engine);
-
-var _Move = __webpack_require__(16);
-
-var _Move2 = _interopRequireDefault(_Move);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var GameObject = _Engine2.default.GameObject,
-    Camera = _Engine2.default.Camera,
-    Canvas = _Engine2.default.Canvas,
-    Scene = _Engine2.default.Scene,
-    _Engine$types = _Engine2.default.types,
-    Vector2 = _Engine$types.Vector2,
-    Rect = _Engine$types.Rect;
-
-var canvas = document.getElementById("canvas");
-var canvasObj = new Canvas({ canvas: canvas, width: 800, height: 400 });
-
-// 创建一个场景
-// Create a scene
-var scene = new Scene({ width: 2000, height: 2000 });
-
-// 创建一个 相机
-// Create a camera
-var camera = new Camera({
-    name: "camera",
-    transform: {
-        rect: new Rect({ x: 0, y: 0, width: 800, height: 400 }),
-        position: new Vector2({ x: 400, y: 200 }),
-        anchor: new Vector2({ x: 400, y: 200 })
-    },
-    scene: scene
-});
-
-// 将相机设置给 canvas, canvas将显示这个相机的内容
-// Set camera to the canvas, canvas will display the camera view.
-canvasObj.setCamera(camera);
-
-// 创建第一个游戏对象
-// create the first game object
-var firstGameObject = new GameObject({
-    name: "firstGameObject",
-    transform: {
-        rect: new Rect({ x: 0, y: 0, width: 30, height: 30 }),
-        position: new Vector2({ x: 400, y: 200 }),
-        anchor: new Vector2({ x: 200, y: 100 })
-    }
-});
-
-// 设置这个对象的 img 宽高 和 位置，img 是 gameObject自带的组件
-// Set the game object img's width height, and the img's {x,y} on object, img is the game object default component.
-firstGameObject.img.setRect({
-    rect: new Rect({
-        x: 0,
-        y: 0,
-        width: 30,
-        height: 30
-    })
-});
-
-// 设置图片的 url
-// set img with url
-firstGameObject.img.setUrl({ url: 'https://fanmingfei.github.io/thallo/example/first/a.png' });
-
-// 给游戏对象添加新的组件，第二个参数是要给组件传递到参数，但是我们写的 Move 组件不需要参数
-// add new component to game object, the twice argument is the component needing, but the Move component isn't need argument.
-firstGameObject.addComponent(_Move2.default)();
-
-// 将游戏对象添加到场景，当相机能看到对象的时候，对象将会显示在canvas上
-// add the game object to scene, when the camera see the game object, the object will show on the canvas.
-scene.addGameObject(firstGameObject);
-
-/***/ }),
-/* 4 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _store = __webpack_require__(5);
-
-var _store2 = _interopRequireDefault(_store);
-
-var _GameObject = __webpack_require__(6);
-
-var _GameObject2 = _interopRequireDefault(_GameObject);
-
-var _Canvas = __webpack_require__(12);
-
-var _Canvas2 = _interopRequireDefault(_Canvas);
-
-var _Scene = __webpack_require__(13);
-
-var _Scene2 = _interopRequireDefault(_Scene);
-
-var _Camera = __webpack_require__(2);
-
-var _Camera2 = _interopRequireDefault(_Camera);
-
-var _types = __webpack_require__(0);
-
-var _types2 = _interopRequireDefault(_types);
-
-var _Component = __webpack_require__(1);
-
-var _Component2 = _interopRequireDefault(_Component);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = {
-    createObject: function createObject(_ref) {
-        var name = _ref.name,
-            transform = _ref.transform,
-            components = _ref.components;
-
-        var gameObject = new _GameObject2.default({
-            name: name,
-            transform: transform,
-            components: components
-        });
-        return gameObject;
-    },
-    distroyObject: function distroyObject(gameObject) {
-        gameObject.distroy();
-    },
-    find: function find(_ref2) {
-        var name = _ref2.name;
-
-        var gameObject = void 0;
-        var all = _store2.default.findAll();
-        var _iteratorNormalCompletion = true;
-        var _didIteratorError = false;
-        var _iteratorError = undefined;
-
-        try {
-            for (var _iterator = all[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-                var obj = _step.value;
-
-                if (obj.name == name) {
-                    gameObject = obj;
-                    break;
-                } else {
-                    gameObject = obj.find({
-                        name: name
-                    });
-                    if (gameObject) {
-                        break;
-                    }
-                }
-            }
-        } catch (err) {
-            _didIteratorError = true;
-            _iteratorError = err;
-        } finally {
-            try {
-                if (!_iteratorNormalCompletion && _iterator.return) {
-                    _iterator.return();
-                }
-            } finally {
-                if (_didIteratorError) {
-                    throw _iteratorError;
-                }
-            }
-        }
-
-        return gameObject;
-    },
-
-    GameObject: _GameObject2.default,
-    Canvas: _Canvas2.default,
-    Scene: _Scene2.default,
-    Camera: _Camera2.default,
-    types: _types2.default,
-    Component: _Component2.default
-};
-
-/***/ }),
-/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -511,7 +161,117 @@ function store(id) {
 };
 
 /***/ }),
-/* 6 */
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _store = __webpack_require__(1);
+
+var _store2 = _interopRequireDefault(_store);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Component = function () {
+    function Component(_ref) {
+        var targetObject = _ref.targetObject;
+
+        _classCallCheck(this, Component);
+
+        this.targetObject = targetObject;
+        this.active = true;
+    }
+
+    _createClass(Component, [{
+        key: 'start',
+        value: function start() {}
+    }, {
+        key: 'preUpdate',
+        value: function preUpdate() {}
+    }, {
+        key: 'update',
+        value: function update() {}
+    }, {
+        key: 'lateUpdate',
+        value: function lateUpdate() {}
+    }, {
+        key: 'setActive',
+        value: function setActive(flag) {
+            this.active = flag;
+        }
+    }, {
+        key: 'distroy',
+        value: function distroy() {
+            (0, _store2.default)(targetObject.scene)('component').remove(this);
+        }
+    }]);
+
+    return Component;
+}();
+
+exports.default = Component;
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.components = exports.Component = exports.types = exports.Camera = exports.Scene = exports.Canvas = exports.GameObject = undefined;
+
+var _GameObject2 = __webpack_require__(4);
+
+var _GameObject3 = _interopRequireDefault(_GameObject2);
+
+var _Canvas2 = __webpack_require__(13);
+
+var _Canvas3 = _interopRequireDefault(_Canvas2);
+
+var _Scene2 = __webpack_require__(14);
+
+var _Scene3 = _interopRequireDefault(_Scene2);
+
+var _Camera2 = __webpack_require__(6);
+
+var _Camera3 = _interopRequireDefault(_Camera2);
+
+var _types2 = __webpack_require__(0);
+
+var _types3 = _interopRequireDefault(_types2);
+
+var _Component2 = __webpack_require__(2);
+
+var _Component3 = _interopRequireDefault(_Component2);
+
+var _components2 = __webpack_require__(5);
+
+var _components3 = _interopRequireDefault(_components2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.GameObject = _GameObject3.default;
+exports.Canvas = _Canvas3.default;
+exports.Scene = _Scene3.default;
+exports.Camera = _Camera3.default;
+exports.types = _types3.default;
+exports.Component = _Component3.default;
+exports.components = _components3.default;
+
+/***/ }),
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -525,9 +285,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _components = __webpack_require__(7);
+var _components = __webpack_require__(5);
 
-var _store = __webpack_require__(5);
+var _store = __webpack_require__(1);
 
 var _store2 = _interopRequireDefault(_store);
 
@@ -554,7 +314,7 @@ var GameObject = function () {
         this.active = true;
         this.scene = undefined;
         this.transform = this.addComponent(_components.Transform)(transform);
-        this.img = this.addComponent(_components.Img)();
+        this.renderer = this.addComponent(_components.Renderer)();
         var _iteratorNormalCompletion = true;
         var _didIteratorError = false;
         var _iteratorError = undefined;
@@ -563,7 +323,7 @@ var GameObject = function () {
             for (var _iterator = components[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
                 var component = _step.value;
 
-                this.addComponent(component)();
+                this.addComponent(component.component)(component.arguments);
             }
         } catch (err) {
             _didIteratorError = true;
@@ -709,7 +469,7 @@ var GameObject = function () {
 exports.default = GameObject;
 
 /***/ }),
-/* 7 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -718,7 +478,7 @@ exports.default = GameObject;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.Transform = exports.Img = undefined;
+exports.Renderer = exports.Transform = exports.Img = undefined;
 
 var _Img = __webpack_require__(8);
 
@@ -728,10 +488,216 @@ var _Transform = __webpack_require__(11);
 
 var _Transform2 = _interopRequireDefault(_Transform);
 
+var _Renderer = __webpack_require__(12);
+
+var _Renderer2 = _interopRequireDefault(_Renderer);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.Img = _Img2.default;
 exports.Transform = _Transform2.default;
+exports.Renderer = _Renderer2.default;
+exports.default = {
+    Img: _Img2.default,
+    Transform: _Transform2.default,
+    Renderer: _Renderer2.default
+};
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _tools = __webpack_require__(15);
+
+var _GameObject2 = __webpack_require__(4);
+
+var _GameObject3 = _interopRequireDefault(_GameObject2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Camera = function (_GameObject) {
+    _inherits(Camera, _GameObject);
+
+    function Camera(_ref) {
+        var name = _ref.name,
+            _ref$transform = _ref.transform,
+            transform = _ref$transform === undefined ? undefined : _ref$transform,
+            _ref$components = _ref.components,
+            components = _ref$components === undefined ? [] : _ref$components,
+            scene = _ref.scene;
+
+        _classCallCheck(this, Camera);
+
+        var _this = _possibleConstructorReturn(this, (Camera.__proto__ || Object.getPrototypeOf(Camera)).call(this, {
+            name: name,
+            transform: transform,
+            components: components
+        }));
+
+        _this.scene = scene;
+        return _this;
+    }
+
+    // 获取当前相机可见的gameObject
+
+
+    _createClass(Camera, [{
+        key: 'getVisibleGameObjects',
+        value: function getVisibleGameObjects() {
+            var _this2 = this;
+
+            var visibleGameObject = this.scene.gameObjects.reduce(function (prev, gameObject) {
+                if (gameObject.active && (0, _tools.isCollsion)(_this2, gameObject)) {
+                    prev.push(gameObject);
+                } else {
+                    return prev;
+                }
+                return prev;
+            }, []);
+            return visibleGameObject;
+        }
+    }, {
+        key: 'isGameObjectVisible',
+        value: function isGameObjectVisible(gameObject) {
+            if (gameObject.active && (0, _tools.isCollsion)(this, gameObject)) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }, {
+        key: 'worldToScreen',
+        value: function worldToScreen(_ref2) {
+            var position = _ref2.position;
+
+            var x1y1 = Vector2.minus(this.transform.position, this.transform.anchor);
+            return Vector2.minus(position, x1y1);
+        }
+    }, {
+        key: 'screenToWorld',
+        value: function screenToWorld(_ref3) {
+            var position = _ref3.position;
+
+            var x1y1 = Vector2.minus(this.transform.position, this.transform.anchor);
+            return Vector2.add(position, x1y1);
+        }
+    }]);
+
+    return Camera;
+}(_GameObject3.default);
+
+exports.default = Camera;
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _Engine = __webpack_require__(3);
+
+var _Move = __webpack_require__(17);
+
+var _Move2 = _interopRequireDefault(_Move);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Img = _Engine.components.Img;
+var Vector2 = _Engine.types.Vector2,
+    Rect = _Engine.types.Rect;
+
+
+var canvas = document.getElementById("canvas");
+var canvasObj = new _Engine.Canvas({ canvas: canvas, width: 400, height: 800 });
+
+// 创建一个场景
+// Create a scene
+var scene = new _Engine.Scene({ width: 400, height: 800 });
+
+// 创建一个 相机
+// Create a camera
+var camera = new _Engine.Camera({
+    name: "camera",
+    transform: {
+        rect: new Rect({ x: 0, y: 0, width: 400, height: 800 }),
+        position: new Vector2({ x: 200, y: 400 })
+        // anchor: new Vector2({ x: 400, y: 200 }) // !!! default is the middle of rect, 默认锚点在相机的中心点
+    },
+    scene: scene // need a scene to show, 需要一个场景，相机将会显示这个场景的内容
+});
+
+// 将相机设置给 canvas, canvas将显示这个相机的内容
+// Set camera to the canvas, canvas will display the camera view.
+canvasObj.setCamera(camera);
+
+// 创建第一个游戏对象
+// create the first game object
+var firstGameObject = new _Engine.GameObject({
+    name: "firstGameObject",
+    transform: {
+        rect: new Rect({ x: 0, y: 0, width: 30, height: 30 })
+    },
+    components: [{
+        component: Img,
+        arguments: {
+            rect: new Rect({
+                x: 0,
+                y: 0,
+                width: 30,
+                height: 30
+            }),
+            url: 'https://fanmingfei.github.io/thallo/example/first/a.png'
+        }
+    }, {
+        component: _Move2.default,
+        arguments: {}
+    }]
+});
+
+// 将游戏对象添加到场景，当相机能看到对象的时候，对象将会显示在canvas上
+// add the game object to scene, when the camera see the game object, the object will show on the canvas.
+scene.addGameObject(firstGameObject);
+
+// 也可以使用以下方式添加组件
+// You can add Component use following way.
+
+// gameObject.addComponent(Component)(arguments);
+
+// 给对象添加一个图片，图片需要设置width 和 height
+// mount a Img component, need pass a Rect with width and height
+
+/*
+firstGameObject.addComponent(Img)({
+    rect: new Rect({
+        x: 0,
+        y: 0,
+        width: 30,
+        height: 30
+    }),
+    url: 'https://fanmingfei.github.io/thallo/example/first/a.png'
+});
+*/
+
+// 给游戏对象添加新的组件，第二个参数是要给组件传递到参数，但是我们写的 Move 组件不需要参数
+// add new component to game object, the twice argument is the component needing, but the Move component isn't need argument.
+
+// firstGameObject.addComponent(Move)();
 
 /***/ }),
 /* 8 */
@@ -748,7 +714,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _types = __webpack_require__(0);
 
-var _Component2 = __webpack_require__(1);
+var _Component2 = __webpack_require__(2);
 
 var _Component3 = _interopRequireDefault(_Component2);
 
@@ -764,7 +730,11 @@ var Img = function (_Component) {
     _inherits(Img, _Component);
 
     function Img(_ref) {
-        var targetObject = _ref.targetObject;
+        var targetObject = _ref.targetObject,
+            _ref$rect = _ref.rect,
+            rect = _ref$rect === undefined ? new _types.Rect() : _ref$rect,
+            _ref$url = _ref.url,
+            url = _ref$url === undefined ? '' : _ref$url;
 
         _classCallCheck(this, Img);
 
@@ -772,30 +742,43 @@ var Img = function (_Component) {
             targetObject: targetObject
         }));
 
-        _this.rect = new _types.Rect();
-        _this.image = new Image();
+        var rect;
+        var image;
+        Object.defineProperties(_this, {
+            rect: {
+                set: function set(value) {
+                    rect = value;
+                    this.image.rect = rect;
+                },
+                get: function get() {
+                    return rect;
+                }
+            },
+            image: {
+                set: function set(value) {
+                    image = value;
+                },
+                get: function get() {
+                    return image;
+                }
+            }
+        });
+        _this.setUrl({ url: url });
+        _this.rect = rect;
         return _this;
     }
 
     _createClass(Img, [{
-        key: 'setRect',
-        value: function setRect(_ref2) {
-            var rect = _ref2.rect;
-
-            this.rect = rect;
-        }
-    }, {
         key: 'setUrl',
-        value: function setUrl(_ref3) {
-            var url = _ref3.url;
+        value: function setUrl(_ref2) {
+            var url = _ref2.url;
 
             this.url = url;
             this.image = new Image();
             this.image.src = url;
+            this.targetObject.renderer.image = this.image;
+            this.targetObject.renderer.rect = this.rect;
         }
-    }, {
-        key: 'update',
-        value: function update(e) {}
     }]);
 
     return Img;
@@ -819,8 +802,9 @@ var _createClass = function () { function defineProperties(target, props) { for 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var Vector2 = function () {
-    function Vector2(_ref) {
-        var _ref$x = _ref.x,
+    function Vector2() {
+        var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { x: 0, y: 0 },
+            _ref$x = _ref.x,
             x = _ref$x === undefined ? 0 : _ref$x,
             _ref$y = _ref.y,
             y = _ref$y === undefined ? 0 : _ref$y;
@@ -880,7 +864,7 @@ Object.defineProperty(exports, "__esModule", {
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var Rect = function Rect() {
-    var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+    var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { x: 0, y: 0, width: 0, height: 0 },
         _ref$x = _ref.x,
         x = _ref$x === undefined ? 0 : _ref$x,
         _ref$y = _ref.y,
@@ -913,7 +897,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _types = __webpack_require__(0);
 
-var _Component2 = __webpack_require__(1);
+var _Component2 = __webpack_require__(2);
 
 var _Component3 = _interopRequireDefault(_Component2);
 
@@ -935,7 +919,7 @@ var Transform = function (_Component) {
             _ref$position = _ref.position,
             position = _ref$position === undefined ? new _types.Vector2() : _ref$position,
             _ref$anchor = _ref.anchor,
-            anchor = _ref$anchor === undefined ? new _types.Vector2() : _ref$anchor;
+            anchor = _ref$anchor === undefined ? new _types.Vector2({ x: rect.width / 2, y: rect.height / 2 }) : _ref$anchor;
 
         _classCallCheck(this, Transform);
 
@@ -956,6 +940,57 @@ exports.default = Transform;
 
 /***/ }),
 /* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _types = __webpack_require__(0);
+
+var _Component2 = __webpack_require__(2);
+
+var _Component3 = _interopRequireDefault(_Component2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Renderer = function (_Component) {
+    _inherits(Renderer, _Component);
+
+    function Renderer(_ref) {
+        var targetObject = _ref.targetObject,
+            _ref$rect = _ref.rect,
+            rect = _ref$rect === undefined ? new _types.Rect() : _ref$rect,
+            _ref$image = _ref.image,
+            image = _ref$image === undefined ? new Image() : _ref$image;
+
+        _classCallCheck(this, Renderer);
+
+        var _this = _possibleConstructorReturn(this, (Renderer.__proto__ || Object.getPrototypeOf(Renderer)).call(this, {
+            targetObject: targetObject
+        }));
+
+        _this.rect = rect;
+        _this.image = image;
+        return _this;
+    }
+
+    return Renderer;
+}(_Component3.default);
+
+exports.default = Renderer;
+
+/***/ }),
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1038,8 +1073,8 @@ var Canvas = function () {
         key: 'drawImg',
         value: function drawImg(gameObject) {
             var x1y1 = _types.Vector2.minus(gameObject.transform.position, gameObject.transform.anchor);
-            var x2y2 = _types.Vector2.add(x1y1, new _types.Vector2({ x: gameObject.img.rect.x, y: gameObject.img.rect.y }));
-            this.context.drawImage(gameObject.img.image, x2y2.x, x2y2.y, gameObject.img.rect.width, gameObject.img.rect.height);
+            var x2y2 = _types.Vector2.add(x1y1, new _types.Vector2({ x: gameObject.renderer.rect.x, y: gameObject.renderer.rect.y }));
+            this.context.drawImage(gameObject.renderer.image, x2y2.x, x2y2.y, gameObject.renderer.rect.width, gameObject.renderer.rect.height);
         }
     }, {
         key: 'setCamera',
@@ -1054,7 +1089,7 @@ var Canvas = function () {
 exports.default = Canvas;
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1066,15 +1101,15 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _Camera = __webpack_require__(2);
+var _Camera = __webpack_require__(6);
 
 var _Camera2 = _interopRequireDefault(_Camera);
 
-var _store = __webpack_require__(5);
+var _store = __webpack_require__(1);
 
 var _store2 = _interopRequireDefault(_store);
 
-var _Frame = __webpack_require__(15);
+var _Frame = __webpack_require__(16);
 
 var _Frame2 = _interopRequireDefault(_Frame);
 
@@ -1113,7 +1148,7 @@ var Scene = function () {
 exports.default = Scene;
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1171,7 +1206,7 @@ function isPointCollsion(point, gameObject) {
 }
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1183,7 +1218,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _store = __webpack_require__(5);
+var _store = __webpack_require__(1);
 
 var _store2 = _interopRequireDefault(_store);
 
@@ -1318,7 +1353,7 @@ var Frame = function () {
 exports.default = Frame;
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1330,11 +1365,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _Engine = __webpack_require__(4);
-
-var _Engine2 = _interopRequireDefault(_Engine);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var _Engine = __webpack_require__(3);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -1344,9 +1375,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 // 取出自己想要的类
 // fetch needing class.
-var Component = _Engine2.default.Component,
-    Vector2 = _Engine2.default.types.Vector2;
-
+// const { Component, types: { Vector2 } } = Engine;
+var Vector2 = _Engine.types.Vector2;
 // 继承 Component 并且 export 
 // extend Component and export it
 
@@ -1370,8 +1400,8 @@ var Move = function (_Component) {
             // 随着时间做圆周运动
             // Do circle active with time.
             var r = 100;
-            var x = r * Math.sin(0.5 * Math.PI * e.time) + 600,
-                y = -r * Math.cos(0.5 * Math.PI * e.time) + 200;
+            var x = r * Math.sin(0.5 * Math.PI * e.time) + 120,
+                y = -r * Math.cos(0.5 * Math.PI * e.time) + 150;
             // 设置位置
             // set position
             this.targetObject.transform.position = new Vector2({ x: x, y: y });
@@ -1379,7 +1409,7 @@ var Move = function (_Component) {
     }]);
 
     return Move;
-}(Component);
+}(_Engine.Component);
 
 exports.default = Move;
 
