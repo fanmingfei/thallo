@@ -934,6 +934,7 @@ var Transform = function (_Component) {
         _this.rect = rect;
         _this.position = position;
         _this.anchor = anchor;
+        _this.rotation = rotation;
         return _this;
     }
 
@@ -1008,6 +1009,12 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _types = __webpack_require__(0);
 
+var _Input = __webpack_require__(18);
+
+var _Input2 = _interopRequireDefault(_Input);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var Canvas = function () {
@@ -1030,6 +1037,7 @@ var Canvas = function () {
         this.framer = requestAnimationFrame(function () {
             return _this.render();
         });
+        this.input = new _Input2.default();
     }
 
     _createClass(Canvas, [{
@@ -1141,12 +1149,39 @@ var Scene = function () {
     }
 
     _createClass(Scene, [{
-        key: 'addGameObject',
-        value: function addGameObject(gameObject) {
-            gameObject instanceof _Camera2.default && this.camera.push(gameObject);
-            gameObject.setScene({ scene: this });
-            this.gameObjects.push(gameObject);
-            this.gameObjectStore.push(gameObject);
+        key: 'addGameObjects',
+        value: function addGameObjects() {
+            for (var _len = arguments.length, gameObjects = Array(_len), _key = 0; _key < _len; _key++) {
+                gameObjects[_key] = arguments[_key];
+            }
+
+            var _iteratorNormalCompletion = true;
+            var _didIteratorError = false;
+            var _iteratorError = undefined;
+
+            try {
+                for (var _iterator = gameObjects[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                    var gameObject = _step.value;
+
+                    gameObject instanceof _Camera2.default && this.camera.push(gameObject);
+                    gameObject.setScene({ scene: this });
+                    this.gameObjects.push(gameObject);
+                    this.gameObjectStore.push(gameObject);
+                }
+            } catch (err) {
+                _didIteratorError = true;
+                _iteratorError = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion && _iterator.return) {
+                        _iterator.return();
+                    }
+                } finally {
+                    if (_didIteratorError) {
+                        throw _iteratorError;
+                    }
+                }
+            }
         }
     }]);
 
@@ -1420,6 +1455,85 @@ var Move = function (_Component) {
 }(_Engine.Component);
 
 exports.default = Move;
+
+/***/ }),
+/* 18 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var keyCode = {
+    A: 65,
+    B: 66
+};
+
+var Input = function () {
+    function Input() {
+        _classCallCheck(this, Input);
+
+        this.currentKeyList = [];
+        this.currentFrameDown = [];
+        this.currentFrameUp = [];
+    }
+
+    _createClass(Input, [{
+        key: "getKeyDown",
+        value: function getKeyDown(keyCode) {
+            if (this.currentFrameDown.indexOf(keyCode) != -1) {
+                return true;
+            }
+            return false;
+        }
+    }, {
+        key: "getKeyUp",
+        value: function getKeyUp(keyCode) {
+            if (this.currentFrameUp.indexOf(keyCode) != -1) {
+                return true;
+            }
+            return false;
+        }
+    }, {
+        key: "getKey",
+        value: function getKey(keyCode) {
+            if (this.currentKeyList.indexOf(keyCode) != -1 && this.currentFrameDown.indexOf(keyCode) == this.currentFrameUp.indexOf(keyCode) == -1) {
+                return true;
+            }
+            return false;
+        }
+    }, {
+        key: "setKeyDown",
+        value: function setKeyDown(keyCode) {
+            this.currentKeyList.push(keyCode);
+            this.currentFrameDown.push(keyCode);
+        }
+    }, {
+        key: "setKeyUp",
+        value: function setKeyUp(keyCode) {
+            this.currentFrameDown.push(keyCode);
+            this.currentFrameUp.push(keyCode);
+        }
+    }, {
+        key: "clearUpDown",
+        value: function clearUpDown() {
+            this.currentFrameDown = [];
+            this.currentFrameUp = [];
+        }
+    }]);
+
+    return Input;
+}();
+
+exports.default = Input;
+exports.keyCode = keyCode;
 
 /***/ })
 /******/ ]);

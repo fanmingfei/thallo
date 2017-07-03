@@ -128,11 +128,42 @@ var firstGameObject = new _Engine.GameObject({
         }
     }, {
         component: _Rotation2.default,
-        arguments: {}
+        arguments: {
+            dir: -1,
+            speed: 50
+        }
+    }]
+});
+// 创建第二个游戏对象
+// create the second game object
+var secondGameObject = new _Engine.GameObject({
+    name: "firstGameObject",
+    transform: {
+        rect: new Rect({ x: 0, y: 0, width: 100, height: 100 }),
+        position: new Vector2({ x: 180, y: 300 }),
+        rotation: 45
+    },
+    components: [{
+        component: Img,
+        arguments: {
+            rect: new Rect({
+                x: 0,
+                y: 0,
+                width: 100,
+                height: 100
+            }),
+            url: 'https://fanmingfei.github.io/thallo/example/first/a.png'
+        }
+    }, {
+        component: _Rotation2.default,
+        arguments: {
+            dir: 1,
+            speed: 110
+        }
     }]
 });
 
-scene.addGameObject(firstGameObject);
+scene.addGameObjects(firstGameObject, secondGameObject);
 
 /***/ }),
 /* 1 */
@@ -909,6 +940,7 @@ var Transform = function (_Component) {
         _this.rect = rect;
         _this.position = position;
         _this.anchor = anchor;
+        _this.rotation = rotation;
         return _this;
     }
 
@@ -983,6 +1015,12 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _types = __webpack_require__(1);
 
+var _Input = __webpack_require__(18);
+
+var _Input2 = _interopRequireDefault(_Input);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var Canvas = function () {
@@ -1005,6 +1043,7 @@ var Canvas = function () {
         this.framer = requestAnimationFrame(function () {
             return _this.render();
         });
+        this.input = new _Input2.default();
     }
 
     _createClass(Canvas, [{
@@ -1116,12 +1155,39 @@ var Scene = function () {
     }
 
     _createClass(Scene, [{
-        key: 'addGameObject',
-        value: function addGameObject(gameObject) {
-            gameObject instanceof _Camera2.default && this.camera.push(gameObject);
-            gameObject.setScene({ scene: this });
-            this.gameObjects.push(gameObject);
-            this.gameObjectStore.push(gameObject);
+        key: 'addGameObjects',
+        value: function addGameObjects() {
+            for (var _len = arguments.length, gameObjects = Array(_len), _key = 0; _key < _len; _key++) {
+                gameObjects[_key] = arguments[_key];
+            }
+
+            var _iteratorNormalCompletion = true;
+            var _didIteratorError = false;
+            var _iteratorError = undefined;
+
+            try {
+                for (var _iterator = gameObjects[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                    var gameObject = _step.value;
+
+                    gameObject instanceof _Camera2.default && this.camera.push(gameObject);
+                    gameObject.setScene({ scene: this });
+                    this.gameObjects.push(gameObject);
+                    this.gameObjectStore.push(gameObject);
+                }
+            } catch (err) {
+                _didIteratorError = true;
+                _iteratorError = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion && _iterator.return) {
+                        _iterator.return();
+                    }
+                } finally {
+                    if (_didIteratorError) {
+                        throw _iteratorError;
+                    }
+                }
+            }
         }
     }]);
 
@@ -1368,19 +1434,26 @@ var Move = function (_Component) {
     _inherits(Move, _Component);
 
     function Move(_ref) {
-        var targetObject = _ref.targetObject;
+        var targetObject = _ref.targetObject,
+            dir = _ref.dir,
+            speed = _ref.speed;
 
         _classCallCheck(this, Move);
 
-        return _possibleConstructorReturn(this, (Move.__proto__ || Object.getPrototypeOf(Move)).call(this, {
+        var _this = _possibleConstructorReturn(this, (Move.__proto__ || Object.getPrototypeOf(Move)).call(this, {
             targetObject: targetObject
         }));
+
+        _this.dir = dir;
+        _this.speed = speed;
+        return _this;
     }
 
     _createClass(Move, [{
         key: 'update',
         value: function update(e) {
-            this.targetObject.transform.rotation = e.time * 30;
+            console.log(this.targetObject.transform.rotation, e.deltaTime, this.speed, this.dir);
+            this.targetObject.transform.rotation = this.targetObject.transform.rotation + e.deltaTime * this.speed * this.dir;
         }
     }]);
 
@@ -1388,6 +1461,85 @@ var Move = function (_Component) {
 }(_Engine.Component);
 
 exports.default = Move;
+
+/***/ }),
+/* 18 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var keyCode = {
+    A: 65,
+    B: 66
+};
+
+var Input = function () {
+    function Input() {
+        _classCallCheck(this, Input);
+
+        this.currentKeyList = [];
+        this.currentFrameDown = [];
+        this.currentFrameUp = [];
+    }
+
+    _createClass(Input, [{
+        key: "getKeyDown",
+        value: function getKeyDown(keyCode) {
+            if (this.currentFrameDown.indexOf(keyCode) != -1) {
+                return true;
+            }
+            return false;
+        }
+    }, {
+        key: "getKeyUp",
+        value: function getKeyUp(keyCode) {
+            if (this.currentFrameUp.indexOf(keyCode) != -1) {
+                return true;
+            }
+            return false;
+        }
+    }, {
+        key: "getKey",
+        value: function getKey(keyCode) {
+            if (this.currentKeyList.indexOf(keyCode) != -1 && this.currentFrameDown.indexOf(keyCode) == this.currentFrameUp.indexOf(keyCode) == -1) {
+                return true;
+            }
+            return false;
+        }
+    }, {
+        key: "setKeyDown",
+        value: function setKeyDown(keyCode) {
+            this.currentKeyList.push(keyCode);
+            this.currentFrameDown.push(keyCode);
+        }
+    }, {
+        key: "setKeyUp",
+        value: function setKeyUp(keyCode) {
+            this.currentFrameDown.push(keyCode);
+            this.currentFrameUp.push(keyCode);
+        }
+    }, {
+        key: "clearUpDown",
+        value: function clearUpDown() {
+            this.currentFrameDown = [];
+            this.currentFrameUp = [];
+        }
+    }]);
+
+    return Input;
+}();
+
+exports.default = Input;
+exports.keyCode = keyCode;
 
 /***/ })
 /******/ ]);

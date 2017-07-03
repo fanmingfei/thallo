@@ -51,12 +51,46 @@ const firstGameObject = new GameObject({
         },
         {
             component: Rotation,
-            arguments: {}
+            arguments: {
+                dir: -1,
+                speed: 50
+            }
+        }
+    ]
+});
+// 创建第二个游戏对象
+// create the second game object
+const secondGameObject = new GameObject({
+    name: "firstGameObject",
+    transform: {
+        rect: new Rect({ x: 0, y: 0, width: 100, height: 100 }),
+        position: new Vector2({x:180,y:300}),
+        rotation: 45
+    },
+    components: [
+        {
+            component: Img,
+            arguments: {
+                rect: new Rect({
+                    x: 0,
+                    y: 0,
+                    width: 100,
+                    height: 100
+                }),
+                url: 'https://fanmingfei.github.io/thallo/example/first/a.png'
+            }
+        },
+        {
+            component: Rotation,
+            arguments: {
+                dir: 1,
+                speed: 110
+            }
         }
     ]
 });
 
-scene.addGameObject(firstGameObject);
+scene.addGameObjects(firstGameObject, secondGameObject);
 
 
 

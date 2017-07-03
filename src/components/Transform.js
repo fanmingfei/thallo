@@ -14,5 +14,6 @@ export default class Transform extends Component {
         this.rect = rect;
         this.position = position;
         this.anchor = anchor;
+        this.rotation = rotation;
     }
 }
