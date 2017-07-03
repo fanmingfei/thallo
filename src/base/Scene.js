@@ -13,10 +13,12 @@ export default class Scene {
         this.frame = new Frame({scene:this});
         this.gameObjectStore = store(this)('gameObject');
     }
-    addGameObject(gameObject) {
-        gameObject instanceof Camera && this.camera.push(gameObject);
-        gameObject.setScene({ scene: this });
-        this.gameObjects.push(gameObject);
-        this.gameObjectStore.push(gameObject);
+    addGameObjects(...gameObjects) {
+        for(let gameObject of gameObjects) {
+            gameObject instanceof Camera && this.camera.push(gameObject);
+            gameObject.setScene({ scene: this });
+            this.gameObjects.push(gameObject);
+            this.gameObjectStore.push(gameObject);   
+        }
     }
 }

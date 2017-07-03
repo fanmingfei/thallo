@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 8);
+/******/ 	return __webpack_require__(__webpack_require__.s = 7);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -228,68 +228,6 @@ function store(id) {
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.keyCode = exports.input = exports.components = exports.Component = exports.types = exports.Camera = exports.Scene = exports.Canvas = exports.GameObject = undefined;
-
-var _Input = __webpack_require__(7);
-
-Object.defineProperty(exports, 'keyCode', {
-  enumerable: true,
-  get: function get() {
-    return _Input.keyCode;
-  }
-});
-
-var _GameObject2 = __webpack_require__(4);
-
-var _GameObject3 = _interopRequireDefault(_GameObject2);
-
-var _Canvas2 = __webpack_require__(14);
-
-var _Canvas3 = _interopRequireDefault(_Canvas2);
-
-var _Scene2 = __webpack_require__(15);
-
-var _Scene3 = _interopRequireDefault(_Scene2);
-
-var _Camera2 = __webpack_require__(6);
-
-var _Camera3 = _interopRequireDefault(_Camera2);
-
-var _types2 = __webpack_require__(0);
-
-var _types3 = _interopRequireDefault(_types2);
-
-var _Component2 = __webpack_require__(1);
-
-var _Component3 = _interopRequireDefault(_Component2);
-
-var _components2 = __webpack_require__(5);
-
-var _components3 = _interopRequireDefault(_components2);
-
-var _Input2 = _interopRequireDefault(_Input);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.GameObject = _GameObject3.default;
-exports.Canvas = _Canvas3.default;
-exports.Scene = _Scene3.default;
-exports.Camera = _Camera3.default;
-exports.types = _types3.default;
-exports.Component = _Component3.default;
-exports.components = _components3.default;
-exports.input = _Input2.default;
-
-/***/ }),
-/* 4 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
@@ -297,7 +235,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _components = __webpack_require__(5);
+var _components = __webpack_require__(4);
 
 var _store = __webpack_require__(2);
 
@@ -481,7 +419,7 @@ var GameObject = function () {
 exports.default = GameObject;
 
 /***/ }),
-/* 5 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -516,7 +454,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 6 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -530,7 +468,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _tools = __webpack_require__(16);
 
-var _GameObject2 = __webpack_require__(4);
+var _GameObject2 = __webpack_require__(3);
 
 var _GameObject3 = _interopRequireDefault(_GameObject2);
 
@@ -616,7 +554,7 @@ var Camera = function (_GameObject) {
 exports.default = Camera;
 
 /***/ }),
-/* 7 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -818,17 +756,17 @@ exports.default = new Input();
 exports.keyCode = keyCode;
 
 /***/ }),
-/* 8 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _Engine = __webpack_require__(3);
+var _Engine = __webpack_require__(8);
 
-var _Move = __webpack_require__(18);
+var _InputManager = __webpack_require__(18);
 
-var _Move2 = _interopRequireDefault(_Move);
+var _InputManager2 = _interopRequireDefault(_InputManager);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -865,7 +803,9 @@ canvasObj.setCamera(camera);
 var firstGameObject = new _Engine.GameObject({
     name: "firstGameObject",
     transform: {
-        rect: new Rect({ x: 0, y: 0, width: 30, height: 30 })
+        rect: new Rect({ x: 0, y: 0, width: 100, height: 100 }),
+        position: new Vector2({ x: 180, y: 200 }),
+        rotation: 45
     },
     components: [{
         component: Img,
@@ -873,45 +813,83 @@ var firstGameObject = new _Engine.GameObject({
             rect: new Rect({
                 x: 0,
                 y: 0,
-                width: 30,
-                height: 30
+                width: 100,
+                height: 100
             }),
             url: 'https://fanmingfei.github.io/thallo/example/first/a.png'
         }
     }, {
-        component: _Move2.default,
-        arguments: {}
+        component: _InputManager2.default,
+        arguments: {
+            dir: -1,
+            speed: 50
+        }
     }]
 });
 
-// 将游戏对象添加到场景，当相机能看到对象的时候，对象将会显示在canvas上
-// add the game object to scene, when the camera see the game object, the object will show on the canvas.
-scene.addGameObject(firstGameObject);
+scene.addGameObjects(firstGameObject);
 
-// 也可以使用以下方式添加组件
-// You can add Component use following way.
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
 
-// gameObject.addComponent(Component)(arguments);
+"use strict";
 
-// 给对象添加一个图片，图片需要设置width 和 height
-// mount a Img component, need pass a Rect with width and height
 
-/*
-firstGameObject.addComponent(Img)({
-    rect: new Rect({
-        x: 0,
-        y: 0,
-        width: 30,
-        height: 30
-    }),
-    url: 'https://fanmingfei.github.io/thallo/example/first/a.png'
+Object.defineProperty(exports, "__esModule", {
+  value: true
 });
-*/
+exports.keyCode = exports.input = exports.components = exports.Component = exports.types = exports.Camera = exports.Scene = exports.Canvas = exports.GameObject = undefined;
 
-// 给游戏对象添加新的组件，第二个参数是要给组件传递到参数，但是我们写的 Move 组件不需要参数
-// add new component to game object, the twice argument is the component needing, but the Move component isn't need argument.
+var _Input = __webpack_require__(6);
 
-// firstGameObject.addComponent(Move)();
+Object.defineProperty(exports, 'keyCode', {
+  enumerable: true,
+  get: function get() {
+    return _Input.keyCode;
+  }
+});
+
+var _GameObject2 = __webpack_require__(3);
+
+var _GameObject3 = _interopRequireDefault(_GameObject2);
+
+var _Canvas2 = __webpack_require__(14);
+
+var _Canvas3 = _interopRequireDefault(_Canvas2);
+
+var _Scene2 = __webpack_require__(15);
+
+var _Scene3 = _interopRequireDefault(_Scene2);
+
+var _Camera2 = __webpack_require__(5);
+
+var _Camera3 = _interopRequireDefault(_Camera2);
+
+var _types2 = __webpack_require__(0);
+
+var _types3 = _interopRequireDefault(_types2);
+
+var _Component2 = __webpack_require__(1);
+
+var _Component3 = _interopRequireDefault(_Component2);
+
+var _components2 = __webpack_require__(4);
+
+var _components3 = _interopRequireDefault(_components2);
+
+var _Input2 = _interopRequireDefault(_Input);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.GameObject = _GameObject3.default;
+exports.Canvas = _Canvas3.default;
+exports.Scene = _Scene3.default;
+exports.Camera = _Camera3.default;
+exports.types = _types3.default;
+exports.Component = _Component3.default;
+exports.components = _components3.default;
+exports.input = _Input2.default;
 
 /***/ }),
 /* 9 */
@@ -1324,7 +1302,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _Camera = __webpack_require__(6);
+var _Camera = __webpack_require__(5);
 
 var _Camera2 = _interopRequireDefault(_Camera);
 
@@ -1472,7 +1450,7 @@ var _store = __webpack_require__(2);
 
 var _store2 = _interopRequireDefault(_store);
 
-var _Input = __webpack_require__(7);
+var _Input = __webpack_require__(6);
 
 var _Input2 = _interopRequireDefault(_Input);
 
@@ -1620,7 +1598,9 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _Engine = __webpack_require__(3);
+var _Engine = __webpack_require__(8);
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -1632,41 +1612,62 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 // fetch needing class.
 // const { Component, types: { Vector2 } } = Engine;
 var Vector2 = _Engine.types.Vector2;
+
 // 继承 Component 并且 export 
 // extend Component and export it
 
-var Move = function (_Component) {
-    _inherits(Move, _Component);
+var InputManager = function (_Component) {
+    _inherits(InputManager, _Component);
 
-    function Move(_ref) {
-        var targetObject = _ref.targetObject;
+    function InputManager(_ref) {
+        var targetObject = _ref.targetObject,
+            dir = _ref.dir,
+            speed = _ref.speed;
 
-        _classCallCheck(this, Move);
+        _classCallCheck(this, InputManager);
 
-        return _possibleConstructorReturn(this, (Move.__proto__ || Object.getPrototypeOf(Move)).call(this, {
+        var _this = _possibleConstructorReturn(this, (InputManager.__proto__ || Object.getPrototypeOf(InputManager)).call(this, {
             targetObject: targetObject
         }));
+
+        _this.speed = 50;
+        _this.conditions = function (e) {
+            var _ref2;
+
+            return _ref2 = {}, _defineProperty(_ref2, _Engine.keyCode.W, new Vector2({ x: 0, y: -_this.speed * e.deltaTime })), _defineProperty(_ref2, _Engine.keyCode.S, new Vector2({ x: 0, y: _this.speed * e.deltaTime })), _defineProperty(_ref2, _Engine.keyCode.A, new Vector2({ x: -_this.speed * e.deltaTime, y: 0 })), _defineProperty(_ref2, _Engine.keyCode.D, new Vector2({ x: _this.speed * e.deltaTime, y: 0 })), _ref2;
+        };
+        return _this;
     }
 
-    _createClass(Move, [{
+    _createClass(InputManager, [{
         key: 'update',
         value: function update(e) {
+            var conditions = this.conditions(e);
+            for (var condition in conditions) {
+                if (_Engine.input.getKey(condition)) {
+                    this.move(conditions[condition]);
+                }
+            }
 
-            // 随着时间做圆周运动
-            // Do circle active with time.
-            var r = 100;
-            var x = r * Math.sin(0.5 * Math.PI * e.time) + 120,
-                y = -r * Math.cos(0.5 * Math.PI * e.time) + 150;
-            // 设置位置
-            // set position
-            this.targetObject.transform.position = new Vector2({ x: x, y: y });
+            if (_Engine.input.getKeyDown(_Engine.keyCode.J)) {
+                this.targetObject.transform.rotation = 45 + this.targetObject.transform.rotation;
+            }
+            if (_Engine.input.getKeyUp(_Engine.keyCode.J)) {
+                this.targetObject.transform.rotation = 45 + this.targetObject.transform.rotation;
+            }
+        }
+    }, {
+        key: 'move',
+        value: function move(direction) {
+            var position = this.targetObject.transform.position;
+            this.targetObject.transform.position = Vector2.add(position, direction);
         }
     }]);
 
-    return Move;
+    return InputManager;
 }(_Engine.Component);
 
-exports.default = Move;
+exports.default = InputManager;
 
 /***/ })
 /******/ ]);

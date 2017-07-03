@@ -60,113 +60,11 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 0);
+/******/ 	return __webpack_require__(__webpack_require__.s = 8);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _Engine = __webpack_require__(4);
-
-var _Rotation = __webpack_require__(17);
-
-var _Rotation2 = _interopRequireDefault(_Rotation);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var Img = _Engine.components.Img;
-var Vector2 = _Engine.types.Vector2,
-    Rect = _Engine.types.Rect;
-
-
-var canvas = document.getElementById("canvas");
-var canvasObj = new _Engine.Canvas({ canvas: canvas, width: 400, height: 800 });
-
-// 创建一个场景
-// Create a scene
-var scene = new _Engine.Scene({ width: 400, height: 800 });
-
-// 创建一个 相机
-// Create a camera
-var camera = new _Engine.Camera({
-    name: "camera",
-    transform: {
-        rect: new Rect({ x: 0, y: 0, width: 400, height: 800 }),
-        position: new Vector2({ x: 200, y: 400 })
-        // anchor: new Vector2({ x: 400, y: 200 }) // !!! default is the middle of rect, 默认锚点在相机的中心点
-    },
-    scene: scene // need a scene to show, 需要一个场景，相机将会显示这个场景的内容
-});
-
-// 将相机设置给 canvas, canvas将显示这个相机的内容
-// Set camera to the canvas, canvas will display the camera view.
-canvasObj.setCamera(camera);
-
-// 创建第一个游戏对象
-// create the first game object
-var firstGameObject = new _Engine.GameObject({
-    name: "firstGameObject",
-    transform: {
-        rect: new Rect({ x: 0, y: 0, width: 100, height: 100 }),
-        position: new Vector2({ x: 180, y: 200 }),
-        rotation: 45
-    },
-    components: [{
-        component: Img,
-        arguments: {
-            rect: new Rect({
-                x: 0,
-                y: 0,
-                width: 100,
-                height: 100
-            }),
-            url: 'https://fanmingfei.github.io/thallo/example/first/a.png'
-        }
-    }, {
-        component: _Rotation2.default,
-        arguments: {
-            dir: -1,
-            speed: 50
-        }
-    }]
-});
-// 创建第二个游戏对象
-// create the second game object
-var secondGameObject = new _Engine.GameObject({
-    name: "firstGameObject",
-    transform: {
-        rect: new Rect({ x: 0, y: 0, width: 100, height: 100 }),
-        position: new Vector2({ x: 180, y: 300 }),
-        rotation: 45
-    },
-    components: [{
-        component: Img,
-        arguments: {
-            rect: new Rect({
-                x: 0,
-                y: 0,
-                width: 100,
-                height: 100
-            }),
-            url: 'https://fanmingfei.github.io/thallo/example/first/a.png'
-        }
-    }, {
-        component: _Rotation2.default,
-        arguments: {
-            dir: 1,
-            speed: 110
-        }
-    }]
-});
-
-scene.addGameObjects(firstGameObject, secondGameObject);
-
-/***/ }),
-/* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -177,11 +75,11 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.Rect = exports.Vector2 = undefined;
 
-var _Vector = __webpack_require__(9);
+var _Vector = __webpack_require__(10);
 
 var _Vector2 = _interopRequireDefault(_Vector);
 
-var _Rect = __webpack_require__(10);
+var _Rect = __webpack_require__(11);
 
 var _Rect2 = _interopRequireDefault(_Rect);
 
@@ -193,6 +91,66 @@ exports.default = {
     Vector2: _Vector2.default,
     Rect: _Rect2.default
 };
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _store = __webpack_require__(2);
+
+var _store2 = _interopRequireDefault(_store);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Component = function () {
+    function Component(_ref) {
+        var targetObject = _ref.targetObject;
+
+        _classCallCheck(this, Component);
+
+        this.targetObject = targetObject;
+        this.active = true;
+    }
+
+    _createClass(Component, [{
+        key: 'start',
+        value: function start() {}
+    }, {
+        key: 'preUpdate',
+        value: function preUpdate() {}
+    }, {
+        key: 'update',
+        value: function update() {}
+    }, {
+        key: 'lateUpdate',
+        value: function lateUpdate() {}
+    }, {
+        key: 'setActive',
+        value: function setActive(flag) {
+            this.active = flag;
+        }
+    }, {
+        key: 'distroy',
+        value: function distroy() {
+            (0, _store2.default)(targetObject.scene)('component').remove(this);
+        }
+    }]);
+
+    return Component;
+}();
+
+exports.default = Component;
 
 /***/ }),
 /* 2 */
@@ -270,97 +228,48 @@ function store(id) {
 
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _store = __webpack_require__(2);
-
-var _store2 = _interopRequireDefault(_store);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var Component = function () {
-    function Component(_ref) {
-        var targetObject = _ref.targetObject;
-
-        _classCallCheck(this, Component);
-
-        this.targetObject = targetObject;
-        this.active = true;
-    }
-
-    _createClass(Component, [{
-        key: 'start',
-        value: function start() {}
-    }, {
-        key: 'preUpdate',
-        value: function preUpdate() {}
-    }, {
-        key: 'update',
-        value: function update() {}
-    }, {
-        key: 'lateUpdate',
-        value: function lateUpdate() {}
-    }, {
-        key: 'setActive',
-        value: function setActive(flag) {
-            this.active = flag;
-        }
-    }, {
-        key: 'distroy',
-        value: function distroy() {
-            (0, _store2.default)(targetObject.scene)('component').remove(this);
-        }
-    }]);
-
-    return Component;
-}();
-
-exports.default = Component;
-
-/***/ }),
-/* 4 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.components = exports.Component = exports.types = exports.Camera = exports.Scene = exports.Canvas = exports.GameObject = undefined;
+exports.keyCode = exports.input = exports.components = exports.Component = exports.types = exports.Camera = exports.Scene = exports.Canvas = exports.GameObject = undefined;
 
-var _GameObject2 = __webpack_require__(5);
+var _Input = __webpack_require__(7);
+
+Object.defineProperty(exports, 'keyCode', {
+  enumerable: true,
+  get: function get() {
+    return _Input.keyCode;
+  }
+});
+
+var _GameObject2 = __webpack_require__(4);
 
 var _GameObject3 = _interopRequireDefault(_GameObject2);
 
-var _Canvas2 = __webpack_require__(13);
+var _Canvas2 = __webpack_require__(14);
 
 var _Canvas3 = _interopRequireDefault(_Canvas2);
 
-var _Scene2 = __webpack_require__(14);
+var _Scene2 = __webpack_require__(15);
 
 var _Scene3 = _interopRequireDefault(_Scene2);
 
-var _Camera2 = __webpack_require__(7);
+var _Camera2 = __webpack_require__(6);
 
 var _Camera3 = _interopRequireDefault(_Camera2);
 
-var _types2 = __webpack_require__(1);
+var _types2 = __webpack_require__(0);
 
 var _types3 = _interopRequireDefault(_types2);
 
-var _Component2 = __webpack_require__(3);
+var _Component2 = __webpack_require__(1);
 
 var _Component3 = _interopRequireDefault(_Component2);
 
-var _components2 = __webpack_require__(6);
+var _components2 = __webpack_require__(5);
 
 var _components3 = _interopRequireDefault(_components2);
+
+var _Input2 = _interopRequireDefault(_Input);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -371,9 +280,10 @@ exports.Camera = _Camera3.default;
 exports.types = _types3.default;
 exports.Component = _Component3.default;
 exports.components = _components3.default;
+exports.input = _Input2.default;
 
 /***/ }),
-/* 5 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -387,7 +297,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _components = __webpack_require__(6);
+var _components = __webpack_require__(5);
 
 var _store = __webpack_require__(2);
 
@@ -571,7 +481,7 @@ var GameObject = function () {
 exports.default = GameObject;
 
 /***/ }),
-/* 6 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -582,15 +492,15 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.Renderer = exports.Transform = exports.Img = undefined;
 
-var _Img = __webpack_require__(8);
+var _Img = __webpack_require__(9);
 
 var _Img2 = _interopRequireDefault(_Img);
 
-var _Transform = __webpack_require__(11);
+var _Transform = __webpack_require__(12);
 
 var _Transform2 = _interopRequireDefault(_Transform);
 
-var _Renderer = __webpack_require__(12);
+var _Renderer = __webpack_require__(13);
 
 var _Renderer2 = _interopRequireDefault(_Renderer);
 
@@ -606,7 +516,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 7 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -618,9 +528,9 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _tools = __webpack_require__(15);
+var _tools = __webpack_require__(16);
 
-var _GameObject2 = __webpack_require__(5);
+var _GameObject2 = __webpack_require__(4);
 
 var _GameObject3 = _interopRequireDefault(_GameObject2);
 
@@ -706,7 +616,7 @@ var Camera = function (_GameObject) {
 exports.default = Camera;
 
 /***/ }),
-/* 8 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -718,9 +628,313 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _types = __webpack_require__(1);
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var _Component2 = __webpack_require__(3);
+var keyCode = {
+    BackSpace: 8,
+    Tab: 9,
+    Clear: 12,
+    Enter: 13,
+    Shift_L: 16,
+    Control_L: 17,
+    Alt_L: 18,
+    Pause: 19,
+    Caps_Lock: 20,
+    Escape: 27,
+    Space: 32,
+    Prior: 33,
+    Next: 34,
+    End: 35,
+    Home: 36,
+    Left: 37,
+    Up: 38,
+    Right: 39,
+    Down: 40,
+    Select: 41,
+    Print: 42,
+    Execute: 43,
+    Insert: 45,
+    Delete: 46,
+    Help: 47,
+    Alpha_0: 48,
+    Alpha_1: 49,
+    Alpha_2: 50,
+    Alpha_3: 51,
+    Alpha_4: 52,
+    Alpha_5: 53,
+    Alpha_6: 54,
+    Alpha_7: 55,
+    Alpha_8: 56,
+    Alpha_9: 57,
+    A: 65,
+    B: 66,
+    C: 67,
+    D: 68,
+    E: 69,
+    F: 70,
+    G: 71,
+    H: 72,
+    I: 73,
+    J: 74,
+    K: 75,
+    L: 76,
+    M: 77,
+    N: 78,
+    O: 79,
+    P: 80,
+    Q: 81,
+    R: 82,
+    S: 83,
+    T: 84,
+    U: 85,
+    V: 86,
+    W: 87,
+    X: 88,
+    Y: 89,
+    Z: 90,
+    KP_0: 96,
+    KP_1: 97,
+    KP_2: 98,
+    KP_3: 99,
+    KP_4: 100,
+    KP_5: 101,
+    KP_6: 102,
+    KP_7: 103,
+    KP_8: 104,
+    KP_9: 105,
+    KP_Multiply: 106,
+    KP_Add: 107,
+    KP_Separator: 108,
+    KP_Subtract: 109,
+    KP_Decimal: 110,
+    KP_Divide: 111,
+    F1: 112,
+    F2: 113,
+    F3: 114,
+    F4: 115,
+    F5: 116,
+    F6: 117,
+    F7: 118,
+    F8: 119,
+    F9: 120,
+    F10: 121,
+    F11: 122,
+    F12: 123,
+    F13: 124,
+    F14: 125,
+    F15: 126,
+    F16: 127,
+    F17: 128,
+    F18: 129,
+    F19: 130,
+    F20: 131,
+    F21: 132,
+    F22: 133,
+    F23: 134,
+    F24: 135,
+    Num_Lock: 136,
+    Scroll_Lock: 137
+};
+
+var Input = function () {
+    function Input() {
+        _classCallCheck(this, Input);
+
+        this.currentKeyList = [];
+        this.currentFrameDown = [];
+        this.currentFrameUp = [];
+        this.createInputEvent();
+    }
+
+    _createClass(Input, [{
+        key: 'getKeyDown',
+        value: function getKeyDown(keyCode) {
+            if (this.currentFrameDown.indexOf(keyCode) != -1) {
+                return true;
+            }
+            return false;
+        }
+    }, {
+        key: 'getKeyUp',
+        value: function getKeyUp(keyCode) {
+            if (this.currentFrameUp.indexOf(keyCode) != -1) {
+                return true;
+            }
+            return false;
+        }
+    }, {
+        key: 'getKey',
+        value: function getKey(keyCode) {
+            keyCode = +keyCode;
+            if (this.currentKeyList.indexOf(keyCode) != -1 && this.currentFrameDown.indexOf(keyCode) == -1 && this.currentFrameUp.indexOf(keyCode) == -1) {
+                return true;
+            }
+            return false;
+        }
+    }, {
+        key: 'setKeyDown',
+        value: function setKeyDown(keyCode) {
+            if (this.currentKeyList.indexOf(keyCode) != -1) {
+                return;
+            }
+            this.currentKeyList.push(keyCode);
+            this.currentFrameDown.push(keyCode);
+        }
+    }, {
+        key: 'setKeyUp',
+        value: function setKeyUp(keyCode) {
+            var index = this.currentKeyList.findIndex(function (c) {
+                return c == keyCode;
+            });
+            if (index != -1) {
+                this.currentKeyList.splice(index, 1);
+            }
+            this.currentFrameUp.push(keyCode);
+        }
+    }, {
+        key: 'clearUpDown',
+        value: function clearUpDown() {
+            this.currentFrameDown = [];
+            this.currentFrameUp = [];
+        }
+    }, {
+        key: 'createInputEvent',
+        value: function createInputEvent() {
+            var _this = this;
+
+            document.addEventListener('keydown', function (e) {
+                _this.setKeyDown(e.keyCode);
+            });
+            document.addEventListener('keyup', function (e) {
+                _this.setKeyUp(e.keyCode);
+            });
+        }
+    }]);
+
+    return Input;
+}();
+
+exports.default = new Input();
+exports.keyCode = keyCode;
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _Engine = __webpack_require__(3);
+
+var _Rotation = __webpack_require__(18);
+
+var _Rotation2 = _interopRequireDefault(_Rotation);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Img = _Engine.components.Img;
+var Vector2 = _Engine.types.Vector2,
+    Rect = _Engine.types.Rect;
+
+
+var canvas = document.getElementById("canvas");
+var canvasObj = new _Engine.Canvas({ canvas: canvas, width: 400, height: 800 });
+
+// 创建一个场景
+// Create a scene
+var scene = new _Engine.Scene({ width: 400, height: 800 });
+
+// 创建一个 相机
+// Create a camera
+var camera = new _Engine.Camera({
+    name: "camera",
+    transform: {
+        rect: new Rect({ x: 0, y: 0, width: 400, height: 800 }),
+        position: new Vector2({ x: 200, y: 400 })
+        // anchor: new Vector2({ x: 400, y: 200 }) // !!! default is the middle of rect, 默认锚点在相机的中心点
+    },
+    scene: scene // need a scene to show, 需要一个场景，相机将会显示这个场景的内容
+});
+
+// 将相机设置给 canvas, canvas将显示这个相机的内容
+// Set camera to the canvas, canvas will display the camera view.
+canvasObj.setCamera(camera);
+
+// 创建第一个游戏对象
+// create the first game object
+var firstGameObject = new _Engine.GameObject({
+    name: "firstGameObject",
+    transform: {
+        rect: new Rect({ x: 0, y: 0, width: 100, height: 100 }),
+        position: new Vector2({ x: 180, y: 200 }),
+        rotation: 45
+    },
+    components: [{
+        component: Img,
+        arguments: {
+            rect: new Rect({
+                x: 0,
+                y: 0,
+                width: 100,
+                height: 100
+            }),
+            url: 'https://fanmingfei.github.io/thallo/example/first/a.png'
+        }
+    }, {
+        component: _Rotation2.default,
+        arguments: {
+            dir: -1,
+            speed: 50
+        }
+    }]
+});
+// 创建第二个游戏对象
+// create the second game object
+var secondGameObject = new _Engine.GameObject({
+    name: "firstGameObject",
+    transform: {
+        rect: new Rect({ x: 0, y: 0, width: 100, height: 100 }),
+        position: new Vector2({ x: 180, y: 300 }),
+        rotation: 45
+    },
+    components: [{
+        component: Img,
+        arguments: {
+            rect: new Rect({
+                x: 0,
+                y: 0,
+                width: 100,
+                height: 100
+            }),
+            url: 'https://fanmingfei.github.io/thallo/example/first/a.png'
+        }
+    }, {
+        component: _Rotation2.default,
+        arguments: {
+            dir: 1,
+            speed: 110
+        }
+    }]
+});
+
+scene.addGameObjects(firstGameObject, secondGameObject);
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _types = __webpack_require__(0);
+
+var _Component2 = __webpack_require__(1);
 
 var _Component3 = _interopRequireDefault(_Component2);
 
@@ -795,7 +1009,7 @@ var Img = function (_Component) {
 exports.default = Img;
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -859,7 +1073,7 @@ var Vector2 = function () {
 exports.default = Vector2;
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -893,7 +1107,7 @@ var Rect = function Rect() {
 exports.default = Rect;
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -903,9 +1117,9 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _types = __webpack_require__(1);
+var _types = __webpack_require__(0);
 
-var _Component2 = __webpack_require__(3);
+var _Component2 = __webpack_require__(1);
 
 var _Component3 = _interopRequireDefault(_Component2);
 
@@ -950,7 +1164,7 @@ var Transform = function (_Component) {
 exports.default = Transform;
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -960,9 +1174,9 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _types = __webpack_require__(1);
+var _types = __webpack_require__(0);
 
-var _Component2 = __webpack_require__(3);
+var _Component2 = __webpack_require__(1);
 
 var _Component3 = _interopRequireDefault(_Component2);
 
@@ -1001,7 +1215,7 @@ var Renderer = function (_Component) {
 exports.default = Renderer;
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1013,13 +1227,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _types = __webpack_require__(1);
-
-var _Input = __webpack_require__(18);
-
-var _Input2 = _interopRequireDefault(_Input);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var _types = __webpack_require__(0);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -1043,7 +1251,6 @@ var Canvas = function () {
         this.framer = requestAnimationFrame(function () {
             return _this.render();
         });
-        this.input = new _Input2.default();
     }
 
     _createClass(Canvas, [{
@@ -1111,7 +1318,7 @@ var Canvas = function () {
 exports.default = Canvas;
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1123,7 +1330,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _Camera = __webpack_require__(7);
+var _Camera = __webpack_require__(6);
 
 var _Camera2 = _interopRequireDefault(_Camera);
 
@@ -1131,7 +1338,7 @@ var _store = __webpack_require__(2);
 
 var _store2 = _interopRequireDefault(_store);
 
-var _Frame = __webpack_require__(16);
+var _Frame = __webpack_require__(17);
 
 var _Frame2 = _interopRequireDefault(_Frame);
 
@@ -1197,7 +1404,7 @@ var Scene = function () {
 exports.default = Scene;
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1209,7 +1416,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.isCollsion = isCollsion;
 exports.isPointCollsion = isPointCollsion;
 
-var _types = __webpack_require__(1);
+var _types = __webpack_require__(0);
 
 function isCollsion(gameObject1, gameObject2) {
     var transform1 = gameObject1.transform;
@@ -1255,7 +1462,7 @@ function isPointCollsion(point, gameObject) {
 }
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1270,6 +1477,10 @@ var _createClass = function () { function defineProperties(target, props) { for 
 var _store = __webpack_require__(2);
 
 var _store2 = _interopRequireDefault(_store);
+
+var _Input = __webpack_require__(7);
+
+var _Input2 = _interopRequireDefault(_Input);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1390,6 +1601,7 @@ var Frame = function () {
                 }
             }
 
+            _Input2.default.clearUpDown();
             requestAnimationFrame(function () {
                 return _this2.frame();
             });
@@ -1402,7 +1614,7 @@ var Frame = function () {
 exports.default = Frame;
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1414,7 +1626,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _Engine = __webpack_require__(4);
+var _Engine = __webpack_require__(3);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -1422,14 +1634,8 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-// 取出自己想要的类
-// fetch needing class.
-// const { Component, types: { Vector2 } } = Engine;
-var Vector2 = _Engine.types.Vector2;
-var Img = _Engine.components.Img;
 // 继承 Component 并且 export 
 // extend Component and export it
-
 var Move = function (_Component) {
     _inherits(Move, _Component);
 
@@ -1452,7 +1658,6 @@ var Move = function (_Component) {
     _createClass(Move, [{
         key: 'update',
         value: function update(e) {
-            console.log(this.targetObject.transform.rotation, e.deltaTime, this.speed, this.dir);
             this.targetObject.transform.rotation = this.targetObject.transform.rotation + e.deltaTime * this.speed * this.dir;
         }
     }]);
@@ -1461,85 +1666,6 @@ var Move = function (_Component) {
 }(_Engine.Component);
 
 exports.default = Move;
-
-/***/ }),
-/* 18 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var keyCode = {
-    A: 65,
-    B: 66
-};
-
-var Input = function () {
-    function Input() {
-        _classCallCheck(this, Input);
-
-        this.currentKeyList = [];
-        this.currentFrameDown = [];
-        this.currentFrameUp = [];
-    }
-
-    _createClass(Input, [{
-        key: "getKeyDown",
-        value: function getKeyDown(keyCode) {
-            if (this.currentFrameDown.indexOf(keyCode) != -1) {
-                return true;
-            }
-            return false;
-        }
-    }, {
-        key: "getKeyUp",
-        value: function getKeyUp(keyCode) {
-            if (this.currentFrameUp.indexOf(keyCode) != -1) {
-                return true;
-            }
-            return false;
-        }
-    }, {
-        key: "getKey",
-        value: function getKey(keyCode) {
-            if (this.currentKeyList.indexOf(keyCode) != -1 && this.currentFrameDown.indexOf(keyCode) == this.currentFrameUp.indexOf(keyCode) == -1) {
-                return true;
-            }
-            return false;
-        }
-    }, {
-        key: "setKeyDown",
-        value: function setKeyDown(keyCode) {
-            this.currentKeyList.push(keyCode);
-            this.currentFrameDown.push(keyCode);
-        }
-    }, {
-        key: "setKeyUp",
-        value: function setKeyUp(keyCode) {
-            this.currentFrameDown.push(keyCode);
-            this.currentFrameUp.push(keyCode);
-        }
-    }, {
-        key: "clearUpDown",
-        value: function clearUpDown() {
-            this.currentFrameDown = [];
-            this.currentFrameUp = [];
-        }
-    }]);
-
-    return Input;
-}();
-
-exports.default = Input;
-exports.keyCode = keyCode;
 
 /***/ })
 /******/ ]);

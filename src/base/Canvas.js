@@ -1,4 +1,5 @@
 import {Vector2} from './types';
+
 export default class Canvas {
     constructor({ canvas, width, height, camera = undefined }) {
         this.canvas = canvas;
