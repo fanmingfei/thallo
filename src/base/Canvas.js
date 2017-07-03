@@ -23,7 +23,11 @@ export default class Canvas {
     drawImg(gameObject) {
         const x1y1 = Vector2.minus(gameObject.transform.position, gameObject.transform.anchor);
         const x2y2 = Vector2.add(x1y1, new Vector2({ x: gameObject.renderer.rect.x, y: gameObject.renderer.rect.y }));
-        this.context.drawImage(gameObject.renderer.image, x2y2.x, x2y2.y, gameObject.renderer.rect.width, gameObject.renderer.rect.height);
+        this.context.save();
+        this.context.translate(gameObject.transform.position.x , gameObject.transform.position.y);
+        this.context.rotate(gameObject.transform.rotation * Math.PI/180);
+        this.context.drawImage(gameObject.renderer.image, -gameObject.transform.anchor.x, -gameObject.transform.anchor.y, gameObject.renderer.rect.width, gameObject.renderer.rect.height);
+        this.context.restore();
     }
     setCamera(camera) {
         this.camera = camera;

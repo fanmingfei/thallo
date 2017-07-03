@@ -4,7 +4,8 @@ export default class Img extends Component {
     constructor({
         targetObject,
         rect = new Rect(),
-        url = ''
+        url = '',
+        rotation = 0
     }) {
         super({
             targetObject,

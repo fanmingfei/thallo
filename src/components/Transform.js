@@ -5,7 +5,8 @@ export default class Transform extends Component {
         targetObject,
         rect = new Rect(),
         position = new Vector2(),
-        anchor = new Vector2({ x: rect.width / 2, y: rect.height / 2 })
+        anchor = new Vector2({ x: rect.width / 2, y: rect.height / 2 }),
+        rotation = 0
     }) {
         super({
             targetObject

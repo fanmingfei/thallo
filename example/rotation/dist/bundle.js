@@ -60,11 +60,82 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 7);
+/******/ 	return __webpack_require__(__webpack_require__.s = 0);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _Engine = __webpack_require__(4);
+
+var _Rotation = __webpack_require__(17);
+
+var _Rotation2 = _interopRequireDefault(_Rotation);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Img = _Engine.components.Img;
+var Vector2 = _Engine.types.Vector2,
+    Rect = _Engine.types.Rect;
+
+
+var canvas = document.getElementById("canvas");
+var canvasObj = new _Engine.Canvas({ canvas: canvas, width: 400, height: 800 });
+
+// 创建一个场景
+// Create a scene
+var scene = new _Engine.Scene({ width: 400, height: 800 });
+
+// 创建一个 相机
+// Create a camera
+var camera = new _Engine.Camera({
+    name: "camera",
+    transform: {
+        rect: new Rect({ x: 0, y: 0, width: 400, height: 800 }),
+        position: new Vector2({ x: 200, y: 400 })
+        // anchor: new Vector2({ x: 400, y: 200 }) // !!! default is the middle of rect, 默认锚点在相机的中心点
+    },
+    scene: scene // need a scene to show, 需要一个场景，相机将会显示这个场景的内容
+});
+
+// 将相机设置给 canvas, canvas将显示这个相机的内容
+// Set camera to the canvas, canvas will display the camera view.
+canvasObj.setCamera(camera);
+
+// 创建第一个游戏对象
+// create the first game object
+var firstGameObject = new _Engine.GameObject({
+    name: "firstGameObject",
+    transform: {
+        rect: new Rect({ x: 0, y: 0, width: 100, height: 100 }),
+        position: new Vector2({ x: 180, y: 200 }),
+        rotation: 45
+    },
+    components: [{
+        component: Img,
+        arguments: {
+            rect: new Rect({
+                x: 0,
+                y: 0,
+                width: 100,
+                height: 100
+            }),
+            url: 'https://fanmingfei.github.io/thallo/example/first/a.png'
+        }
+    }, {
+        component: _Rotation2.default,
+        arguments: {}
+    }]
+});
+
+scene.addGameObject(firstGameObject);
+
+/***/ }),
+/* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -93,7 +164,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 1 */
+/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -161,7 +232,7 @@ function store(id) {
 };
 
 /***/ }),
-/* 2 */
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -173,7 +244,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _store = __webpack_require__(1);
+var _store = __webpack_require__(2);
 
 var _store2 = _interopRequireDefault(_store);
 
@@ -221,7 +292,7 @@ var Component = function () {
 exports.default = Component;
 
 /***/ }),
-/* 3 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -232,7 +303,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.components = exports.Component = exports.types = exports.Camera = exports.Scene = exports.Canvas = exports.GameObject = undefined;
 
-var _GameObject2 = __webpack_require__(4);
+var _GameObject2 = __webpack_require__(5);
 
 var _GameObject3 = _interopRequireDefault(_GameObject2);
 
@@ -244,19 +315,19 @@ var _Scene2 = __webpack_require__(14);
 
 var _Scene3 = _interopRequireDefault(_Scene2);
 
-var _Camera2 = __webpack_require__(6);
+var _Camera2 = __webpack_require__(7);
 
 var _Camera3 = _interopRequireDefault(_Camera2);
 
-var _types2 = __webpack_require__(0);
+var _types2 = __webpack_require__(1);
 
 var _types3 = _interopRequireDefault(_types2);
 
-var _Component2 = __webpack_require__(2);
+var _Component2 = __webpack_require__(3);
 
 var _Component3 = _interopRequireDefault(_Component2);
 
-var _components2 = __webpack_require__(5);
+var _components2 = __webpack_require__(6);
 
 var _components3 = _interopRequireDefault(_components2);
 
@@ -271,7 +342,7 @@ exports.Component = _Component3.default;
 exports.components = _components3.default;
 
 /***/ }),
-/* 4 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -285,9 +356,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _components = __webpack_require__(5);
+var _components = __webpack_require__(6);
 
-var _store = __webpack_require__(1);
+var _store = __webpack_require__(2);
 
 var _store2 = _interopRequireDefault(_store);
 
@@ -469,7 +540,7 @@ var GameObject = function () {
 exports.default = GameObject;
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -504,7 +575,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -518,7 +589,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _tools = __webpack_require__(15);
 
-var _GameObject2 = __webpack_require__(4);
+var _GameObject2 = __webpack_require__(5);
 
 var _GameObject3 = _interopRequireDefault(_GameObject2);
 
@@ -604,102 +675,6 @@ var Camera = function (_GameObject) {
 exports.default = Camera;
 
 /***/ }),
-/* 7 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _Engine = __webpack_require__(3);
-
-var _Move = __webpack_require__(17);
-
-var _Move2 = _interopRequireDefault(_Move);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var Img = _Engine.components.Img;
-var Vector2 = _Engine.types.Vector2,
-    Rect = _Engine.types.Rect;
-
-
-var canvas = document.getElementById("canvas");
-var canvasObj = new _Engine.Canvas({ canvas: canvas, width: 400, height: 800 });
-
-// 创建一个场景
-// Create a scene
-var scene = new _Engine.Scene({ width: 400, height: 800 });
-
-// 创建一个 相机
-// Create a camera
-var camera = new _Engine.Camera({
-    name: "camera",
-    transform: {
-        rect: new Rect({ x: 0, y: 0, width: 400, height: 800 }),
-        position: new Vector2({ x: 200, y: 400 })
-        // anchor: new Vector2({ x: 400, y: 200 }) // !!! default is the middle of rect, 默认锚点在相机的中心点
-    },
-    scene: scene // need a scene to show, 需要一个场景，相机将会显示这个场景的内容
-});
-
-// 将相机设置给 canvas, canvas将显示这个相机的内容
-// Set camera to the canvas, canvas will display the camera view.
-canvasObj.setCamera(camera);
-
-// 创建第一个游戏对象
-// create the first game object
-var firstGameObject = new _Engine.GameObject({
-    name: "firstGameObject",
-    transform: {
-        rect: new Rect({ x: 0, y: 0, width: 30, height: 30 })
-    },
-    components: [{
-        component: Img,
-        arguments: {
-            rect: new Rect({
-                x: 0,
-                y: 0,
-                width: 30,
-                height: 30
-            }),
-            url: 'https://fanmingfei.github.io/thallo/example/first/a.png'
-        }
-    }, {
-        component: _Move2.default,
-        arguments: {}
-    }]
-});
-
-// 将游戏对象添加到场景，当相机能看到对象的时候，对象将会显示在canvas上
-// add the game object to scene, when the camera see the game object, the object will show on the canvas.
-scene.addGameObject(firstGameObject);
-
-// 也可以使用以下方式添加组件
-// You can add Component use following way.
-
-// gameObject.addComponent(Component)(arguments);
-
-// 给对象添加一个图片，图片需要设置width 和 height
-// mount a Img component, need pass a Rect with width and height
-
-/*
-firstGameObject.addComponent(Img)({
-    rect: new Rect({
-        x: 0,
-        y: 0,
-        width: 30,
-        height: 30
-    }),
-    url: 'https://fanmingfei.github.io/thallo/example/first/a.png'
-});
-*/
-
-// 给游戏对象添加新的组件，第二个参数是要给组件传递到参数，但是我们写的 Move 组件不需要参数
-// add new component to game object, the twice argument is the component needing, but the Move component isn't need argument.
-
-// firstGameObject.addComponent(Move)();
-
-/***/ }),
 /* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -712,9 +687,9 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _types = __webpack_require__(0);
+var _types = __webpack_require__(1);
 
-var _Component2 = __webpack_require__(2);
+var _Component2 = __webpack_require__(3);
 
 var _Component3 = _interopRequireDefault(_Component2);
 
@@ -897,9 +872,9 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _types = __webpack_require__(0);
+var _types = __webpack_require__(1);
 
-var _Component2 = __webpack_require__(2);
+var _Component2 = __webpack_require__(3);
 
 var _Component3 = _interopRequireDefault(_Component2);
 
@@ -953,9 +928,9 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _types = __webpack_require__(0);
+var _types = __webpack_require__(1);
 
-var _Component2 = __webpack_require__(2);
+var _Component2 = __webpack_require__(3);
 
 var _Component3 = _interopRequireDefault(_Component2);
 
@@ -1006,7 +981,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _types = __webpack_require__(0);
+var _types = __webpack_require__(1);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -1109,11 +1084,11 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _Camera = __webpack_require__(6);
+var _Camera = __webpack_require__(7);
 
 var _Camera2 = _interopRequireDefault(_Camera);
 
-var _store = __webpack_require__(1);
+var _store = __webpack_require__(2);
 
 var _store2 = _interopRequireDefault(_store);
 
@@ -1168,7 +1143,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.isCollsion = isCollsion;
 exports.isPointCollsion = isPointCollsion;
 
-var _types = __webpack_require__(0);
+var _types = __webpack_require__(1);
 
 function isCollsion(gameObject1, gameObject2) {
     var transform1 = gameObject1.transform;
@@ -1226,7 +1201,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _store = __webpack_require__(1);
+var _store = __webpack_require__(2);
 
 var _store2 = _interopRequireDefault(_store);
 
@@ -1373,7 +1348,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _Engine = __webpack_require__(3);
+var _Engine = __webpack_require__(4);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -1385,6 +1360,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 // fetch needing class.
 // const { Component, types: { Vector2 } } = Engine;
 var Vector2 = _Engine.types.Vector2;
+var Img = _Engine.components.Img;
 // 继承 Component 并且 export 
 // extend Component and export it
 
@@ -1404,15 +1380,7 @@ var Move = function (_Component) {
     _createClass(Move, [{
         key: 'update',
         value: function update(e) {
-
-            // 随着时间做圆周运动
-            // Do circle active with time.
-            var r = 100;
-            var x = r * Math.sin(0.5 * Math.PI * e.time) + 120,
-                y = -r * Math.cos(0.5 * Math.PI * e.time) + 150;
-            // 设置位置
-            // set position
-            this.targetObject.transform.position = new Vector2({ x: x, y: y });
+            this.targetObject.transform.rotation = e.time * 30;
         }
     }]);
 
