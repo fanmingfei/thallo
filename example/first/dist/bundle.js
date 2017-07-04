@@ -909,7 +909,7 @@ firstGameObject.addComponent(Img)({
 */
 
 // 给游戏对象添加新的组件，第二个参数是要给组件传递到参数，但是我们写的 Move 组件不需要参数
-// add new component to game object, the twice argument is the component needing, but the Move component isn't need argument.
+// add new component to game object, the twice argument is the component needing, but the Move component don't need argument.
 
 // firstGameObject.addComponent(Move)();
 

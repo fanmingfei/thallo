@@ -1631,18 +1631,15 @@ var InputManager = function (_Component) {
         }));
 
         _this.speed = 50;
-        _this.conditions = function (e) {
-            var _ref2;
-
-            return _ref2 = {}, _defineProperty(_ref2, _Engine.keyCode.W, new Vector2({ x: 0, y: -_this.speed * e.deltaTime })), _defineProperty(_ref2, _Engine.keyCode.S, new Vector2({ x: 0, y: _this.speed * e.deltaTime })), _defineProperty(_ref2, _Engine.keyCode.A, new Vector2({ x: -_this.speed * e.deltaTime, y: 0 })), _defineProperty(_ref2, _Engine.keyCode.D, new Vector2({ x: _this.speed * e.deltaTime, y: 0 })), _ref2;
-        };
         return _this;
     }
 
     _createClass(InputManager, [{
         key: 'update',
         value: function update(e) {
-            var conditions = this.conditions(e);
+            var _conditions;
+
+            var conditions = (_conditions = {}, _defineProperty(_conditions, _Engine.keyCode.W, new Vector2({ x: 0, y: -this.speed * e.deltaTime })), _defineProperty(_conditions, _Engine.keyCode.S, new Vector2({ x: 0, y: this.speed * e.deltaTime })), _defineProperty(_conditions, _Engine.keyCode.A, new Vector2({ x: -this.speed * e.deltaTime, y: 0 })), _defineProperty(_conditions, _Engine.keyCode.D, new Vector2({ x: this.speed * e.deltaTime, y: 0 })), _conditions);
             for (var condition in conditions) {
                 if (_Engine.input.getKey(condition)) {
                     this.move(conditions[condition]);

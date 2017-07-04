@@ -12,15 +12,14 @@ export default class InputManager extends Component {
             targetObject
         });
         this.speed = 50;
-        this.conditions = (e)=>({
+    }
+    update(e) {
+        const conditions = {
             [keyCode.W]: new Vector2({x: 0, y: -this.speed * e.deltaTime}),
             [keyCode.S]: new Vector2({x: 0, y: this.speed * e.deltaTime}),
             [keyCode.A]: new Vector2({x: -this.speed * e.deltaTime, y: 0}),
             [keyCode.D]: new Vector2({x: this.speed * e.deltaTime, y: 0})
-        })
-    }
-    update(e) {
-        const conditions = this.conditions(e);
+        };
         for (let condition in conditions) {
             if (input.getKey(condition)) {
                 this.move(conditions[condition]);
