@@ -27,7 +27,7 @@ const camera = new Camera({
 canvasObj.setCamera(camera);
 
 // 创建游戏对象
-// create the first game object
+// create the game object
 const getRandom = (min = 0,max = 10) => Math.floor(min + Math.random() * (max - min + 1));
 const texts = ['工作使我快乐','我热爱工作','你看他是不是傻','快和牛魔王一起出来看上帝','b(￣▽￣)d','快来用这个游戏引擎','这个没有物理引擎？','好厉害！', '这是个无聊的DEMO'];
 let objects = texts.map(text=>{

@@ -7,3 +7,4 @@ A simple JavaScript game engine.
 - [first](https://fanmingfei.github.io/thallo/example/first/)
 - [rotation](https://fanmingfei.github.io/thallo/example/rotation/)
 - [input](https://fanmingfei.github.io/thallo/example/input/)
+- [text](https://fanmingfei.github.io/thallo/example/text/)

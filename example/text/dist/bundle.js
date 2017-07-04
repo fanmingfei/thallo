@@ -801,7 +801,7 @@ var camera = new _Engine.Camera({
 canvasObj.setCamera(camera);
 
 // 创建游戏对象
-// create the first game object
+// create the game object
 var getRandom = function getRandom() {
     var min = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
     var max = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 10;
