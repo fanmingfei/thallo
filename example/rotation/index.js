@@ -90,7 +90,40 @@ const secondGameObject = new GameObject({
     ]
 });
 
-scene.addGameObjects(firstGameObject, secondGameObject);
+// 创建第三个游戏对象
+// create the third game object
+const thirdGameObject = new GameObject({
+    name: "thirdGameObject",
+    transform: {
+        rect: new Rect({ x: 0, y: 0, width: 100, height: 100 }),
+        position: new Vector2({x:260,y:300}),
+        anchor: new Vector2({x:0,y:0}),
+        rotation: 45
+    },
+    components: [
+        {
+            component: Img,
+            arguments: {
+                rect: new Rect({
+                    x: 0,
+                    y: 0,
+                    width: 100,
+                    height: 100
+                }),
+                url: 'https://fanmingfei.github.io/thallo/example/first/a.png'
+            }
+        },
+        {
+            component: Rotation,
+            arguments: {
+                dir: 1,
+                speed: 210
+            }
+        }
+    ]
+});
+
+scene.addGameObjects(firstGameObject, secondGameObject, thirdGameObject);
 
 
 

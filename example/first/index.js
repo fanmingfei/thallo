@@ -57,7 +57,7 @@ const firstGameObject = new GameObject({
 
 // 将游戏对象添加到场景，当相机能看到对象的时候，对象将会显示在canvas上
 // add the game object to scene, when the camera see the game object, the object will show on the canvas.
-scene.addGameObject(firstGameObject);
+scene.addGameObjects(firstGameObject);
 
 
 // 也可以使用以下方式添加组件
