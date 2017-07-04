@@ -38,7 +38,11 @@ export default class Img extends Component {
         this.url = url;
         this.image = new Image();
         this.image.src = url;
-        this.targetObject.renderer.image = this.image;
-        this.targetObject.renderer.rect = this.rect;
+    }
+    update () {
+        this.targetObject.renderer.pushImages({
+            image: this.image,
+            rect: this.rect
+        })
     }
 }

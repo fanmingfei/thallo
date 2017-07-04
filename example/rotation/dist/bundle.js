@@ -1034,8 +1034,14 @@ var Img = function (_Component) {
             this.url = url;
             this.image = new Image();
             this.image.src = url;
-            this.targetObject.renderer.image = this.image;
-            this.targetObject.renderer.rect = this.rect;
+        }
+    }, {
+        key: 'update',
+        value: function update() {
+            this.targetObject.renderer.pushImages({
+                image: this.image,
+                rect: this.rect
+            });
         }
     }]);
 
@@ -1210,6 +1216,8 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 var _types = __webpack_require__(0);
 
 var _Component2 = __webpack_require__(1);
@@ -1228,11 +1236,7 @@ var Renderer = function (_Component) {
     _inherits(Renderer, _Component);
 
     function Renderer(_ref) {
-        var targetObject = _ref.targetObject,
-            _ref$rect = _ref.rect,
-            rect = _ref$rect === undefined ? new _types.Rect() : _ref$rect,
-            _ref$image = _ref.image,
-            image = _ref$image === undefined ? new Image() : _ref$image;
+        var targetObject = _ref.targetObject;
 
         _classCallCheck(this, Renderer);
 
@@ -1240,19 +1244,44 @@ var Renderer = function (_Component) {
             targetObject: targetObject
         }));
 
-        var _image = image;
-        _this.rect = rect;
-        Object.defineProperty(_this, 'image', {
-            get: function get() {
-                return _image;
-            },
-            set: function set(value) {
-                value.crossOrigin = 'anonymous';
-                _image = value;
-            }
-        });
+        _this.images = [];
         return _this;
     }
+
+    _createClass(Renderer, [{
+        key: 'pushImages',
+        value: function pushImages() {
+            for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+                args[_key] = arguments[_key];
+            }
+
+            var _iteratorNormalCompletion = true;
+            var _didIteratorError = false;
+            var _iteratorError = undefined;
+
+            try {
+                for (var _iterator = args[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                    var img = _step.value;
+
+                    img.crossOrigin = 'anonymous';
+                    this.images.push(img);
+                }
+            } catch (err) {
+                _didIteratorError = true;
+                _iteratorError = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion && _iterator.return) {
+                        _iterator.return();
+                    }
+                } finally {
+                    if (_didIteratorError) {
+                        throw _iteratorError;
+                    }
+                }
+            }
+        }
+    }]);
 
     return Renderer;
 }(_Component3.default);
@@ -1342,14 +1371,36 @@ var Canvas = function () {
     }, {
         key: 'drawImg',
         value: function drawImg(gameObject) {
-            // console.log(gameObject)
-            var x1y1 = _types.Vector2.minus(gameObject.transform.position, gameObject.transform.anchor);
-            var x2y2 = _types.Vector2.add(x1y1, new _types.Vector2({ x: gameObject.renderer.rect.x, y: gameObject.renderer.rect.y }));
-            this.context.save();
-            this.context.translate(gameObject.transform.position.x, gameObject.transform.position.y);
-            this.context.rotate(gameObject.transform.rotation * Math.PI / 180);
-            this.context.drawImage(gameObject.renderer.image, -gameObject.transform.anchor.x, -gameObject.transform.anchor.y, gameObject.renderer.rect.width, gameObject.renderer.rect.height);
-            this.context.restore();
+            var _iteratorNormalCompletion2 = true;
+            var _didIteratorError2 = false;
+            var _iteratorError2 = undefined;
+
+            try {
+                for (var _iterator2 = gameObject.renderer.images[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+                    var img = _step2.value;
+
+                    var x1y1 = _types.Vector2.minus(gameObject.transform.position, gameObject.transform.anchor);
+                    var x2y2 = _types.Vector2.add(x1y1, new _types.Vector2({ x: img.rect.x, y: img.rect.y }));
+                    this.context.save();
+                    this.context.translate(gameObject.transform.position.x, gameObject.transform.position.y);
+                    this.context.rotate(gameObject.transform.rotation * Math.PI / 180);
+                    this.context.drawImage(img.image, -gameObject.transform.anchor.x, -gameObject.transform.anchor.y, img.rect.width, img.rect.height);
+                    this.context.restore();
+                }
+            } catch (err) {
+                _didIteratorError2 = true;
+                _iteratorError2 = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion2 && _iterator2.return) {
+                        _iterator2.return();
+                    }
+                } finally {
+                    if (_didIteratorError2) {
+                        throw _iteratorError2;
+                    }
+                }
+            }
         }
     }, {
         key: 'setCamera',
@@ -1542,6 +1593,7 @@ var Frame = function () {
 
         this.scene = scene;
         this.componentStore = (0, _store2.default)(scene)('component');
+        this.gameObjectStore = (0, _store2.default)(scene)('gameObject');
         this.sceneStartTime = performance.now();
         this.lastFrameTime = performance.now();
         this.frameCount = 0;
@@ -1556,6 +1608,7 @@ var Frame = function () {
             var _this2 = this;
 
             var components = this.componentStore.getAll();
+            var gameObjects = this.gameObjectStore.getAll();
             var currentTime = performance.now();
             var e = {
                 deltaTime: (currentTime - this.lastFrameTime) / 1000,
@@ -1565,18 +1618,16 @@ var Frame = function () {
 
             this.lastFrameTime = performance.now();
             this.frameCount++;
+
             var _iteratorNormalCompletion = true;
             var _didIteratorError = false;
             var _iteratorError = undefined;
 
             try {
-                for (var _iterator = components[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-                    var component = _step.value;
+                for (var _iterator = gameObjects[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                    var gameObject = _step.value;
 
-
-                    if (component.targetObject && component.active == true) {
-                        component.preUpdate && component.preUpdate(e);
-                    }
+                    gameObject.renderer.images = [];
                 }
             } catch (err) {
                 _didIteratorError = true;
@@ -1599,10 +1650,10 @@ var Frame = function () {
 
             try {
                 for (var _iterator2 = components[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-                    var _component = _step2.value;
+                    var component = _step2.value;
 
-                    if (_component.targetObject && _component.active == true) {
-                        _component.update && _component.update(e);
+                    if (component.targetObject && component.active == true) {
+                        component.preUpdate && component.preUpdate(e);
                     }
                 }
             } catch (err) {
@@ -1626,10 +1677,10 @@ var Frame = function () {
 
             try {
                 for (var _iterator3 = components[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-                    var _component2 = _step3.value;
+                    var _component = _step3.value;
 
-                    if (_component2.targetObject && _component2.active == true) {
-                        _component2.lateUpdate && _component2.lateUpdate(e);
+                    if (_component.targetObject && _component.active == true) {
+                        _component.update && _component.update(e);
                     }
                 }
             } catch (err) {
@@ -1643,6 +1694,33 @@ var Frame = function () {
                 } finally {
                     if (_didIteratorError3) {
                         throw _iteratorError3;
+                    }
+                }
+            }
+
+            var _iteratorNormalCompletion4 = true;
+            var _didIteratorError4 = false;
+            var _iteratorError4 = undefined;
+
+            try {
+                for (var _iterator4 = components[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
+                    var _component2 = _step4.value;
+
+                    if (_component2.targetObject && _component2.active == true) {
+                        _component2.lateUpdate && _component2.lateUpdate(e);
+                    }
+                }
+            } catch (err) {
+                _didIteratorError4 = true;
+                _iteratorError4 = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion4 && _iterator4.return) {
+                        _iterator4.return();
+                    }
+                } finally {
+                    if (_didIteratorError4) {
+                        throw _iteratorError4;
                     }
                 }
             }
@@ -1752,9 +1830,13 @@ var Text = function (_Component) {
             _ref$color = _ref.color,
             color = _ref$color === undefined ? '#000' : _ref$color,
             _ref$textAlign = _ref.textAlign,
-            textAlign = _ref$textAlign === undefined ? 'center' : _ref$textAlign,
+            textAlign = _ref$textAlign === undefined ? 'start' : _ref$textAlign,
             _ref$textBaseline = _ref.textBaseline,
-            textBaseline = _ref$textBaseline === undefined ? 'hanging' : _ref$textBaseline;
+            textBaseline = _ref$textBaseline === undefined ? 'hanging' : _ref$textBaseline,
+            _ref$position = _ref.position,
+            position = _ref$position === undefined ? new _types.Vector2() : _ref$position,
+            _ref$rect = _ref.rect,
+            rect = _ref$rect === undefined ? targetObject.transform.rect : _ref$rect;
 
         _classCallCheck(this, Text);
 
@@ -1767,6 +1849,8 @@ var Text = function (_Component) {
         _this.text = text;
         _this.textAlign = textAlign;
         _this.textBaseline = textBaseline;
+        _this.position = position;
+        _this.rect = rect;
         _this.canvas = document.createElement('canvas');
         _this.ctx = _this.canvas.getContext('2d');
         return _this;
@@ -1775,18 +1859,20 @@ var Text = function (_Component) {
     _createClass(Text, [{
         key: 'update',
         value: function update() {
-            this.canvas.width = this.targetObject.transform.rect.width;
-            this.canvas.height = this.targetObject.transform.rect.height;
+            this.canvas.width = this.rect.width;
+            this.canvas.height = this.rect.height;
             this.ctx.fillStyle = this.color;
             this.ctx.font = this.font;
             this.ctx.textAlign = this.textAlign;
             this.ctx.textBaseline = this.textBaseline;
-            this.ctx.fillText(this.text, this.canvas.width / 2, this.canvas.height / 2);
+            this.ctx.fillText(this.text, this.position.x, this.position.y);
             var base64 = this.canvas.toDataURL('image/png');
             var img = new Image();
             img.src = base64;
-            this.targetObject.renderer.image = img;
-            this.targetObject.renderer.rect = new _types.Rect({ x: 0, y: 0, width: this.canvas.width, height: this.canvas.height });
+            this.targetObject.renderer.pushImages({
+                image: img,
+                rect: new _types.Rect({ x: 0, y: 0, width: this.canvas.width, height: this.canvas.height })
+            });
         }
     }]);
 
