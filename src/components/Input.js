@@ -104,12 +104,18 @@ const keyCode = {
     Scroll_Lock: 137
 }
 
-class Input {
-    constructor() {
+export { keyCode };
+
+
+import Component from '../base/Component';
+
+export default class Input {
+    constructor({canvas}) {
+        this.canvas = canvas;
         this.currentKeyList = [];
         this.currentFrameDown = [];
         this.currentFrameUp = [];
-        this.createInputEvent();
+        this.addEventListener();
     }
     getKeyDown(keyCode) {
         if (this.currentFrameDown.indexOf(keyCode) != -1) {
@@ -146,23 +152,17 @@ class Input {
         }
         this.currentFrameUp.push(keyCode);
     }
-    clearUpDown() {
+    clearInput() {
         this.currentFrameDown = [];
         this.currentFrameUp = [];
     }
-    createInputEvent() {
-        document.addEventListener('keydown', e => {
+    addEventListener() {
+        this.canvas.canvas.addEventListener('keydown', e => {
             this.setKeyDown(e.keyCode);
         })
-        document.addEventListener('keyup', e => {
+        this.canvas.canvas.addEventListener('keyup', e => {
             this.setKeyUp(e.keyCode);
         })
     }
 
 }
-
-
-export default new Input();
-export {
-    keyCode
-};

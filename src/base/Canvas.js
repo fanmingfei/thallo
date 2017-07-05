@@ -1,13 +1,12 @@
 import {Vector2} from './types';
 
 export default class Canvas {
-    constructor({ canvas, width, height, camera = undefined }) {
+    constructor({ canvas, width, height}) {
         this.canvas = canvas;
         this.width = width;
         this.height = height;
         this.context = canvas.getContext('2d');
-        this.camera = camera;
-        this.framer = requestAnimationFrame(()=>this.render());
+        this.camera = undefined;
     }
 
     render() {
@@ -16,7 +15,6 @@ export default class Canvas {
         for (let gameObject of gameObjects) {
             this.drawImg(gameObject);
         }
-        this.framer = requestAnimationFrame(()=>this.render());
     }
     clearContext() {
         this.context.clearRect(0, 0, this.width, this.height);

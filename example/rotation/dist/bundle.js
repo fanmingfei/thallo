@@ -143,6 +143,8 @@ var Component = function () {
     }, {
         key: 'distroy',
         value: function distroy() {
+            this.targetObject = targetObject;
+            this.active = false;
             (0, _store2.default)(targetObject.scene)('component').remove(this);
         }
     }]);
@@ -182,18 +184,22 @@ function store(id) {
                     objs[_key] = arguments[_key];
                 }
 
+                var _loop = function _loop(obj) {
+                    var index = store.findIndex(function (o) {
+                        return o == obj;
+                    });
+                    index !== -1 && store.splice(index, 1);
+                };
+
                 var _iteratorNormalCompletion = true;
                 var _didIteratorError = false;
                 var _iteratorError = undefined;
 
                 try {
                     for (var _iterator = objs[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-                        obj = _step.value;
+                        var obj = _step.value;
 
-                        var index = store.findIndex(function (o) {
-                            return o == obj;
-                        });
-                        index !== -1 && store.splice(index, 1);
+                        _loop(obj);
                     }
                 } catch (err) {
                     _didIteratorError = true;
@@ -219,6 +225,9 @@ function store(id) {
         };
     };
 };
+store.remove = function (id) {
+    cache.delete(id);
+};
 
 /***/ }),
 /* 3 */
@@ -228,18 +237,19 @@ function store(id) {
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
-exports.keyCode = exports.input = exports.components = exports.Component = exports.types = exports.Camera = exports.Scene = exports.Canvas = exports.GameObject = undefined;
+exports.Thallo = exports.keyCode = exports.components = exports.Component = exports.types = exports.Camera = exports.Scene = exports.Canvas = exports.GameObject = undefined;
 
-var _Input = __webpack_require__(4);
+var _Input = __webpack_require__(21);
 
 Object.defineProperty(exports, 'keyCode', {
-  enumerable: true,
-  get: function get() {
-    return _Input.keyCode;
-  }
+    enumerable: true,
+    get: function get() {
+        return _Input.keyCode;
+    }
 });
+exports.createGameObject = createGameObject;
 
 var _GameObject2 = __webpack_require__(5);
 
@@ -269,7 +279,9 @@ var _components2 = __webpack_require__(6);
 
 var _components3 = _interopRequireDefault(_components2);
 
-var _Input2 = _interopRequireDefault(_Input);
+var _Game = __webpack_require__(22);
+
+var _Game2 = _interopRequireDefault(_Game);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -280,211 +292,19 @@ exports.Camera = _Camera3.default;
 exports.types = _types3.default;
 exports.Component = _Component3.default;
 exports.components = _components3.default;
-exports.input = _Input2.default;
+exports.Thallo = _Game2.default;
+function createGameObject(_ref) {
+    var name = _ref.name,
+        _ref$transform = _ref.transform,
+        transform = _ref$transform === undefined ? undefined : _ref$transform,
+        _ref$components = _ref.components,
+        components = _ref$components === undefined ? [] : _ref$components;
+
+    return GameObject.bind({ name: name, transform: transform, components: components });
+}
 
 /***/ }),
-/* 4 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var keyCode = {
-    BackSpace: 8,
-    Tab: 9,
-    Clear: 12,
-    Enter: 13,
-    Shift_L: 16,
-    Control_L: 17,
-    Alt_L: 18,
-    Pause: 19,
-    Caps_Lock: 20,
-    Escape: 27,
-    Space: 32,
-    Prior: 33,
-    Next: 34,
-    End: 35,
-    Home: 36,
-    Left: 37,
-    Up: 38,
-    Right: 39,
-    Down: 40,
-    Select: 41,
-    Print: 42,
-    Execute: 43,
-    Insert: 45,
-    Delete: 46,
-    Help: 47,
-    Alpha_0: 48,
-    Alpha_1: 49,
-    Alpha_2: 50,
-    Alpha_3: 51,
-    Alpha_4: 52,
-    Alpha_5: 53,
-    Alpha_6: 54,
-    Alpha_7: 55,
-    Alpha_8: 56,
-    Alpha_9: 57,
-    A: 65,
-    B: 66,
-    C: 67,
-    D: 68,
-    E: 69,
-    F: 70,
-    G: 71,
-    H: 72,
-    I: 73,
-    J: 74,
-    K: 75,
-    L: 76,
-    M: 77,
-    N: 78,
-    O: 79,
-    P: 80,
-    Q: 81,
-    R: 82,
-    S: 83,
-    T: 84,
-    U: 85,
-    V: 86,
-    W: 87,
-    X: 88,
-    Y: 89,
-    Z: 90,
-    KP_0: 96,
-    KP_1: 97,
-    KP_2: 98,
-    KP_3: 99,
-    KP_4: 100,
-    KP_5: 101,
-    KP_6: 102,
-    KP_7: 103,
-    KP_8: 104,
-    KP_9: 105,
-    KP_Multiply: 106,
-    KP_Add: 107,
-    KP_Separator: 108,
-    KP_Subtract: 109,
-    KP_Decimal: 110,
-    KP_Divide: 111,
-    F1: 112,
-    F2: 113,
-    F3: 114,
-    F4: 115,
-    F5: 116,
-    F6: 117,
-    F7: 118,
-    F8: 119,
-    F9: 120,
-    F10: 121,
-    F11: 122,
-    F12: 123,
-    F13: 124,
-    F14: 125,
-    F15: 126,
-    F16: 127,
-    F17: 128,
-    F18: 129,
-    F19: 130,
-    F20: 131,
-    F21: 132,
-    F22: 133,
-    F23: 134,
-    F24: 135,
-    Num_Lock: 136,
-    Scroll_Lock: 137
-};
-
-var Input = function () {
-    function Input() {
-        _classCallCheck(this, Input);
-
-        this.currentKeyList = [];
-        this.currentFrameDown = [];
-        this.currentFrameUp = [];
-        this.createInputEvent();
-    }
-
-    _createClass(Input, [{
-        key: 'getKeyDown',
-        value: function getKeyDown(keyCode) {
-            if (this.currentFrameDown.indexOf(keyCode) != -1) {
-                return true;
-            }
-            return false;
-        }
-    }, {
-        key: 'getKeyUp',
-        value: function getKeyUp(keyCode) {
-            if (this.currentFrameUp.indexOf(keyCode) != -1) {
-                return true;
-            }
-            return false;
-        }
-    }, {
-        key: 'getKey',
-        value: function getKey(keyCode) {
-            keyCode = +keyCode;
-            if (this.currentKeyList.indexOf(keyCode) != -1 && this.currentFrameDown.indexOf(keyCode) == -1 && this.currentFrameUp.indexOf(keyCode) == -1) {
-                return true;
-            }
-            return false;
-        }
-    }, {
-        key: 'setKeyDown',
-        value: function setKeyDown(keyCode) {
-            if (this.currentKeyList.indexOf(keyCode) != -1) {
-                return;
-            }
-            this.currentKeyList.push(keyCode);
-            this.currentFrameDown.push(keyCode);
-        }
-    }, {
-        key: 'setKeyUp',
-        value: function setKeyUp(keyCode) {
-            var index = this.currentKeyList.findIndex(function (c) {
-                return c == keyCode;
-            });
-            if (index != -1) {
-                this.currentKeyList.splice(index, 1);
-            }
-            this.currentFrameUp.push(keyCode);
-        }
-    }, {
-        key: 'clearUpDown',
-        value: function clearUpDown() {
-            this.currentFrameDown = [];
-            this.currentFrameUp = [];
-        }
-    }, {
-        key: 'createInputEvent',
-        value: function createInputEvent() {
-            var _this = this;
-
-            document.addEventListener('keydown', function (e) {
-                _this.setKeyDown(e.keyCode);
-            });
-            document.addEventListener('keyup', function (e) {
-                _this.setKeyUp(e.keyCode);
-            });
-        }
-    }]);
-
-    return Input;
-}();
-
-exports.default = new Input();
-exports.keyCode = keyCode;
-
-/***/ }),
+/* 4 */,
 /* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -495,19 +315,13 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _components = __webpack_require__(6);
+var _RealGameObject = __webpack_require__(23);
 
-var _store = __webpack_require__(2);
-
-var _store2 = _interopRequireDefault(_store);
+var _RealGameObject2 = _interopRequireDefault(_RealGameObject);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -521,159 +335,18 @@ var GameObject = function () {
 
         _classCallCheck(this, GameObject);
 
-        this.name = name;
-        this.childs = [];
-        this.parent = undefined;
-        this.components = [];
-        this.active = true;
-        this.scene = undefined;
-        this.transform = this.addComponent(_components.Transform)(transform);
-        this.renderer = this.addComponent(_components.Renderer)();
-        var _iteratorNormalCompletion = true;
-        var _didIteratorError = false;
-        var _iteratorError = undefined;
-
-        try {
-            for (var _iterator = components[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-                var component = _step.value;
-
-                this.addComponent(component.component)(component.arguments);
-            }
-        } catch (err) {
-            _didIteratorError = true;
-            _iteratorError = err;
-        } finally {
-            try {
-                if (!_iteratorNormalCompletion && _iterator.return) {
-                    _iterator.return();
-                }
-            } finally {
-                if (_didIteratorError) {
-                    throw _iteratorError;
-                }
-            }
-        }
+        this.arguments = {
+            name: name,
+            transform: transform,
+            components: components
+        };
+        this.instance = null;
     }
 
     _createClass(GameObject, [{
-        key: 'find',
-        value: function find(_ref2) {
-            var name = _ref2.name;
-
-            var obj = this.childs.find(function (obj) {
-                return obj.name == name;
-            });
-            if (!obj) {
-                var _iteratorNormalCompletion2 = true;
-                var _didIteratorError2 = false;
-                var _iteratorError2 = undefined;
-
-                try {
-                    for (var _iterator2 = this.childs[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-                        var child = _step2.value;
-
-                        obj = child.find({
-                            name: name
-                        });
-                        if (obj) break;
-                    }
-                } catch (err) {
-                    _didIteratorError2 = true;
-                    _iteratorError2 = err;
-                } finally {
-                    try {
-                        if (!_iteratorNormalCompletion2 && _iterator2.return) {
-                            _iterator2.return();
-                        }
-                    } finally {
-                        if (_didIteratorError2) {
-                            throw _iteratorError2;
-                        }
-                    }
-                }
-            }
-            return obj;
-        }
-    }, {
-        key: 'addComponent',
-        value: function addComponent(Component) {
-            var _this = this;
-
-            return function () {
-                var obj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-
-                var arg = _extends({
-                    targetObject: _this
-                }, obj);
-                var component = new Component(arg);
-                if (_this.componentsStore) {
-                    _this.componentsStore.push(component);
-                }
-                _this.components.push(component);
-                component.start();
-                return component;
-            };
-        }
-    }, {
-        key: 'removeComponent',
-        value: function removeComponent(Component) {
-            var index = this.components.findIndex(function (c) {
-                return c instanceof Component;
-            });
-            index !== -1 && this.component.splice(index, 1);
-        }
-    }, {
-        key: 'getComponent',
-        value: function getComponent(Component) {
-            return this.components.find(function (c) {
-                return c instanceof Component;
-            });
-        }
-    }, {
-        key: 'setActive',
-        value: function setActive(flag) {
-            this.active = flag;
-        }
-    }, {
-        key: 'setScene',
-        value: function setScene(_ref3) {
-            var _componentsStore;
-
-            var scene = _ref3.scene;
-
-            this.scene = scene;
-            this.componentsStore = (0, _store2.default)(scene)('component');
-            (_componentsStore = this.componentsStore).push.apply(_componentsStore, _toConsumableArray(this.components));
-        }
-    }, {
-        key: 'distroy',
-        value: function distroy() {
-            var _iteratorNormalCompletion3 = true;
-            var _didIteratorError3 = false;
-            var _iteratorError3 = undefined;
-
-            try {
-                for (var _iterator3 = this.components[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-                    var component = _step3.value;
-
-                    component.distory();
-                }
-            } catch (err) {
-                _didIteratorError3 = true;
-                _iteratorError3 = err;
-            } finally {
-                try {
-                    if (!_iteratorNormalCompletion3 && _iterator3.return) {
-                        _iterator3.return();
-                    }
-                } finally {
-                    if (_didIteratorError3) {
-                        throw _iteratorError3;
-                    }
-                }
-            }
-
-            this.active = false;
+        key: 'init',
+        value: function init() {
+            this.instance = new _RealGameObject2.default(this.arguments);
         }
     }]);
 
@@ -770,19 +443,26 @@ var Camera = function (_GameObject) {
         }));
 
         _this.scene = scene;
+
+        _this.canvas = null;
+        scene.addGameObjects(_this);
         return _this;
     }
 
-    // 获取当前相机可见的gameObject
-
-
     _createClass(Camera, [{
+        key: 'setCanvas',
+        value: function setCanvas(canvas) {
+            this.canvas = canvas;
+        }
+        // 获取当前相机可见的gameObject
+
+    }, {
         key: 'getVisibleGameObjects',
         value: function getVisibleGameObjects() {
             var _this2 = this;
 
             var visibleGameObject = this.scene.gameObjects.reduce(function (prev, gameObject) {
-                if (gameObject.active && (0, _tools.isCollsion)(_this2, gameObject)) {
+                if (gameObject !== _this2 && gameObject.active && (0, _tools.isCollsion)(_this2, gameObject)) {
                     prev.push(gameObject);
                 } else {
                     return prev;
@@ -1306,13 +986,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 var Canvas = function () {
     function Canvas(_ref) {
-        var _this = this;
-
         var canvas = _ref.canvas,
             width = _ref.width,
-            height = _ref.height,
-            _ref$camera = _ref.camera,
-            camera = _ref$camera === undefined ? undefined : _ref$camera;
+            height = _ref.height;
 
         _classCallCheck(this, Canvas);
 
@@ -1320,17 +996,12 @@ var Canvas = function () {
         this.width = width;
         this.height = height;
         this.context = canvas.getContext('2d');
-        this.camera = camera;
-        this.framer = requestAnimationFrame(function () {
-            return _this.render();
-        });
+        this.camera = undefined;
     }
 
     _createClass(Canvas, [{
         key: 'render',
         value: function render() {
-            var _this2 = this;
-
             this.clearContext();
             var gameObjects = this.camera.getVisibleGameObjects();
             var _iteratorNormalCompletion = true;
@@ -1357,10 +1028,6 @@ var Canvas = function () {
                     }
                 }
             }
-
-            this.framer = requestAnimationFrame(function () {
-                return _this2.render();
-            });
         }
     }, {
         key: 'clearContext',
@@ -1415,89 +1082,10 @@ exports.default = Canvas;
 
 /***/ }),
 /* 15 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
 "use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _Camera = __webpack_require__(7);
-
-var _Camera2 = _interopRequireDefault(_Camera);
-
-var _store = __webpack_require__(2);
-
-var _store2 = _interopRequireDefault(_store);
-
-var _Frame = __webpack_require__(17);
-
-var _Frame2 = _interopRequireDefault(_Frame);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var Scene = function () {
-    function Scene(_ref) {
-        var width = _ref.width,
-            height = _ref.height;
-
-        _classCallCheck(this, Scene);
-
-        this.width = width;
-        this.height = height;
-        this.camera = [];
-        this.gameObjects = [];
-        this.frame = new _Frame2.default({ scene: this });
-        this.gameObjectStore = (0, _store2.default)(this)('gameObject');
-    }
-
-    _createClass(Scene, [{
-        key: 'addGameObjects',
-        value: function addGameObjects() {
-            for (var _len = arguments.length, gameObjects = Array(_len), _key = 0; _key < _len; _key++) {
-                gameObjects[_key] = arguments[_key];
-            }
-
-            var _iteratorNormalCompletion = true;
-            var _didIteratorError = false;
-            var _iteratorError = undefined;
-
-            try {
-                for (var _iterator = gameObjects[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-                    var gameObject = _step.value;
-
-                    gameObject instanceof _Camera2.default && this.camera.push(gameObject);
-                    gameObject.setScene({ scene: this });
-                    this.gameObjects.push(gameObject);
-                    this.gameObjectStore.push(gameObject);
-                }
-            } catch (err) {
-                _didIteratorError = true;
-                _iteratorError = err;
-            } finally {
-                try {
-                    if (!_iteratorNormalCompletion && _iterator.return) {
-                        _iterator.return();
-                    }
-                } finally {
-                    if (_didIteratorError) {
-                        throw _iteratorError;
-                    }
-                }
-            }
-        }
-    }]);
-
-    return Scene;
-}();
-
-exports.default = Scene;
+throw new Error("Module build failed: SyntaxError: Unsyntactic continue (10:12)\n\n\u001b[0m \u001b[90m  8 | \u001b[39m    addGameObjects(\u001b[33m...\u001b[39mgameObjects) {\n \u001b[90m  9 | \u001b[39m        \u001b[36mif\u001b[39m (\u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mgameObjects\u001b[33m.\u001b[39mindexOf(gameObject) \u001b[33m!==\u001b[39m \u001b[33m-\u001b[39m\u001b[35m1\u001b[39m) {\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 10 | \u001b[39m            \u001b[36mcontinue\u001b[39m\u001b[33m;\u001b[39m\n \u001b[90m    | \u001b[39m            \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 11 | \u001b[39m        }\n \u001b[90m 12 | \u001b[39m\n \u001b[90m 13 | \u001b[39m        \u001b[36mif\u001b[39m (gameObject \u001b[36minstanceof\u001b[39m \u001b[33mCamera\u001b[39m) {\u001b[0m\n");
 
 /***/ }),
 /* 16 */
@@ -1511,6 +1099,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.isCollsion = isCollsion;
 exports.isPointCollsion = isPointCollsion;
+exports.isPointInRect = isPointInRect;
 
 var _types = __webpack_require__(0);
 
@@ -1557,6 +1146,13 @@ function isPointCollsion(point, gameObject) {
     return false;
 }
 
+function isPointInRect(vector2, rect) {
+    if (vector2.x >= rect.x && vector2.x <= rect.x + rect.width && vector2.y >= rect.y && vector2.y <= rect.y + rect.height) {
+        return true;
+    }
+    return false;
+}
+
 /***/ }),
 /* 17 */
 /***/ (function(module, exports, __webpack_require__) {
@@ -1574,10 +1170,6 @@ var _store = __webpack_require__(2);
 
 var _store2 = _interopRequireDefault(_store);
 
-var _Input = __webpack_require__(4);
-
-var _Input2 = _interopRequireDefault(_Input);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1586,22 +1178,36 @@ var Frame = function () {
     function Frame(_ref) {
         var _this = this;
 
-        var scene = _ref.scene;
+        var scene = _ref.scene,
+            canvas = _ref.canvas;
 
         _classCallCheck(this, Frame);
 
-        this.scene = scene;
-        this.componentStore = (0, _store2.default)(scene)('component');
-        this.gameObjectStore = (0, _store2.default)(scene)('gameObject');
+        this.componentStore = null;
+        this.gameObjectStore = null;
+        this.gameStartTime = performance.now();
         this.sceneStartTime = performance.now();
         this.lastFrameTime = performance.now();
-        this.frameCount = 0;
+        this.gameFrameCount = 0;
+        this.sceneFrameCount = 0;
+        this.canvas = canvas;
+        this.setScene({ scene: scene });
         requestAnimationFrame(function () {
             return _this.frame();
         });
     }
 
     _createClass(Frame, [{
+        key: 'setScene',
+        value: function setScene(_ref2) {
+            var scene = _ref2.scene;
+
+            this.componentStore = (0, _store2.default)(scene)('component');
+            this.gameObjectStore = (0, _store2.default)(scene)('gameObject');
+            this.sceneStartTime = performance.now();
+            this.gameFrameCount = 0;
+        }
+    }, {
         key: 'frame',
         value: function frame() {
             var _this2 = this;
@@ -1611,12 +1217,15 @@ var Frame = function () {
             var currentTime = performance.now();
             var e = {
                 deltaTime: (currentTime - this.lastFrameTime) / 1000,
-                frameCount: this.frameCount,
-                time: (currentTime - this.sceneStartTime) / 1000
+                gameFrameCount: this.gameFrameCount,
+                sceneFrameCount: this.sceneFrameCount,
+                timeSinceSceneLoad: (currentTime - this.sceneStartTime) / 1000,
+                timeSinceGameLoad: (currentTime - this.gameStartTime) / 1000
             };
 
             this.lastFrameTime = performance.now();
-            this.frameCount++;
+            this.gameFrameCount++;
+            this.sceneFrameCount++;
 
             var _iteratorNormalCompletion = true;
             var _didIteratorError = false;
@@ -1709,6 +1318,9 @@ var Frame = function () {
                         _component2.lateUpdate && _component2.lateUpdate(e);
                     }
                 }
+                // let { input, touch } = this.scene.camera;
+                // input.clearInput();
+                // touch.clearTouch();
             } catch (err) {
                 _didIteratorError4 = true;
                 _iteratorError4 = err;
@@ -1724,7 +1336,8 @@ var Frame = function () {
                 }
             }
 
-            _Input2.default.clearUpDown();
+            this.canvas.render();
+
             requestAnimationFrame(function () {
                 return _this2.frame();
             });
@@ -1843,21 +1456,52 @@ var Text = function (_Component) {
             targetObject: targetObject
         }));
 
-        _this.color = color;
-        _this.font = font;
-        _this.text = text;
-        _this.textAlign = textAlign;
-        _this.textBaseline = textBaseline;
-        _this.position = position;
-        _this.rect = rect;
+        var store = {
+            color: color,
+            font: font,
+            text: text,
+            textAlign: textAlign,
+            textBaseline: textBaseline,
+            position: position,
+            rect: rect
+        };
+
+        _this.needRender = false;
+
+        var _loop = function _loop(name) {
+            Object.defineProperty(_this, name, {
+                get: function get() {
+                    return store[name];
+                },
+                set: function set(value) {
+                    store[name] = value;
+                    this.needRender = true;
+                }
+            });
+        };
+
+        for (var name in store) {
+            _loop(name);
+        }
+
         _this.canvas = document.createElement('canvas');
         _this.ctx = _this.canvas.getContext('2d');
+        _this.updateText();
         return _this;
     }
 
     _createClass(Text, [{
         key: 'update',
         value: function update() {
+            if (this.needRender) {
+                this.updateText();
+            } else {
+                this.targetObject.renderer.pushImages(this.renderImg);
+            }
+        }
+    }, {
+        key: 'updateText',
+        value: function updateText() {
             this.canvas.width = this.rect.width;
             this.canvas.height = this.rect.height;
             this.ctx.fillStyle = this.color;
@@ -1868,10 +1512,12 @@ var Text = function (_Component) {
             var base64 = this.canvas.toDataURL('image/png');
             var img = new Image();
             img.src = base64;
-            this.targetObject.renderer.pushImages({
+            this.renderImg = {
                 image: img,
                 rect: new _types.Rect({ x: 0, y: 0, width: this.canvas.width, height: this.canvas.height })
-            });
+            };
+            this.targetObject.renderer.pushImages(this.renderImg);
+            this.needRender = false;
         }
     }]);
 
@@ -1879,6 +1525,279 @@ var Text = function (_Component) {
 }(_Component3.default);
 
 exports.default = Text;
+
+/***/ }),
+/* 20 */,
+/* 21 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.keyCode = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _Component = __webpack_require__(1);
+
+var _Component2 = _interopRequireDefault(_Component);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var keyCode = {
+    BackSpace: 8,
+    Tab: 9,
+    Clear: 12,
+    Enter: 13,
+    Shift_L: 16,
+    Control_L: 17,
+    Alt_L: 18,
+    Pause: 19,
+    Caps_Lock: 20,
+    Escape: 27,
+    Space: 32,
+    Prior: 33,
+    Next: 34,
+    End: 35,
+    Home: 36,
+    Left: 37,
+    Up: 38,
+    Right: 39,
+    Down: 40,
+    Select: 41,
+    Print: 42,
+    Execute: 43,
+    Insert: 45,
+    Delete: 46,
+    Help: 47,
+    Alpha_0: 48,
+    Alpha_1: 49,
+    Alpha_2: 50,
+    Alpha_3: 51,
+    Alpha_4: 52,
+    Alpha_5: 53,
+    Alpha_6: 54,
+    Alpha_7: 55,
+    Alpha_8: 56,
+    Alpha_9: 57,
+    A: 65,
+    B: 66,
+    C: 67,
+    D: 68,
+    E: 69,
+    F: 70,
+    G: 71,
+    H: 72,
+    I: 73,
+    J: 74,
+    K: 75,
+    L: 76,
+    M: 77,
+    N: 78,
+    O: 79,
+    P: 80,
+    Q: 81,
+    R: 82,
+    S: 83,
+    T: 84,
+    U: 85,
+    V: 86,
+    W: 87,
+    X: 88,
+    Y: 89,
+    Z: 90,
+    KP_0: 96,
+    KP_1: 97,
+    KP_2: 98,
+    KP_3: 99,
+    KP_4: 100,
+    KP_5: 101,
+    KP_6: 102,
+    KP_7: 103,
+    KP_8: 104,
+    KP_9: 105,
+    KP_Multiply: 106,
+    KP_Add: 107,
+    KP_Separator: 108,
+    KP_Subtract: 109,
+    KP_Decimal: 110,
+    KP_Divide: 111,
+    F1: 112,
+    F2: 113,
+    F3: 114,
+    F4: 115,
+    F5: 116,
+    F6: 117,
+    F7: 118,
+    F8: 119,
+    F9: 120,
+    F10: 121,
+    F11: 122,
+    F12: 123,
+    F13: 124,
+    F14: 125,
+    F15: 126,
+    F16: 127,
+    F17: 128,
+    F18: 129,
+    F19: 130,
+    F20: 131,
+    F21: 132,
+    F22: 133,
+    F23: 134,
+    F24: 135,
+    Num_Lock: 136,
+    Scroll_Lock: 137
+};
+
+exports.keyCode = keyCode;
+
+var Input = function () {
+    function Input(_ref) {
+        var canvas = _ref.canvas;
+
+        _classCallCheck(this, Input);
+
+        this.canvas = canvas;
+        this.currentKeyList = [];
+        this.currentFrameDown = [];
+        this.currentFrameUp = [];
+        this.addEventListener();
+    }
+
+    _createClass(Input, [{
+        key: 'getKeyDown',
+        value: function getKeyDown(keyCode) {
+            if (this.currentFrameDown.indexOf(keyCode) != -1) {
+                return true;
+            }
+            return false;
+        }
+    }, {
+        key: 'getKeyUp',
+        value: function getKeyUp(keyCode) {
+            if (this.currentFrameUp.indexOf(keyCode) != -1) {
+                return true;
+            }
+            return false;
+        }
+    }, {
+        key: 'getKey',
+        value: function getKey(keyCode) {
+            keyCode = +keyCode;
+            if (this.currentKeyList.indexOf(keyCode) != -1 && this.currentFrameDown.indexOf(keyCode) == -1 && this.currentFrameUp.indexOf(keyCode) == -1) {
+                return true;
+            }
+            return false;
+        }
+    }, {
+        key: 'setKeyDown',
+        value: function setKeyDown(keyCode) {
+            if (this.currentKeyList.indexOf(keyCode) != -1) {
+                return;
+            }
+            this.currentKeyList.push(keyCode);
+            this.currentFrameDown.push(keyCode);
+        }
+    }, {
+        key: 'setKeyUp',
+        value: function setKeyUp(keyCode) {
+            var index = this.currentKeyList.findIndex(function (c) {
+                return c == keyCode;
+            });
+            if (index != -1) {
+                this.currentKeyList.splice(index, 1);
+            }
+            this.currentFrameUp.push(keyCode);
+        }
+    }, {
+        key: 'clearInput',
+        value: function clearInput() {
+            this.currentFrameDown = [];
+            this.currentFrameUp = [];
+        }
+    }, {
+        key: 'addEventListener',
+        value: function addEventListener() {
+            var _this = this;
+
+            this.canvas.canvas.addEventListener('keydown', function (e) {
+                _this.setKeyDown(e.keyCode);
+            });
+            this.canvas.canvas.addEventListener('keyup', function (e) {
+                _this.setKeyUp(e.keyCode);
+            });
+        }
+    }]);
+
+    return Input;
+}();
+
+exports.default = Input;
+
+/***/ }),
+/* 22 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _Frame = __webpack_require__(17);
+
+var _Frame2 = _interopRequireDefault(_Frame);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Game = function () {
+    function Game(_ref) {
+        var canvas = _ref.canvas,
+            scene = _ref.scene;
+
+        _classCallCheck(this, Game);
+
+        this.canvas = canvas;
+        this.scene = undefined;
+        this.loadScene({ scene: scene });
+        this.frame = new _Frame2.default({ scene: scene, canvas: canvas });
+    }
+
+    _createClass(Game, [{
+        key: 'loadScene',
+        value: function loadScene(_ref2) {
+            var scene = _ref2.scene;
+
+            var prevScene = this.scene;
+            prevScene && prevScene.destroy();
+            this.frame && this.frame.setScene({ scene: scene });
+            this.canvas.setCamera(scene.camera);
+            this.scene = scene;
+            this.scene.start();
+        }
+    }]);
+
+    return Game;
+}();
+
+exports.default = Game;
+
+/***/ }),
+/* 23 */
+/***/ (function(module, exports) {
+
+throw new Error("Module build failed: Error: ENOENT: no such file or directory, open '/Users/fanmingfei/opensource/persion/thallo/src/base/RealGameObject.js'");
 
 /***/ })
 /******/ ]);

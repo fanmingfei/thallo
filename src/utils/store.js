@@ -13,7 +13,7 @@ export default function store(id) {
                 store.push(...objs);
             },
             remove(...objs) {
-                for (obj of objs) {
+                for (let obj of objs) {
                     const index = store.findIndex(o => o == obj);
                     (index !== -1) && store.splice(index, 1);
                 }
@@ -27,3 +27,6 @@ export default function store(id) {
         }
     }
 };
+store.remove = function(id) {
+    cache.delete(id);
+}

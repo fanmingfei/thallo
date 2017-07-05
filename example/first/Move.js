@@ -8,18 +8,20 @@ const { Vector2 } = types;
 export default class Move extends Component {
     constructor({
         targetObject,
+        dir = 1
     }) {
         super({
-            targetObject
+            targetObject,
         });
+        this.dir = dir;
     }
     update(e) {
-
         // 随着时间做圆周运动
         // Do circle active with time.
+        console.log(123)
         const r = 100;
-        const x = r * Math.sin(0.5 * Math.PI * e.time) + 120,
-            y = -r * Math.cos(0.5 * Math.PI * e.time) + 150;
+        const x = r * Math.sin(0.5 * this.dir * Math.PI * e.timeSinceSceneLoad) + 120,
+            y =  r * Math.cos(0.5 * this.dir * Math.PI * e.timeSinceSceneLoad) + 150;
         // 设置位置
         // set position
         this.targetObject.transform.position = new Vector2({ x: x, y: y });

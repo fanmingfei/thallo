@@ -1,15 +1,23 @@
 import store from '../utils/store';
-import input from './Input';
 
 export default class Frame {
-    constructor({ scene }) {
-        this.scene = scene;
+    constructor({ scene, canvas }) {
+        this.componentStore = null;
+        this.gameObjectStore = null;
+        this.gameStartTime = performance.now();
+        this.sceneStartTime = performance.now();
+        this.lastFrameTime = performance.now();
+        this.gameFrameCount = 0;
+        this.sceneFrameCount = 0;
+        this.canvas = canvas;
+        this.setScene({ scene });
+        requestAnimationFrame(() => this.frame());
+    }
+    setScene({ scene }) {
         this.componentStore = store(scene)('component');
         this.gameObjectStore = store(scene)('gameObject');
-        this.sceneStartTime = performance.now()
-        this.lastFrameTime = performance.now();
-        this.frameCount = 0;
-        requestAnimationFrame(() => this.frame());
+        this.sceneStartTime = performance.now();
+        this.gameFrameCount = 0;
     }
     frame() {
         const components = this.componentStore.getAll();
@@ -17,14 +25,16 @@ export default class Frame {
         const currentTime = performance.now();
         const e = {
             deltaTime: (currentTime - this.lastFrameTime) / 1000,
-            frameCount: this.frameCount,
-            time: (currentTime - this.sceneStartTime) / 1000
+            gameFrameCount: this.gameFrameCount,
+            sceneFrameCount: this.sceneFrameCount,
+            timeSinceSceneLoad: (currentTime - this.sceneStartTime) / 1000,
+            timeSinceGameLoad: (currentTime - this.gameStartTime) / 1000
         }
 
 
         this.lastFrameTime = performance.now();
-        this.frameCount++;
-
+        this.gameFrameCount ++;
+        this.sceneFrameCount ++;
 
         for (let gameObject of gameObjects) {
             gameObject.renderer.images = [];
@@ -44,7 +54,11 @@ export default class Frame {
                 component.lateUpdate && component.lateUpdate(e)
             }
         }
-        input.clearUpDown();
+        // let { input, touch } = this.scene.camera;
+        // input.clearInput();
+        // touch.clearTouch();
+        this.canvas.render();
+
         requestAnimationFrame(() => this.frame());
     }
 

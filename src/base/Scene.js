@@ -1,24 +1,17 @@
-import Camera from './Camera';
-import store from '../utils/store';
-import Frame from './Frame';
+import RealScene from './RealScene';
+import GameObject from './GameObject';
+
 export default class Scene {
-    constructor({
-        width,
-        height
-    }) {
-        this.width = width;
-        this.height = height;
-        this.camera = [];
+    constructor() {
         this.gameObjects = [];
-        this.frame = new Frame({scene:this});
-        this.gameObjectStore = store(this)('gameObject');
     }
     addGameObjects(...gameObjects) {
-        for(let gameObject of gameObjects) {
-            gameObject instanceof Camera && this.camera.push(gameObject);
-            gameObject.setScene({ scene: this });
-            this.gameObjects.push(gameObject);
-            this.gameObjectStore.push(gameObject);   
+        if (this.gameObjects.indexOf(gameObject) !== -1) {
+            continue;
+        }
+
+        if (gameObject instanceof Camera) {
+            this.camera = gameObject;
         }
     }
 }

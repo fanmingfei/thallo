@@ -5,4 +5,14 @@ export Camera from './base/Camera';
 export types from './base/types';
 export Component from './base/Component';
 export components from './components/components';
-export input, {keyCode} from './base/Input';
+export { keyCode } from './components/Input';
+export Thallo from './base/Game';
+
+export function createGameObject({
+    name,
+    transform = undefined,
+    components = []
+}) {
+    return GameObject.bind({name,transform,components});
+}
+

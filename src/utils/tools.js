@@ -44,3 +44,10 @@ export function isPointCollsion(point, gameObject) {
     }
     return false;
 }
+
+export function isPointInRect (vector2, rect) {
+    if (vector2.x >= rect.x && vector2.x <= rect.x + rect.width && vector2.y >= rect.y && vector2.y <= rect.y + rect.height) {
+        return true;
+    }
+    return false;
+}

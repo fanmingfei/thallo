@@ -8,12 +8,16 @@ export default class Component {
     }
     start() {}
     preUpdate() {}
-    update() {}
+    update() {
+
+    }
     lateUpdate() {}
     setActive (flag) {
         this.active = flag;
     }
     distroy() {
+        this.targetObject = targetObject;
+        this.active = false;
         store(targetObject.scene)('component').remove(this);
     }
 }

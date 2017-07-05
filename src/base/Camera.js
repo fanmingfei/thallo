@@ -16,12 +16,17 @@ export default class Camera extends GameObject {
             components
         });
         this.scene = scene;
-    }
 
+        this.canvas = null;
+        scene.addGameObjects(this);
+    }
+    setCanvas(canvas){
+        this.canvas = canvas;
+    }
     // 获取当前相机可见的gameObject
     getVisibleGameObjects() {
         const visibleGameObject = this.scene.gameObjects.reduce((prev, gameObject) => {
-            if (gameObject.active && isCollsion(this, gameObject)) {
+            if (gameObject !== this && gameObject.active && isCollsion(this, gameObject)) {
                 prev.push(gameObject);
             } else {
                 return prev;

@@ -12,7 +12,7 @@
 
 ## 工作原理
 
-![](http://p4.qhimg.com/t01aee1d92f40e1cb81.jpg)
+![](http://p1.qhimg.com/t015d280f531eb7ca44.jpg)
 
 - Canvas 显示相机内容，相机需要放到游戏场景内
 - 创建游戏对象后将游戏对象添加到场景
