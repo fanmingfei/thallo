@@ -9,6 +9,7 @@
 - [rotation](https://fanmingfei.github.io/thallo/example/rotation/)
 - [input](https://fanmingfei.github.io/thallo/example/input/)
 - [text](https://fanmingfei.github.io/thallo/example/text/)
+- [touch](https://fanmingfei.github.io/thallo/example/touch/)
 
 ## 工作原理
 
