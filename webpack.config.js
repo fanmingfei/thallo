@@ -90,4 +90,22 @@ module.exports = [{
             }
         }]
     }
+},{
+    entry: './example/tb/index.js',
+    output: {
+        filename: 'bundle.js',
+        path: path.resolve(__dirname, 'example/tb/dist')
+    },
+    module: {
+        rules: [{
+            test: /\.js$/,
+            exclude: /(node_modules|bower_components)/,
+            use: {
+                loader: 'babel-loader',
+                options: {
+                    presets: ['env', 'stage-0']
+                }
+            }
+        }]
+    }
 }];

@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 10);
+/******/ 	return __webpack_require__(__webpack_require__.s = 11);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -75,11 +75,11 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.Rect = exports.Vector2 = undefined;
 
-var _Vector = __webpack_require__(13);
+var _Vector = __webpack_require__(14);
 
 var _Vector2 = _interopRequireDefault(_Vector);
 
-var _Rect = __webpack_require__(14);
+var _Rect = __webpack_require__(15);
 
 var _Rect2 = _interopRequireDefault(_Rect);
 
@@ -105,7 +105,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _store = __webpack_require__(2);
+var _store = __webpack_require__(3);
 
 var _store2 = _interopRequireDefault(_store);
 
@@ -154,6 +154,84 @@ exports.default = Component;
 
 /***/ }),
 /* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.findGameObject = exports.Touch = exports.keyCode = exports.Input = exports.components = exports.Component = exports.types = exports.Camera = exports.Scene = exports.Canvas = exports.GameObject = undefined;
+
+var _Input2 = __webpack_require__(12);
+
+Object.defineProperty(exports, 'keyCode', {
+  enumerable: true,
+  get: function get() {
+    return _Input2.keyCode;
+  }
+});
+
+var _store = __webpack_require__(3);
+
+Object.defineProperty(exports, 'findGameObject', {
+  enumerable: true,
+  get: function get() {
+    return _store.findGameObject;
+  }
+});
+
+var _GameObject2 = __webpack_require__(4);
+
+var _GameObject3 = _interopRequireDefault(_GameObject2);
+
+var _Canvas2 = __webpack_require__(19);
+
+var _Canvas3 = _interopRequireDefault(_Canvas2);
+
+var _Scene2 = __webpack_require__(20);
+
+var _Scene3 = _interopRequireDefault(_Scene2);
+
+var _Camera2 = __webpack_require__(9);
+
+var _Camera3 = _interopRequireDefault(_Camera2);
+
+var _types2 = __webpack_require__(0);
+
+var _types3 = _interopRequireDefault(_types2);
+
+var _Component2 = __webpack_require__(1);
+
+var _Component3 = _interopRequireDefault(_Component2);
+
+var _components2 = __webpack_require__(5);
+
+var _components3 = _interopRequireDefault(_components2);
+
+var _Input3 = _interopRequireDefault(_Input2);
+
+var _Touch2 = __webpack_require__(22);
+
+var _Touch3 = _interopRequireDefault(_Touch2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.GameObject = _GameObject3.default;
+exports.Canvas = _Canvas3.default;
+exports.Scene = _Scene3.default;
+exports.Camera = _Camera3.default;
+exports.types = _types3.default;
+exports.Component = _Component3.default;
+exports.components = _components3.default;
+// export input, {keyCode} from './base/Input';
+
+exports.Input = _Input3.default;
+exports.Touch = _Touch3.default;
+
+/***/ }),
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -259,7 +337,7 @@ var findGameObject = exports.findGameObject = function findGameObject(_ref) {
 };
 
 /***/ }),
-/* 3 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -283,7 +361,7 @@ var _Touch = __webpack_require__(7);
 
 var _Touch2 = _interopRequireDefault(_Touch);
 
-var _store = __webpack_require__(2);
+var _store = __webpack_require__(3);
 
 var _store2 = _interopRequireDefault(_store);
 
@@ -471,84 +549,6 @@ var GameObject = function () {
 exports.default = GameObject;
 
 /***/ }),
-/* 4 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.findGameObject = exports.Touch = exports.keyCode = exports.Input = exports.components = exports.Component = exports.types = exports.Camera = exports.Scene = exports.Canvas = exports.GameObject = undefined;
-
-var _Input2 = __webpack_require__(11);
-
-Object.defineProperty(exports, 'keyCode', {
-  enumerable: true,
-  get: function get() {
-    return _Input2.keyCode;
-  }
-});
-
-var _store = __webpack_require__(2);
-
-Object.defineProperty(exports, 'findGameObject', {
-  enumerable: true,
-  get: function get() {
-    return _store.findGameObject;
-  }
-});
-
-var _GameObject2 = __webpack_require__(3);
-
-var _GameObject3 = _interopRequireDefault(_GameObject2);
-
-var _Canvas2 = __webpack_require__(18);
-
-var _Canvas3 = _interopRequireDefault(_Canvas2);
-
-var _Scene2 = __webpack_require__(19);
-
-var _Scene3 = _interopRequireDefault(_Scene2);
-
-var _Camera2 = __webpack_require__(9);
-
-var _Camera3 = _interopRequireDefault(_Camera2);
-
-var _types2 = __webpack_require__(0);
-
-var _types3 = _interopRequireDefault(_types2);
-
-var _Component2 = __webpack_require__(1);
-
-var _Component3 = _interopRequireDefault(_Component2);
-
-var _components2 = __webpack_require__(5);
-
-var _components3 = _interopRequireDefault(_components2);
-
-var _Input3 = _interopRequireDefault(_Input2);
-
-var _Touch2 = __webpack_require__(21);
-
-var _Touch3 = _interopRequireDefault(_Touch2);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.GameObject = _GameObject3.default;
-exports.Canvas = _Canvas3.default;
-exports.Scene = _Scene3.default;
-exports.Camera = _Camera3.default;
-exports.types = _types3.default;
-exports.Component = _Component3.default;
-exports.components = _components3.default;
-// export input, {keyCode} from './base/Input';
-
-exports.Input = _Input3.default;
-exports.Touch = _Touch3.default;
-
-/***/ }),
 /* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -560,19 +560,19 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.Text = exports.Renderer = exports.Transform = exports.Img = undefined;
 
-var _Img = __webpack_require__(12);
+var _Img = __webpack_require__(13);
 
 var _Img2 = _interopRequireDefault(_Img);
 
-var _Transform = __webpack_require__(15);
+var _Transform = __webpack_require__(16);
 
 var _Transform2 = _interopRequireDefault(_Transform);
 
-var _Renderer = __webpack_require__(16);
+var _Renderer = __webpack_require__(17);
 
 var _Renderer2 = _interopRequireDefault(_Renderer);
 
-var _Text = __webpack_require__(17);
+var _Text = __webpack_require__(18);
 
 var _Text2 = _interopRequireDefault(_Text);
 
@@ -1016,7 +1016,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _tools = __webpack_require__(8);
 
-var _GameObject2 = __webpack_require__(3);
+var _GameObject2 = __webpack_require__(4);
 
 var _GameObject3 = _interopRequireDefault(_GameObject2);
 
@@ -1108,47 +1108,157 @@ exports.default = Camera;
 "use strict";
 
 
-var _Engine = __webpack_require__(4);
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
 
-var _Move = __webpack_require__(22);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _Move2 = _interopRequireDefault(_Move);
+var _Engine = __webpack_require__(2);
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Rect = _Engine.types.Rect;
+var Text = _Engine.components.Text;
+
+var Energy = function (_Component) {
+    _inherits(Energy, _Component);
+
+    function Energy(_ref) {
+        var targetObject = _ref.targetObject;
+
+        _classCallCheck(this, Energy);
+
+        var _this = _possibleConstructorReturn(this, (Energy.__proto__ || Object.getPrototypeOf(Energy)).call(this, { targetObject: targetObject }));
+
+        _this.num = 0;
+        _this.targetNum = 0;
+        return _this;
+    }
+
+    _createClass(Energy, [{
+        key: 'setEnergy',
+        value: function setEnergy(num) {
+            this.targetNum = num;
+        }
+    }, {
+        key: 'update',
+        value: function update() {
+            if (this.num < this.targetNum) {
+                this.num += 5;
+                this.targetObject.getComponent(Text).text = this.num;
+            }
+        }
+    }]);
+
+    return Energy;
+}(_Engine.Component);
+
+exports.default = Energy;
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _Engine = __webpack_require__(2);
+
+var _Fish = __webpack_require__(23);
+
+var _Fish2 = _interopRequireDefault(_Fish);
+
+var _Energy = __webpack_require__(10);
+
+var _Energy2 = _interopRequireDefault(_Energy);
+
+var _Circle = __webpack_require__(24);
+
+var _Circle2 = _interopRequireDefault(_Circle);
+
+var _Dot = __webpack_require__(25);
+
+var _Dot2 = _interopRequireDefault(_Dot);
+
+var _More = __webpack_require__(26);
+
+var _More2 = _interopRequireDefault(_More);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var Img = _Engine.components.Img;
+var Img = _Engine.components.Img,
+    Text = _Engine.components.Text;
 var Vector2 = _Engine.types.Vector2,
     Rect = _Engine.types.Rect;
 
 
-var canvas = document.getElementById("canvas");
+var width = window.innerWidth;
+var height = window.innerHeight;
 
+var canvas = document.getElementById("canvas");
+canvas.width = width;
+canvas.height = height;
 // 创建一个场景
 // Create a scene
-var scene = new _Engine.Scene({ width: 400, height: 800 });
+var scene = new _Engine.Scene({
+    width: width,
+    height: height
+});
 
 // 创建一个 相机
 // Create a camera
 var camera = new _Engine.Camera({
     name: "camera",
     transform: {
-        rect: new Rect({ x: 0, y: 0, width: 400, height: 800 }),
-        position: new Vector2({ x: 200, y: 400 })
-        // anchor: new Vector2({ x: 400, y: 200 }) // !!! default is the middle of rect, 默认锚点在相机的中心点
+        rect: new Rect({
+            x: 0,
+            y: 0,
+            width: width,
+            height: height
+        }),
+        position: new Vector2({
+            x: width / 2,
+            y: height / 2
+        })
+        // anchor: new Vector2({ x: width, y: 200 }) // !!! default is the middle of rect, 默认锚点在相机的中心点
     },
     scene: scene // need a scene to show, 需要一个场景，相机将会显示这个场景的内容
 });
 
 // 创建将相机设置给 canvas, canvas将显示这个相机的内容
 // Create canvas and set camera to the canvas, canvas will display the camera view.
-var canvasObj = new _Engine.Canvas({ canvas: canvas, width: 400, height: 800, camera: camera });
+var canvasObj = new _Engine.Canvas({
+    canvas: canvas,
+    width: width,
+    height: height,
+    camera: camera
+});
 
-// 创建第一个游戏对象
-// create the first game object
-var firstGameObject = new _Engine.GameObject({
-    name: "firstGameObject",
+var touch = new _Engine.Touch({ canvas: canvasObj });
+
+// 创建一个背景
+var background = new _Engine.GameObject({
+    name: 'background',
     transform: {
-        rect: new Rect({ x: 0, y: 0, width: 30, height: 30 })
+        position: new Vector2({
+            x: 0,
+            y: 0
+        }),
+        rect: new Rect({
+            x: 0,
+            y: 0,
+            width: width,
+            height: height
+        }),
+        anchor: new Vector2({
+            x: 0,
+            y: 0
+        })
     },
     components: [{
         component: Img,
@@ -1156,48 +1266,214 @@ var firstGameObject = new _Engine.GameObject({
             rect: new Rect({
                 x: 0,
                 y: 0,
-                width: 30,
-                height: 30
+                width: width,
+                height: height
             }),
-            url: 'https://fanmingfei.github.io/thallo/example/first/a.png'
+            url: 'https://gw.alicdn.com/mt/TB1JGScSXXXXXcyXXXXXXXXXXXX-750-1334.jpg?v=1499321313869'
         }
-    }, {
-        component: _Move2.default,
-        arguments: {}
     }]
 });
 
-// 将游戏对象添加到场景，当相机能看到对象的时候，对象将会显示在canvas上
-// add the game object to scene, when the camera see the game object, the object will show on the canvas.
-scene.addGameObjects(firstGameObject);
+var fish = new _Engine.GameObject({
+    name: 'fish',
+    transform: {
+        position: new Vector2({
+            x: 0,
+            y: height * 0.584
+        }),
+        rect: new Rect({
+            x: 0,
+            y: 0,
+            width: width,
+            height: height
+        }),
+        anchor: new Vector2({
+            x: 0,
+            y: 0
 
-// 也可以使用以下方式添加组件
-// You can add Component use following way.
-
-// gameObject.addComponent(Component)(arguments);
-
-// 给对象添加一个图片，图片需要设置width 和 height
-// mount a Img component, need pass a Rect with width and height
-
-/*
-firstGameObject.addComponent(Img)({
-    rect: new Rect({
-        x: 0,
-        y: 0,
-        width: 30,
-        height: 30
-    }),
-    url: 'https://fanmingfei.github.io/thallo/example/first/a.png'
+        })
+    },
+    components: [{
+        component: _Fish2.default,
+        arguments: {
+            width: width,
+            height: height
+        }
+    }]
 });
-*/
 
-// 给游戏对象添加新的组件，第二个参数是要给组件传递到参数，但是我们写的 Move 组件不需要参数
-// add new component to game object, the twice argument is the component needing, but the Move component don't need argument.
+var energy = new _Engine.GameObject({
+    name: 'energy',
+    transform: {
+        position: new Vector2({
+            x: width / 2,
+            y: height * 0.2333
+        }),
+        rect: new Rect({
+            x: 0,
+            y: 0,
+            width: width,
+            height: 60
+        })
+        // anchor: new Vector2({x:0,y:0})
+    },
+    components: [{
+        component: Text,
+        arguments: {
+            text: '0',
+            font: '50px futura',
+            color: '#ddd',
+            textAlign: 'center',
+            position: new Vector2({
+                x: width / 2,
+                y: 0
+            })
+        }
+    }, {
+        component: _Energy2.default
+    }]
+});
 
-// firstGameObject.addComponent(Move)();
+var canUse = new _Engine.GameObject({
+    name: 'canUse',
+    transform: {
+        position: new Vector2({
+            x: width / 2,
+            y: height * 0.16
+        }),
+        rect: new Rect({
+            x: 0,
+            y: 0,
+            width: 136,
+            height: 18
+        })
+
+    },
+    components: [{
+        component: Img,
+        arguments: {
+            rect: new Rect({
+                x: 0,
+                y: 0,
+                width: 136,
+                height: 18
+            }),
+            url: 'http://p8.qhimg.com/t01894b72700fb00c8a.png'
+        }
+    }]
+});
+
+var dot = new _Engine.GameObject({
+    name: 'dot',
+    transform: {
+        position: new Vector2({
+            x: width * 0.33,
+            y: height * 0.45
+        }),
+        rect: new Rect({
+            x: 0,
+            y: 0,
+            width: 40,
+            height: 40
+        })
+    },
+    components: [{
+        component: Img,
+        arguments: {
+            rect: new Rect({
+                x: 0,
+                y: 0,
+                width: 40,
+                height: 40
+            }),
+            url: 'http://p6.qhimg.com/t013c40a2dc6d75615f.png'
+        }
+    }, {
+        component: Text,
+        arguments: {
+            position: new Vector2({
+                x: 7,
+                y: 14
+            }),
+            rect: new Rect({
+                x: 0,
+                y: 0,
+                width: 40,
+                height: 40
+            }),
+            text: '+300',
+            color: '#fff',
+            font: '8px sans-serif'
+        }
+    }, {
+        component: _Dot2.default
+    }]
+});
+
+var circle = new _Engine.GameObject({
+    name: 'circle',
+    transform: {
+        position: new Vector2({
+            x: width * 0.33,
+            y: height * 0.45
+        }),
+        anchor: new Vector2({
+            x: 85 / 2,
+            y: 85 / 2
+        })
+    },
+    components: [{
+        component: Img,
+        arguments: {
+            rect: new Rect({
+                x: 0,
+                y: 0,
+                width: 85,
+                height: 85
+            }),
+            url: 'http://p3.qhimg.com/t0157b0ad49e0be86fe.png'
+        }
+    }, {
+        component: _Circle2.default
+    }]
+});
+
+var more = new _Engine.GameObject({
+    name: 'more',
+    transform: {
+        position: new Vector2({
+            x: width * 0.5,
+            y: height * 0.92
+        }),
+        rect: new Rect({
+            width: 230,
+            height: 45
+        }),
+        anchor: new Vector2({
+            x: 230 / 2,
+            y: 45 / 2
+        })
+    },
+    components: [{
+        component: Img,
+        arguments: {
+            rect: new Rect({
+                x: 0,
+                y: 0,
+                width: 230,
+                height: 45
+            }),
+            url: 'http://p8.qhimg.com/t018b0bc7ac8ea50039.png'
+        }
+    }, {
+        component: _More2.default
+    }]
+});
+
+scene.addGameObjects(touch, background, fish, energy, canUse, dot, circle, more);
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1208,7 +1484,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.keyCode = undefined;
 
-var _GameObject2 = __webpack_require__(3);
+var _GameObject2 = __webpack_require__(4);
 
 var _GameObject3 = _interopRequireDefault(_GameObject2);
 
@@ -1356,7 +1632,7 @@ var keyCode = {
 exports.keyCode = keyCode;
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1451,7 +1727,7 @@ var Img = function (_Component) {
 exports.default = Img;
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1515,7 +1791,7 @@ var Vector2 = function () {
 exports.default = Vector2;
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1549,7 +1825,7 @@ var Rect = function Rect() {
 exports.default = Rect;
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1606,7 +1882,7 @@ var Transform = function (_Component) {
 exports.default = Transform;
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1689,7 +1965,7 @@ var Renderer = function (_Component) {
 exports.default = Renderer;
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1812,7 +2088,7 @@ var Text = function (_Component) {
 exports.default = Text;
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1938,7 +2214,7 @@ var Canvas = function () {
 exports.default = Canvas;
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1954,11 +2230,11 @@ var _Camera = __webpack_require__(9);
 
 var _Camera2 = _interopRequireDefault(_Camera);
 
-var _store = __webpack_require__(2);
+var _store = __webpack_require__(3);
 
 var _store2 = _interopRequireDefault(_store);
 
-var _Frame = __webpack_require__(20);
+var _Frame = __webpack_require__(21);
 
 var _Frame2 = _interopRequireDefault(_Frame);
 
@@ -2024,7 +2300,7 @@ var Scene = function () {
 exports.default = Scene;
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2036,7 +2312,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _store = __webpack_require__(2);
+var _store = __webpack_require__(3);
 
 var _store2 = _interopRequireDefault(_store);
 
@@ -2198,7 +2474,7 @@ var Frame = function () {
 exports.default = Frame;
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2208,7 +2484,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _GameObject2 = __webpack_require__(3);
+var _GameObject2 = __webpack_require__(4);
 
 var _GameObject3 = _interopRequireDefault(_GameObject2);
 
@@ -2247,7 +2523,7 @@ var TouchObject = function (_GameObject) {
 exports.default = TouchObject;
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2259,7 +2535,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _Engine = __webpack_require__(4);
+var _Engine = __webpack_require__(2);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -2267,45 +2543,280 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-// 取出自己想要的类
-// fetch needing class.
-// const { Component, types: { Vector2 } } = Engine;
-var Vector2 = _Engine.types.Vector2;
+var Rect = _Engine.types.Rect;
+
+var Fish = function (_Component) {
+    _inherits(Fish, _Component);
+
+    function Fish(_ref) {
+        var targetObject = _ref.targetObject,
+            width = _ref.width,
+            height = _ref.height;
+
+        _classCallCheck(this, Fish);
+
+        var _this = _possibleConstructorReturn(this, (Fish.__proto__ || Object.getPrototypeOf(Fish)).call(this, {
+            targetObject: targetObject
+        }));
+
+        _this.url = '';
+
+        _this.imageWidth = width;
+        _this.imageHeight = height;
+
+        _this.width = 750;
+        _this.height = 410;
+        _this.imageList = [];
+        _this.images = [];
+        _this.image = new Image();
+        _this.rect = new Rect({
+            x: 0,
+            y: 0,
+            width: width,
+            height: height * 0.2608
+        });
+        _this.i = 0;
+        _this.init();
+        return _this;
+    }
+
+    _createClass(Fish, [{
+        key: 'update',
+        value: function update(e) {
+            this.setImg();
+            this.i = Math.floor(e.time / 0.1) % 16;
+            // console.log(this.i)
+        }
+    }, {
+        key: 'init',
+        value: function init() {
+            var _this2 = this;
+
+            this.url = 'https://gw.alicdn.com/mt/TB1rFX6SXXXXXbCXpXXXXXXXXXX-1504-1648.jpg?v=1499321313957';
+            this.splitImg().then(function () {
+                _this2.url = 'https://gw.alicdn.com/mt/TB1_zmaSXXXXXcLXXXXXXXXXXXX-1504-1648.jpg?v=1499321313947';
+                _this2.splitImg();
+            });
+        }
+    }, {
+        key: 'splitImg',
+        value: function splitImg() {
+            var _this3 = this;
+
+            return new Promise(function (resolve) {
+
+                var width = _this3.width;
+                var height = _this3.height;
+                var gap = 2;
+                var canvas = document.createElement('canvas');
+                var ctx = canvas.getContext('2d');
+                canvas.width = width;
+                canvas.height = height;
+
+                var image = new Image();
+                image.crossOrigin = 'anonymous';
+                image.src = _this3.url;
+                image.onload = function () {
+                    for (var j = 0; j < 4; j++) {
+                        for (var i = 0; i < 2; i++) {
+                            var sx = i * gap + i * width;
+                            var sy = j * gap + j * height;
+                            ctx.clearRect(0, 0, width, height);
+                            ctx.drawImage(image, sx, sy, width, height, 0, 0, width, height);
+                            // this.imageList.push();
+                            // this.image.src = canvas.toDataURL('image/png');
+                            var img = new Image();
+                            img.src = canvas.toDataURL('image/png');
+                            _this3.images.push(img);
+                        }
+                    }
+                    resolve();
+                };
+            });
+        }
+    }, {
+        key: 'setImg',
+        value: function setImg() {
+            if (this.images.length == 0) return;
+            this.targetObject.renderer.pushImages({
+                rect: this.rect,
+                image: this.images[this.i]
+            });
+        }
+    }]);
+
+    return Fish;
+}(_Engine.Component);
+
+exports.default = Fish;
+
+/***/ }),
+/* 24 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _Engine = __webpack_require__(2);
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
 // 继承 Component 并且 export 
 // extend Component and export it
+var Circle = function (_Component) {
+    _inherits(Circle, _Component);
 
-var Move = function (_Component) {
-    _inherits(Move, _Component);
-
-    function Move(_ref) {
+    function Circle(_ref) {
         var targetObject = _ref.targetObject;
 
-        _classCallCheck(this, Move);
+        _classCallCheck(this, Circle);
 
-        return _possibleConstructorReturn(this, (Move.__proto__ || Object.getPrototypeOf(Move)).call(this, {
+        var _this = _possibleConstructorReturn(this, (Circle.__proto__ || Object.getPrototypeOf(Circle)).call(this, {
+            targetObject: targetObject
+        }));
+
+        _this.targetObject.active = false;
+        return _this;
+    }
+
+    _createClass(Circle, [{
+        key: 'update',
+        value: function update(e) {
+            if (this.targetObject.active) this.targetObject.transform.rotation = this.targetObject.transform.rotation + 4;
+        }
+    }]);
+
+    return Circle;
+}(_Engine.Component);
+
+exports.default = Circle;
+
+/***/ }),
+/* 25 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _Engine = __webpack_require__(2);
+
+var _Energy = __webpack_require__(10);
+
+var _Energy2 = _interopRequireDefault(_Energy);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+// 继承 Component 并且 export 
+// extend Component and export it
+var Dot = function (_Component) {
+    _inherits(Dot, _Component);
+
+    function Dot(_ref) {
+        var targetObject = _ref.targetObject;
+
+        _classCallCheck(this, Dot);
+
+        var _this = _possibleConstructorReturn(this, (Dot.__proto__ || Object.getPrototypeOf(Dot)).call(this, {
+            targetObject: targetObject
+        }));
+
+        _this.touch = null;
+        return _this;
+    }
+
+    _createClass(Dot, [{
+        key: 'preUpdate',
+        value: function preUpdate(e) {
+            if (!this.touch) {
+                this.touch = (0, _Engine.findGameObject)({ name: 'touch' }).touch;
+            }
+            if (this.touch.getTouchStart(this.targetObject)) {
+                this.targetObject.active = false;
+                (0, _Engine.findGameObject)({ name: 'circle' }).active = true;
+                (0, _Engine.findGameObject)({ name: 'energy' }).getComponent(_Energy2.default).setEnergy(300);
+            }
+        }
+    }]);
+
+    return Dot;
+}(_Engine.Component);
+
+exports.default = Dot;
+
+/***/ }),
+/* 26 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _Engine = __webpack_require__(2);
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+// 继承 Component 并且 export 
+// extend Component and export it
+var More = function (_Component) {
+    _inherits(More, _Component);
+
+    function More(_ref) {
+        var targetObject = _ref.targetObject;
+
+        _classCallCheck(this, More);
+
+        return _possibleConstructorReturn(this, (More.__proto__ || Object.getPrototypeOf(More)).call(this, {
             targetObject: targetObject
         }));
     }
 
-    _createClass(Move, [{
+    _createClass(More, [{
         key: 'update',
         value: function update(e) {
-
-            // 随着时间做圆周运动
-            // Do circle active with time.
-            var r = 100;
-            var x = r * Math.sin(0.5 * Math.PI * e.time) + 120,
-                y = -r * Math.cos(0.5 * Math.PI * e.time) + 150;
-            // 设置位置
-            // set position
-            this.targetObject.transform.position = new Vector2({ x: x, y: y });
+            if (!this.touch) {
+                this.touch = (0, _Engine.findGameObject)({ name: 'touch' }).touch;
+            }
+            if (this.touch.getTouchStart(this.targetObject)) {
+                alert('就这一页哦');
+            }
         }
     }]);
 
-    return Move;
+    return More;
 }(_Engine.Component);
 
-exports.default = Move;
+exports.default = More;
 
 /***/ })
 /******/ ]);

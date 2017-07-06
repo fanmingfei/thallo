@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 8);
+/******/ 	return __webpack_require__(__webpack_require__.s = 10);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -75,11 +75,11 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.Rect = exports.Vector2 = undefined;
 
-var _Vector = __webpack_require__(12);
+var _Vector = __webpack_require__(13);
 
 var _Vector2 = _interopRequireDefault(_Vector);
 
-var _Rect = __webpack_require__(13);
+var _Rect = __webpack_require__(14);
 
 var _Rect2 = _interopRequireDefault(_Rect);
 
@@ -105,7 +105,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _store = __webpack_require__(3);
+var _store = __webpack_require__(2);
 
 var _store2 = _interopRequireDefault(_store);
 
@@ -163,21 +163,127 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
+exports.default = store;
+var cache = new Map();
+function store(id) {
+    if (!cache.has(id)) {
+        cache.set(id, new Map());
+    }
+    return function (name) {
+        if (!cache.get(id).has(name)) {
+            cache.get(id).set(name, []);
+        }
+        var store = cache.get(id).get(name);
+        return {
+            push: function push() {
+                store.push.apply(store, arguments);
+            },
+            remove: function remove() {
+                for (var _len = arguments.length, objs = Array(_len), _key = 0; _key < _len; _key++) {
+                    objs[_key] = arguments[_key];
+                }
+
+                var _iteratorNormalCompletion = true;
+                var _didIteratorError = false;
+                var _iteratorError = undefined;
+
+                try {
+                    for (var _iterator = objs[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                        obj = _step.value;
+
+                        var index = store.findIndex(function (o) {
+                            return o == obj;
+                        });
+                        index !== -1 && store.splice(index, 1);
+                    }
+                } catch (err) {
+                    _didIteratorError = true;
+                    _iteratorError = err;
+                } finally {
+                    try {
+                        if (!_iteratorNormalCompletion && _iterator.return) {
+                            _iterator.return();
+                        }
+                    } finally {
+                        if (_didIteratorError) {
+                            throw _iteratorError;
+                        }
+                    }
+                }
+            },
+            getAll: function getAll() {
+                return store;
+            },
+            clear: function clear() {
+                store.clear();
+            }
+        };
+    };
+};
+
+var findGameObject = exports.findGameObject = function findGameObject(_ref) {
+    var name = _ref.name;
+    var _iteratorNormalCompletion2 = true;
+    var _didIteratorError2 = false;
+    var _iteratorError2 = undefined;
+
+    try {
+        for (var _iterator2 = cache[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+            var _ref2 = _step2.value;
+
+            var _ref3 = _slicedToArray(_ref2, 2);
+
+            var key = _ref3[0];
+            var value = _ref3[1];
+
+            return value.get('gameObject').find(function (go) {
+                return go.name == name;
+            });
+        }
+    } catch (err) {
+        _didIteratorError2 = true;
+        _iteratorError2 = err;
+    } finally {
+        try {
+            if (!_iteratorNormalCompletion2 && _iterator2.return) {
+                _iterator2.return();
+            }
+        } finally {
+            if (_didIteratorError2) {
+                throw _iteratorError2;
+            }
+        }
+    }
+};
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _components = __webpack_require__(4);
+var _components = __webpack_require__(5);
 
-var _Input = __webpack_require__(5);
+var _Input = __webpack_require__(6);
 
 var _Input2 = _interopRequireDefault(_Input);
 
-var _Touch = __webpack_require__(6);
+var _Touch = __webpack_require__(7);
 
 var _Touch2 = _interopRequireDefault(_Touch);
 
-var _store = __webpack_require__(3);
+var _store = __webpack_require__(2);
 
 var _store2 = _interopRequireDefault(_store);
 
@@ -365,113 +471,85 @@ var GameObject = function () {
 exports.default = GameObject;
 
 /***/ }),
-/* 3 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
+});
+exports.findGameObject = exports.Touch = exports.keyCode = exports.Input = exports.components = exports.Component = exports.types = exports.Camera = exports.Scene = exports.Canvas = exports.GameObject = undefined;
+
+var _Input2 = __webpack_require__(11);
+
+Object.defineProperty(exports, 'keyCode', {
+  enumerable: true,
+  get: function get() {
+    return _Input2.keyCode;
+  }
 });
 
-var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+var _store = __webpack_require__(2);
 
-exports.default = store;
-var cache = new Map();
-function store(id) {
-    if (!cache.has(id)) {
-        cache.set(id, new Map());
-    }
-    return function (name) {
-        if (!cache.get(id).has(name)) {
-            cache.get(id).set(name, []);
-        }
-        var store = cache.get(id).get(name);
-        return {
-            push: function push() {
-                store.push.apply(store, arguments);
-            },
-            remove: function remove() {
-                for (var _len = arguments.length, objs = Array(_len), _key = 0; _key < _len; _key++) {
-                    objs[_key] = arguments[_key];
-                }
+Object.defineProperty(exports, 'findGameObject', {
+  enumerable: true,
+  get: function get() {
+    return _store.findGameObject;
+  }
+});
 
-                var _iteratorNormalCompletion = true;
-                var _didIteratorError = false;
-                var _iteratorError = undefined;
+var _GameObject2 = __webpack_require__(3);
 
-                try {
-                    for (var _iterator = objs[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-                        obj = _step.value;
+var _GameObject3 = _interopRequireDefault(_GameObject2);
 
-                        var index = store.findIndex(function (o) {
-                            return o == obj;
-                        });
-                        index !== -1 && store.splice(index, 1);
-                    }
-                } catch (err) {
-                    _didIteratorError = true;
-                    _iteratorError = err;
-                } finally {
-                    try {
-                        if (!_iteratorNormalCompletion && _iterator.return) {
-                            _iterator.return();
-                        }
-                    } finally {
-                        if (_didIteratorError) {
-                            throw _iteratorError;
-                        }
-                    }
-                }
-            },
-            getAll: function getAll() {
-                return store;
-            },
-            clear: function clear() {
-                store.clear();
-            }
-        };
-    };
-};
+var _Canvas2 = __webpack_require__(18);
 
-var findGameObject = exports.findGameObject = function findGameObject(_ref) {
-    var name = _ref.name;
-    var _iteratorNormalCompletion2 = true;
-    var _didIteratorError2 = false;
-    var _iteratorError2 = undefined;
+var _Canvas3 = _interopRequireDefault(_Canvas2);
 
-    try {
-        for (var _iterator2 = cache[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-            var _ref2 = _step2.value;
+var _Scene2 = __webpack_require__(19);
 
-            var _ref3 = _slicedToArray(_ref2, 2);
+var _Scene3 = _interopRequireDefault(_Scene2);
 
-            var key = _ref3[0];
-            var value = _ref3[1];
+var _Camera2 = __webpack_require__(9);
 
-            return value.get('gameObject').find(function (go) {
-                return go.name == name;
-            });
-        }
-    } catch (err) {
-        _didIteratorError2 = true;
-        _iteratorError2 = err;
-    } finally {
-        try {
-            if (!_iteratorNormalCompletion2 && _iterator2.return) {
-                _iterator2.return();
-            }
-        } finally {
-            if (_didIteratorError2) {
-                throw _iteratorError2;
-            }
-        }
-    }
-};
+var _Camera3 = _interopRequireDefault(_Camera2);
+
+var _types2 = __webpack_require__(0);
+
+var _types3 = _interopRequireDefault(_types2);
+
+var _Component2 = __webpack_require__(1);
+
+var _Component3 = _interopRequireDefault(_Component2);
+
+var _components2 = __webpack_require__(5);
+
+var _components3 = _interopRequireDefault(_components2);
+
+var _Input3 = _interopRequireDefault(_Input2);
+
+var _Touch2 = __webpack_require__(21);
+
+var _Touch3 = _interopRequireDefault(_Touch2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.GameObject = _GameObject3.default;
+exports.Canvas = _Canvas3.default;
+exports.Scene = _Scene3.default;
+exports.Camera = _Camera3.default;
+exports.types = _types3.default;
+exports.Component = _Component3.default;
+exports.components = _components3.default;
+// export input, {keyCode} from './base/Input';
+
+exports.Input = _Input3.default;
+exports.Touch = _Touch3.default;
 
 /***/ }),
-/* 4 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -482,19 +560,19 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.Text = exports.Renderer = exports.Transform = exports.Img = undefined;
 
-var _Img = __webpack_require__(11);
+var _Img = __webpack_require__(12);
 
 var _Img2 = _interopRequireDefault(_Img);
 
-var _Transform = __webpack_require__(14);
+var _Transform = __webpack_require__(15);
 
 var _Transform2 = _interopRequireDefault(_Transform);
 
-var _Renderer = __webpack_require__(15);
+var _Renderer = __webpack_require__(16);
 
 var _Renderer2 = _interopRequireDefault(_Renderer);
 
-var _Text = __webpack_require__(16);
+var _Text = __webpack_require__(17);
 
 var _Text2 = _interopRequireDefault(_Text);
 
@@ -512,7 +590,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -631,7 +709,7 @@ var Input = function (_Component) {
 exports.default = Input;
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -645,7 +723,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _types = __webpack_require__(0);
 
-var _tools = __webpack_require__(19);
+var _tools = __webpack_require__(8);
 
 var _Component2 = __webpack_require__(1);
 
@@ -849,7 +927,82 @@ var Touch = function (_Component) {
 exports.default = Touch;
 
 /***/ }),
-/* 7 */
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.isCollsion = isCollsion;
+exports.isPointCollsion = isPointCollsion;
+exports.isPointRectCollsion = isPointRectCollsion;
+
+var _types = __webpack_require__(0);
+
+function isCollsion(gameObject1, gameObject2) {
+    var transform1 = gameObject1.transform;
+    var transform2 = gameObject2.transform;
+
+    var w1 = transform1.rect.width;
+    var w2 = transform2.rect.width;
+    var h1 = transform1.rect.height;
+    var h2 = transform2.rect.height;
+
+    var x1y1 = _types.Vector2.minus(transform1.position, transform1.anchor);
+    var x2y2 = _types.Vector2.minus(transform2.position, transform2.anchor);
+
+    var x1 = x1y1.x;
+    var x2 = x2y2.x;
+    var y1 = x1y1.y;
+    var y2 = x2y2.y;
+
+    if (x1 >= x2 && x1 >= x2 + w2) {
+        return false;
+    } else if (x1 <= x2 && x1 + w1 <= x2) {
+        return false;
+    } else if (y1 >= y2 && y1 >= y2 + h2) {
+        return false;
+    } else if (y1 <= y2 && y1 + h1 <= y2) {
+        return false;
+    }
+    return true;
+}
+
+function isPointCollsion(point, gameObject) {
+    var x1 = point.x;
+    var y1 = point.y;
+
+    var x2y2 = _types.Vector2.minus(gameObject.transform.position, gameObject.transform.anchor);
+    var x2 = x2y2.x;
+    var y2 = x2y2.y;
+    var w = gameObject.transform.rect.width;
+    var h = gameObject.transform.rect.height;
+
+    if (x1 >= x2 && x1 <= x2 + w && y1 >= y2 && y1 <= y2 + h) {
+        return true;
+    }
+    return false;
+}
+
+function isPointRectCollsion(point, rect) {
+    var x1 = point.x;
+    var y1 = point.y;
+    var x2 = rect.x;
+    var y2 = rect.y;
+    var w = rect.width;
+    var h = rect.height;
+
+    if (x1 >= x2 && x1 <= x2 + w && y1 >= y2 && y1 <= y2 + h) {
+        return true;
+    }
+    return false;
+}
+
+/***/ }),
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -861,9 +1014,9 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _tools = __webpack_require__(19);
+var _tools = __webpack_require__(8);
 
-var _GameObject2 = __webpack_require__(2);
+var _GameObject2 = __webpack_require__(3);
 
 var _GameObject3 = _interopRequireDefault(_GameObject2);
 
@@ -949,13 +1102,13 @@ var Camera = function (_GameObject) {
 exports.default = Camera;
 
 /***/ }),
-/* 8 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _Engine = __webpack_require__(9);
+var _Engine = __webpack_require__(4);
 
 var _TouchManager = __webpack_require__(22);
 
@@ -1024,85 +1177,7 @@ var touch = new _Engine.Touch({ canvas: canvasObj });
 scene.addGameObjects(touch, firstGameObject);
 
 /***/ }),
-/* 9 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.findGameObject = exports.Touch = exports.keyCode = exports.Input = exports.components = exports.Component = exports.types = exports.Camera = exports.Scene = exports.Canvas = exports.GameObject = undefined;
-
-var _Input2 = __webpack_require__(10);
-
-Object.defineProperty(exports, 'keyCode', {
-  enumerable: true,
-  get: function get() {
-    return _Input2.keyCode;
-  }
-});
-
-var _store = __webpack_require__(3);
-
-Object.defineProperty(exports, 'findGameObject', {
-  enumerable: true,
-  get: function get() {
-    return _store.findGameObject;
-  }
-});
-
-var _GameObject2 = __webpack_require__(2);
-
-var _GameObject3 = _interopRequireDefault(_GameObject2);
-
-var _Canvas2 = __webpack_require__(17);
-
-var _Canvas3 = _interopRequireDefault(_Canvas2);
-
-var _Scene2 = __webpack_require__(18);
-
-var _Scene3 = _interopRequireDefault(_Scene2);
-
-var _Camera2 = __webpack_require__(7);
-
-var _Camera3 = _interopRequireDefault(_Camera2);
-
-var _types2 = __webpack_require__(0);
-
-var _types3 = _interopRequireDefault(_types2);
-
-var _Component2 = __webpack_require__(1);
-
-var _Component3 = _interopRequireDefault(_Component2);
-
-var _components2 = __webpack_require__(4);
-
-var _components3 = _interopRequireDefault(_components2);
-
-var _Input3 = _interopRequireDefault(_Input2);
-
-var _Touch2 = __webpack_require__(21);
-
-var _Touch3 = _interopRequireDefault(_Touch2);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.GameObject = _GameObject3.default;
-exports.Canvas = _Canvas3.default;
-exports.Scene = _Scene3.default;
-exports.Camera = _Camera3.default;
-exports.types = _types3.default;
-exports.Component = _Component3.default;
-exports.components = _components3.default;
-// export input, {keyCode} from './base/Input';
-
-exports.Input = _Input3.default;
-exports.Touch = _Touch3.default;
-
-/***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1113,11 +1188,11 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.keyCode = undefined;
 
-var _GameObject2 = __webpack_require__(2);
+var _GameObject2 = __webpack_require__(3);
 
 var _GameObject3 = _interopRequireDefault(_GameObject2);
 
-var _Input = __webpack_require__(5);
+var _Input = __webpack_require__(6);
 
 var _Input2 = _interopRequireDefault(_Input);
 
@@ -1261,7 +1336,7 @@ var keyCode = {
 exports.keyCode = keyCode;
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1356,7 +1431,7 @@ var Img = function (_Component) {
 exports.default = Img;
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1420,7 +1495,7 @@ var Vector2 = function () {
 exports.default = Vector2;
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1454,7 +1529,7 @@ var Rect = function Rect() {
 exports.default = Rect;
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1511,7 +1586,7 @@ var Transform = function (_Component) {
 exports.default = Transform;
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1594,7 +1669,7 @@ var Renderer = function (_Component) {
 exports.default = Renderer;
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1717,7 +1792,7 @@ var Text = function (_Component) {
 exports.default = Text;
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1843,7 +1918,7 @@ var Canvas = function () {
 exports.default = Canvas;
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1855,11 +1930,11 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _Camera = __webpack_require__(7);
+var _Camera = __webpack_require__(9);
 
 var _Camera2 = _interopRequireDefault(_Camera);
 
-var _store = __webpack_require__(3);
+var _store = __webpack_require__(2);
 
 var _store2 = _interopRequireDefault(_store);
 
@@ -1929,81 +2004,6 @@ var Scene = function () {
 exports.default = Scene;
 
 /***/ }),
-/* 19 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.isCollsion = isCollsion;
-exports.isPointCollsion = isPointCollsion;
-exports.isPointRectCollsion = isPointRectCollsion;
-
-var _types = __webpack_require__(0);
-
-function isCollsion(gameObject1, gameObject2) {
-    var transform1 = gameObject1.transform;
-    var transform2 = gameObject2.transform;
-
-    var w1 = transform1.rect.width;
-    var w2 = transform2.rect.width;
-    var h1 = transform1.rect.height;
-    var h2 = transform2.rect.height;
-
-    var x1y1 = _types.Vector2.minus(transform1.position, transform1.anchor);
-    var x2y2 = _types.Vector2.minus(transform2.position, transform2.anchor);
-
-    var x1 = x1y1.x;
-    var x2 = x2y2.x;
-    var y1 = x1y1.y;
-    var y2 = x2y2.y;
-
-    if (x1 >= x2 && x1 >= x2 + w2) {
-        return false;
-    } else if (x1 <= x2 && x1 + w1 <= x2) {
-        return false;
-    } else if (y1 >= y2 && y1 >= y2 + h2) {
-        return false;
-    } else if (y1 <= y2 && y1 + h1 <= y2) {
-        return false;
-    }
-    return true;
-}
-
-function isPointCollsion(point, gameObject) {
-    var x1 = point.x;
-    var y1 = point.y;
-
-    var x2y2 = _types.Vector2.minus(gameObject.transform.position, gameObject.transform.anchor);
-    var x2 = x2y2.x;
-    var y2 = x2y2.y;
-    var w = gameObject.transform.rect.width;
-    var h = gameObject.transform.rect.height;
-
-    if (x1 >= x2 && x1 <= x2 + w && y1 >= y2 && y1 <= y2 + h) {
-        return true;
-    }
-    return false;
-}
-
-function isPointRectCollsion(point, rect) {
-    var x1 = point.x;
-    var y1 = point.y;
-    var x2 = rect.x;
-    var y2 = rect.y;
-    var w = rect.width;
-    var h = rect.height;
-
-    if (x1 >= x2 && x1 <= x2 + w && y1 >= y2 && y1 <= y2 + h) {
-        return true;
-    }
-    return false;
-}
-
-/***/ }),
 /* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2016,7 +2016,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _store = __webpack_require__(3);
+var _store = __webpack_require__(2);
 
 var _store2 = _interopRequireDefault(_store);
 
@@ -2188,11 +2188,11 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _GameObject2 = __webpack_require__(2);
+var _GameObject2 = __webpack_require__(3);
 
 var _GameObject3 = _interopRequireDefault(_GameObject2);
 
-var _Touch = __webpack_require__(6);
+var _Touch = __webpack_require__(7);
 
 var _Touch2 = _interopRequireDefault(_Touch);
 
@@ -2239,7 +2239,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _Engine = __webpack_require__(9);
+var _Engine = __webpack_require__(4);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 

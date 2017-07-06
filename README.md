@@ -10,6 +10,7 @@
 - [input](https://fanmingfei.github.io/thallo/example/input/)
 - [text](https://fanmingfei.github.io/thallo/example/text/)
 - [touch](https://fanmingfei.github.io/thallo/example/touch/)
+- [简单模仿淘宝造物节](https://fanmingfei.github.io/thallo/example/tb/) (淘宝造物节)[http://c.b1yt.com/h.kKLunM?cv=OKLDZzXw9nG&sm=c4250e]
 
 ## 工作原理
 

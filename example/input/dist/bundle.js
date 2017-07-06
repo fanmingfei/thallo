@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 9);
+/******/ 	return __webpack_require__(__webpack_require__.s = 10);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -75,11 +75,11 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.Rect = exports.Vector2 = undefined;
 
-var _Vector = __webpack_require__(12);
+var _Vector = __webpack_require__(13);
 
 var _Vector2 = _interopRequireDefault(_Vector);
 
-var _Rect = __webpack_require__(13);
+var _Rect = __webpack_require__(14);
 
 var _Rect2 = _interopRequireDefault(_Rect);
 
@@ -482,7 +482,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.findGameObject = exports.Touch = exports.keyCode = exports.Input = exports.components = exports.Component = exports.types = exports.Camera = exports.Scene = exports.Canvas = exports.GameObject = undefined;
 
-var _Input2 = __webpack_require__(10);
+var _Input2 = __webpack_require__(11);
 
 Object.defineProperty(exports, 'keyCode', {
   enumerable: true,
@@ -504,15 +504,15 @@ var _GameObject2 = __webpack_require__(3);
 
 var _GameObject3 = _interopRequireDefault(_GameObject2);
 
-var _Canvas2 = __webpack_require__(17);
+var _Canvas2 = __webpack_require__(18);
 
 var _Canvas3 = _interopRequireDefault(_Canvas2);
 
-var _Scene2 = __webpack_require__(18);
+var _Scene2 = __webpack_require__(19);
 
 var _Scene3 = _interopRequireDefault(_Scene2);
 
-var _Camera2 = __webpack_require__(8);
+var _Camera2 = __webpack_require__(9);
 
 var _Camera3 = _interopRequireDefault(_Camera2);
 
@@ -560,19 +560,19 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.Text = exports.Renderer = exports.Transform = exports.Img = undefined;
 
-var _Img = __webpack_require__(11);
+var _Img = __webpack_require__(12);
 
 var _Img2 = _interopRequireDefault(_Img);
 
-var _Transform = __webpack_require__(14);
+var _Transform = __webpack_require__(15);
 
 var _Transform2 = _interopRequireDefault(_Transform);
 
-var _Renderer = __webpack_require__(15);
+var _Renderer = __webpack_require__(16);
 
 var _Renderer2 = _interopRequireDefault(_Renderer);
 
-var _Text = __webpack_require__(16);
+var _Text = __webpack_require__(17);
 
 var _Text2 = _interopRequireDefault(_Text);
 
@@ -723,7 +723,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _types = __webpack_require__(0);
 
-var _tools = __webpack_require__(19);
+var _tools = __webpack_require__(8);
 
 var _Component2 = __webpack_require__(1);
 
@@ -936,10 +936,85 @@ exports.default = Touch;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+exports.isCollsion = isCollsion;
+exports.isPointCollsion = isPointCollsion;
+exports.isPointRectCollsion = isPointRectCollsion;
+
+var _types = __webpack_require__(0);
+
+function isCollsion(gameObject1, gameObject2) {
+    var transform1 = gameObject1.transform;
+    var transform2 = gameObject2.transform;
+
+    var w1 = transform1.rect.width;
+    var w2 = transform2.rect.width;
+    var h1 = transform1.rect.height;
+    var h2 = transform2.rect.height;
+
+    var x1y1 = _types.Vector2.minus(transform1.position, transform1.anchor);
+    var x2y2 = _types.Vector2.minus(transform2.position, transform2.anchor);
+
+    var x1 = x1y1.x;
+    var x2 = x2y2.x;
+    var y1 = x1y1.y;
+    var y2 = x2y2.y;
+
+    if (x1 >= x2 && x1 >= x2 + w2) {
+        return false;
+    } else if (x1 <= x2 && x1 + w1 <= x2) {
+        return false;
+    } else if (y1 >= y2 && y1 >= y2 + h2) {
+        return false;
+    } else if (y1 <= y2 && y1 + h1 <= y2) {
+        return false;
+    }
+    return true;
+}
+
+function isPointCollsion(point, gameObject) {
+    var x1 = point.x;
+    var y1 = point.y;
+
+    var x2y2 = _types.Vector2.minus(gameObject.transform.position, gameObject.transform.anchor);
+    var x2 = x2y2.x;
+    var y2 = x2y2.y;
+    var w = gameObject.transform.rect.width;
+    var h = gameObject.transform.rect.height;
+
+    if (x1 >= x2 && x1 <= x2 + w && y1 >= y2 && y1 <= y2 + h) {
+        return true;
+    }
+    return false;
+}
+
+function isPointRectCollsion(point, rect) {
+    var x1 = point.x;
+    var y1 = point.y;
+    var x2 = rect.x;
+    var y2 = rect.y;
+    var w = rect.width;
+    var h = rect.height;
+
+    if (x1 >= x2 && x1 <= x2 + w && y1 >= y2 && y1 <= y2 + h) {
+        return true;
+    }
+    return false;
+}
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _tools = __webpack_require__(19);
+var _tools = __webpack_require__(8);
 
 var _GameObject2 = __webpack_require__(3);
 
@@ -1027,7 +1102,7 @@ var Camera = function (_GameObject) {
 exports.default = Camera;
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1102,7 +1177,7 @@ var input = new _Engine.Input({ canvas: canvasObj });
 scene.addGameObjects(input, firstGameObject);
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1261,7 +1336,7 @@ var keyCode = {
 exports.keyCode = keyCode;
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1356,7 +1431,7 @@ var Img = function (_Component) {
 exports.default = Img;
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1420,7 +1495,7 @@ var Vector2 = function () {
 exports.default = Vector2;
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1454,7 +1529,7 @@ var Rect = function Rect() {
 exports.default = Rect;
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1511,7 +1586,7 @@ var Transform = function (_Component) {
 exports.default = Transform;
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1594,7 +1669,7 @@ var Renderer = function (_Component) {
 exports.default = Renderer;
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1717,7 +1792,7 @@ var Text = function (_Component) {
 exports.default = Text;
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1843,7 +1918,7 @@ var Canvas = function () {
 exports.default = Canvas;
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1855,7 +1930,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _Camera = __webpack_require__(8);
+var _Camera = __webpack_require__(9);
 
 var _Camera2 = _interopRequireDefault(_Camera);
 
@@ -1927,81 +2002,6 @@ var Scene = function () {
 }();
 
 exports.default = Scene;
-
-/***/ }),
-/* 19 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.isCollsion = isCollsion;
-exports.isPointCollsion = isPointCollsion;
-exports.isPointRectCollsion = isPointRectCollsion;
-
-var _types = __webpack_require__(0);
-
-function isCollsion(gameObject1, gameObject2) {
-    var transform1 = gameObject1.transform;
-    var transform2 = gameObject2.transform;
-
-    var w1 = transform1.rect.width;
-    var w2 = transform2.rect.width;
-    var h1 = transform1.rect.height;
-    var h2 = transform2.rect.height;
-
-    var x1y1 = _types.Vector2.minus(transform1.position, transform1.anchor);
-    var x2y2 = _types.Vector2.minus(transform2.position, transform2.anchor);
-
-    var x1 = x1y1.x;
-    var x2 = x2y2.x;
-    var y1 = x1y1.y;
-    var y2 = x2y2.y;
-
-    if (x1 >= x2 && x1 >= x2 + w2) {
-        return false;
-    } else if (x1 <= x2 && x1 + w1 <= x2) {
-        return false;
-    } else if (y1 >= y2 && y1 >= y2 + h2) {
-        return false;
-    } else if (y1 <= y2 && y1 + h1 <= y2) {
-        return false;
-    }
-    return true;
-}
-
-function isPointCollsion(point, gameObject) {
-    var x1 = point.x;
-    var y1 = point.y;
-
-    var x2y2 = _types.Vector2.minus(gameObject.transform.position, gameObject.transform.anchor);
-    var x2 = x2y2.x;
-    var y2 = x2y2.y;
-    var w = gameObject.transform.rect.width;
-    var h = gameObject.transform.rect.height;
-
-    if (x1 >= x2 && x1 <= x2 + w && y1 >= y2 && y1 <= y2 + h) {
-        return true;
-    }
-    return false;
-}
-
-function isPointRectCollsion(point, rect) {
-    var x1 = point.x;
-    var y1 = point.y;
-    var x2 = rect.x;
-    var y2 = rect.y;
-    var w = rect.width;
-    var h = rect.height;
-
-    if (x1 >= x2 && x1 <= x2 + w && y1 >= y2 && y1 <= y2 + h) {
-        return true;
-    }
-    return false;
-}
 
 /***/ }),
 /* 20 */

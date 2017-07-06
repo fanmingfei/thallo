@@ -58,6 +58,8 @@ const firstGameObject = new GameObject({
     ]
 });
 
+const input = new 
+
 scene.addGameObjects(firstGameObject);
 
 
