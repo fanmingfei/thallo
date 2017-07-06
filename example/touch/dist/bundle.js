@@ -2278,11 +2278,7 @@ var TouchManager = function (_Component) {
         value: function preUpdate() {
             this.touch = (0, _Engine.findGameObject)({ name: 'touch' }).touch;
             if (this.touch.getTouchStart(this.targetObject)) {
-                // if (this.rotate) {
-                //     this.rotate = false;
-                // } else {
                 this.rotate = true;
-                // }
             }
             if (this.touch.getTouchEnd(this.targetObject)) {
                 this.rotate = false;

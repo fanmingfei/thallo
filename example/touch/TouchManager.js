@@ -17,12 +17,7 @@ export default class TouchManager extends Component {
     preUpdate() {
         this.touch = findGameObject({name: 'touch'}).touch;
         if (this.touch.getTouchStart(this.targetObject)) {
-            // if (this.rotate) {
-            //     this.rotate = false;
-            // } else {
                 this.rotate = true;
-            // }
-
         }
         if (this.touch.getTouchEnd(this.targetObject)) {
             this.rotate = false;
