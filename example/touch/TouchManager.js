@@ -1,6 +1,4 @@
-import { GameObject, Component, keyCode, Input, types } from '../../src/Engine.js';
-
-import store from '../../src/utils/store';
+import { GameObject, Component, keyCode, Input, types, findGameObject } from '../../src/Engine.js';
 
 // 取出自己想要的类
 // fetch needing class.
@@ -17,14 +15,14 @@ export default class TouchManager extends Component {
         this.rotate = false;
     }
     preUpdate() {
-        const gameObjects = store(this.targetObject.scene)('gameObject').getAll();
-        this.touch = gameObjects.find(x=>x.name=='touch').touch;
+        this.touch = findGameObject({name: 'touch'}).touch;
         if (this.touch.getTouchStart(this.targetObject)) {
             // if (this.rotate) {
             //     this.rotate = false;
             // } else {
                 this.rotate = true;
             // }
+
         }
         if (this.touch.getTouchEnd(this.targetObject)) {
             this.rotate = false;

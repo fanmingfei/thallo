@@ -1,6 +1,4 @@
-import { GameObject, Component, keyCode, Input, types } from '../../src/Engine.js';
-
-import store from '../../src/utils/store';
+import { GameObject, Component, keyCode, Input, types, findGameObject } from '../../src/Engine.js';
 
 // 取出自己想要的类
 // fetch needing class.
@@ -18,8 +16,7 @@ export default class InputManager extends Component {
     }
     update(e) {
 
-        const gameObjects = store(this.targetObject.scene)('gameObject').getAll();
-        this.input = gameObjects.find(x=>x.name=='input').input;
+        this.input = findGameObject({name: 'input'}).input;
         const conditions = {
             [keyCode.W]: new Vector2({x: 0, y: -this.speed * e.deltaTime}),
             [keyCode.S]: new Vector2({x: 0, y: this.speed * e.deltaTime}),

@@ -374,6 +374,9 @@ exports.default = GameObject;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
 exports.default = store;
 var cache = new Map();
 function store(id) {
@@ -430,6 +433,41 @@ function store(id) {
             }
         };
     };
+};
+
+var findGameObject = exports.findGameObject = function findGameObject(_ref) {
+    var name = _ref.name;
+    var _iteratorNormalCompletion2 = true;
+    var _didIteratorError2 = false;
+    var _iteratorError2 = undefined;
+
+    try {
+        for (var _iterator2 = cache[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+            var _ref2 = _step2.value;
+
+            var _ref3 = _slicedToArray(_ref2, 2);
+
+            var key = _ref3[0];
+            var value = _ref3[1];
+
+            return value.get('gameObject').find(function (go) {
+                return go.name == name;
+            });
+        }
+    } catch (err) {
+        _didIteratorError2 = true;
+        _iteratorError2 = err;
+    } finally {
+        try {
+            if (!_iteratorNormalCompletion2 && _iterator2.return) {
+                _iterator2.return();
+            }
+        } finally {
+            if (_didIteratorError2) {
+                throw _iteratorError2;
+            }
+        }
+    }
 };
 
 /***/ }),
@@ -995,7 +1033,7 @@ scene.addGameObjects(touch, firstGameObject);
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.Touch = exports.keyCode = exports.Input = exports.components = exports.Component = exports.types = exports.Camera = exports.Scene = exports.Canvas = exports.GameObject = undefined;
+exports.findGameObject = exports.Touch = exports.keyCode = exports.Input = exports.components = exports.Component = exports.types = exports.Camera = exports.Scene = exports.Canvas = exports.GameObject = undefined;
 
 var _Input2 = __webpack_require__(10);
 
@@ -1003,6 +1041,15 @@ Object.defineProperty(exports, 'keyCode', {
   enumerable: true,
   get: function get() {
     return _Input2.keyCode;
+  }
+});
+
+var _store = __webpack_require__(3);
+
+Object.defineProperty(exports, 'findGameObject', {
+  enumerable: true,
+  get: function get() {
+    return _store.findGameObject;
   }
 });
 
@@ -2194,12 +2241,6 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _Engine = __webpack_require__(9);
 
-var _store = __webpack_require__(3);
-
-var _store2 = _interopRequireDefault(_store);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -2235,10 +2276,7 @@ var TouchManager = function (_Component) {
     _createClass(TouchManager, [{
         key: 'preUpdate',
         value: function preUpdate() {
-            var gameObjects = (0, _store2.default)(this.targetObject.scene)('gameObject').getAll();
-            this.touch = gameObjects.find(function (x) {
-                return x.name == 'touch';
-            }).touch;
+            this.touch = (0, _Engine.findGameObject)({ name: 'touch' }).touch;
             if (this.touch.getTouchStart(this.targetObject)) {
                 // if (this.rotate) {
                 //     this.rotate = false;

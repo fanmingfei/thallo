@@ -8,3 +8,4 @@ export components from './components/components';
 // export input, {keyCode} from './base/Input';
 export Input, {keyCode} from './base-game-object/Input';
 export Touch from './base-game-object/Touch';
+export {findGameObject} from './utils/store'

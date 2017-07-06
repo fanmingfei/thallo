@@ -27,3 +27,9 @@ export default function store(id) {
         }
     }
 };
+
+export const findGameObject = function({name}) {
+    for (let [key,value] of cache){
+        return value.get('gameObject').find(go=>go.name == name);
+    }
+}
