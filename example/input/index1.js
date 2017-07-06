@@ -1,6 +1,5 @@
-import { GameObject, Camera, Canvas, Scene, types, components, Input } from '../../src/Engine.js';
+import { GameObject, Camera, Canvas, Scene, types, components } from '../../src/Engine.js';
 import InputManager from './InputManager.js';
-
 const { Img } = components;
 const { Vector2, Rect} = types;
 
@@ -34,7 +33,7 @@ const firstGameObject = new GameObject({
     transform: {
         rect: new Rect({ x: 0, y: 0, width: 100, height: 100 }),
         position: new Vector2({x:180,y:200}),
-        // rotation: 45
+        rotation: 45
     },
     components: [
         {
@@ -59,9 +58,7 @@ const firstGameObject = new GameObject({
     ]
 });
 
-const input = new Input({canvas: canvasObj});
-
-scene.addGameObjects(input, firstGameObject);
+scene.addGameObjects(firstGameObject);
 
 
 

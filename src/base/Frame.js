@@ -1,5 +1,4 @@
 import store from '../utils/store';
-import input from './Input';
 
 export default class Frame {
     constructor({ scene }) {
@@ -44,7 +43,6 @@ export default class Frame {
                 component.lateUpdate && component.lateUpdate(e)
             }
         }
-        input.clearUpDown();
         requestAnimationFrame(() => this.frame());
     }
 

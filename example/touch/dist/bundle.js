@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 9);
+/******/ 	return __webpack_require__(__webpack_require__.s = 8);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -167,13 +167,13 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _components = __webpack_require__(5);
+var _components = __webpack_require__(4);
 
-var _Input = __webpack_require__(6);
+var _Input = __webpack_require__(5);
 
 var _Input2 = _interopRequireDefault(_Input);
 
-var _Touch = __webpack_require__(7);
+var _Touch = __webpack_require__(6);
 
 var _Touch2 = _interopRequireDefault(_Touch);
 
@@ -440,75 +440,6 @@ function store(id) {
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.Touch = exports.keyCode = exports.Input = exports.components = exports.Component = exports.types = exports.Camera = exports.Scene = exports.Canvas = exports.GameObject = undefined;
-
-var _Input2 = __webpack_require__(10);
-
-Object.defineProperty(exports, 'keyCode', {
-  enumerable: true,
-  get: function get() {
-    return _Input2.keyCode;
-  }
-});
-
-var _GameObject2 = __webpack_require__(2);
-
-var _GameObject3 = _interopRequireDefault(_GameObject2);
-
-var _Canvas2 = __webpack_require__(17);
-
-var _Canvas3 = _interopRequireDefault(_Canvas2);
-
-var _Scene2 = __webpack_require__(18);
-
-var _Scene3 = _interopRequireDefault(_Scene2);
-
-var _Camera2 = __webpack_require__(8);
-
-var _Camera3 = _interopRequireDefault(_Camera2);
-
-var _types2 = __webpack_require__(0);
-
-var _types3 = _interopRequireDefault(_types2);
-
-var _Component2 = __webpack_require__(1);
-
-var _Component3 = _interopRequireDefault(_Component2);
-
-var _components2 = __webpack_require__(5);
-
-var _components3 = _interopRequireDefault(_components2);
-
-var _Input3 = _interopRequireDefault(_Input2);
-
-var _Touch2 = __webpack_require__(21);
-
-var _Touch3 = _interopRequireDefault(_Touch2);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.GameObject = _GameObject3.default;
-exports.Canvas = _Canvas3.default;
-exports.Scene = _Scene3.default;
-exports.Camera = _Camera3.default;
-exports.types = _types3.default;
-exports.Component = _Component3.default;
-exports.components = _components3.default;
-// export input, {keyCode} from './base/Input';
-
-exports.Input = _Input3.default;
-exports.Touch = _Touch3.default;
-
-/***/ }),
-/* 5 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
     value: true
 });
 exports.Text = exports.Renderer = exports.Transform = exports.Img = undefined;
@@ -543,7 +474,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 6 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -662,7 +593,7 @@ var Input = function (_Component) {
 exports.default = Input;
 
 /***/ }),
-/* 7 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -880,7 +811,7 @@ var Touch = function (_Component) {
 exports.default = Touch;
 
 /***/ }),
-/* 8 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -980,17 +911,17 @@ var Camera = function (_GameObject) {
 exports.default = Camera;
 
 /***/ }),
-/* 9 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _Engine = __webpack_require__(4);
+var _Engine = __webpack_require__(9);
 
-var _Move = __webpack_require__(22);
+var _TouchManager = __webpack_require__(22);
 
-var _Move2 = _interopRequireDefault(_Move);
+var _TouchManager2 = _interopRequireDefault(_TouchManager);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1026,7 +957,9 @@ var canvasObj = new _Engine.Canvas({ canvas: canvas, width: 400, height: 800, ca
 var firstGameObject = new _Engine.GameObject({
     name: "firstGameObject",
     transform: {
-        rect: new Rect({ x: 0, y: 0, width: 30, height: 30 })
+        rect: new Rect({ x: 0, y: 0, width: 100, height: 100 }),
+        position: new Vector2({ x: 180, y: 200 })
+        // rotation: 45
     },
     components: [{
         component: Img,
@@ -1034,45 +967,92 @@ var firstGameObject = new _Engine.GameObject({
             rect: new Rect({
                 x: 0,
                 y: 0,
-                width: 30,
-                height: 30
+                width: 100,
+                height: 100
             }),
             url: 'https://fanmingfei.github.io/thallo/example/first/a.png'
         }
     }, {
-        component: _Move2.default,
-        arguments: {}
+        component: _TouchManager2.default,
+        arguments: {
+            dir: -1,
+            speed: 50
+        }
     }]
 });
 
-// 将游戏对象添加到场景，当相机能看到对象的时候，对象将会显示在canvas上
-// add the game object to scene, when the camera see the game object, the object will show on the canvas.
-scene.addGameObjects(firstGameObject);
+var touch = new _Engine.Touch({ canvas: canvasObj });
 
-// 也可以使用以下方式添加组件
-// You can add Component use following way.
+scene.addGameObjects(touch, firstGameObject);
 
-// gameObject.addComponent(Component)(arguments);
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
 
-// 给对象添加一个图片，图片需要设置width 和 height
-// mount a Img component, need pass a Rect with width and height
+"use strict";
 
-/*
-firstGameObject.addComponent(Img)({
-    rect: new Rect({
-        x: 0,
-        y: 0,
-        width: 30,
-        height: 30
-    }),
-    url: 'https://fanmingfei.github.io/thallo/example/first/a.png'
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
 });
-*/
+exports.Touch = exports.keyCode = exports.Input = exports.components = exports.Component = exports.types = exports.Camera = exports.Scene = exports.Canvas = exports.GameObject = undefined;
 
-// 给游戏对象添加新的组件，第二个参数是要给组件传递到参数，但是我们写的 Move 组件不需要参数
-// add new component to game object, the twice argument is the component needing, but the Move component don't need argument.
+var _Input2 = __webpack_require__(10);
 
-// firstGameObject.addComponent(Move)();
+Object.defineProperty(exports, 'keyCode', {
+  enumerable: true,
+  get: function get() {
+    return _Input2.keyCode;
+  }
+});
+
+var _GameObject2 = __webpack_require__(2);
+
+var _GameObject3 = _interopRequireDefault(_GameObject2);
+
+var _Canvas2 = __webpack_require__(17);
+
+var _Canvas3 = _interopRequireDefault(_Canvas2);
+
+var _Scene2 = __webpack_require__(18);
+
+var _Scene3 = _interopRequireDefault(_Scene2);
+
+var _Camera2 = __webpack_require__(7);
+
+var _Camera3 = _interopRequireDefault(_Camera2);
+
+var _types2 = __webpack_require__(0);
+
+var _types3 = _interopRequireDefault(_types2);
+
+var _Component2 = __webpack_require__(1);
+
+var _Component3 = _interopRequireDefault(_Component2);
+
+var _components2 = __webpack_require__(4);
+
+var _components3 = _interopRequireDefault(_components2);
+
+var _Input3 = _interopRequireDefault(_Input2);
+
+var _Touch2 = __webpack_require__(21);
+
+var _Touch3 = _interopRequireDefault(_Touch2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.GameObject = _GameObject3.default;
+exports.Canvas = _Canvas3.default;
+exports.Scene = _Scene3.default;
+exports.Camera = _Camera3.default;
+exports.types = _types3.default;
+exports.Component = _Component3.default;
+exports.components = _components3.default;
+// export input, {keyCode} from './base/Input';
+
+exports.Input = _Input3.default;
+exports.Touch = _Touch3.default;
 
 /***/ }),
 /* 10 */
@@ -1090,7 +1070,7 @@ var _GameObject2 = __webpack_require__(2);
 
 var _GameObject3 = _interopRequireDefault(_GameObject2);
 
-var _Input = __webpack_require__(6);
+var _Input = __webpack_require__(5);
 
 var _Input2 = _interopRequireDefault(_Input);
 
@@ -1828,7 +1808,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _Camera = __webpack_require__(8);
+var _Camera = __webpack_require__(7);
 
 var _Camera2 = _interopRequireDefault(_Camera);
 
@@ -2165,7 +2145,7 @@ var _GameObject2 = __webpack_require__(2);
 
 var _GameObject3 = _interopRequireDefault(_GameObject2);
 
-var _Touch = __webpack_require__(7);
+var _Touch = __webpack_require__(6);
 
 var _Touch2 = _interopRequireDefault(_Touch);
 
@@ -2212,7 +2192,13 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _Engine = __webpack_require__(4);
+var _Engine = __webpack_require__(9);
+
+var _store = __webpack_require__(3);
+
+var _store2 = _interopRequireDefault(_store);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -2224,41 +2210,59 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 // fetch needing class.
 // const { Component, types: { Vector2 } } = Engine;
 var Vector2 = _Engine.types.Vector2;
+
 // 继承 Component 并且 export 
 // extend Component and export it
 
-var Move = function (_Component) {
-    _inherits(Move, _Component);
+var TouchManager = function (_Component) {
+    _inherits(TouchManager, _Component);
 
-    function Move(_ref) {
-        var targetObject = _ref.targetObject;
+    function TouchManager(_ref) {
+        var targetObject = _ref.targetObject,
+            dir = _ref.dir,
+            speed = _ref.speed;
 
-        _classCallCheck(this, Move);
+        _classCallCheck(this, TouchManager);
 
-        return _possibleConstructorReturn(this, (Move.__proto__ || Object.getPrototypeOf(Move)).call(this, {
+        var _this = _possibleConstructorReturn(this, (TouchManager.__proto__ || Object.getPrototypeOf(TouchManager)).call(this, {
             targetObject: targetObject
         }));
+
+        _this.rotate = false;
+        return _this;
     }
 
-    _createClass(Move, [{
+    _createClass(TouchManager, [{
+        key: 'preUpdate',
+        value: function preUpdate() {
+            var gameObjects = (0, _store2.default)(this.targetObject.scene)('gameObject').getAll();
+            this.touch = gameObjects.find(function (x) {
+                return x.name == 'touch';
+            }).touch;
+            if (this.touch.getTouchStart(this.targetObject)) {
+                // if (this.rotate) {
+                //     this.rotate = false;
+                // } else {
+                this.rotate = true;
+                // }
+            }
+            if (this.touch.getTouchEnd(this.targetObject)) {
+                this.rotate = false;
+            }
+        }
+    }, {
         key: 'update',
-        value: function update(e) {
-
-            // 随着时间做圆周运动
-            // Do circle active with time.
-            var r = 100;
-            var x = r * Math.sin(0.5 * Math.PI * e.time) + 120,
-                y = -r * Math.cos(0.5 * Math.PI * e.time) + 150;
-            // 设置位置
-            // set position
-            this.targetObject.transform.position = new Vector2({ x: x, y: y });
+        value: function update() {
+            if (this.rotate) {
+                this.targetObject.transform.rotation = this.targetObject.transform.rotation += 10;
+            }
         }
     }]);
 
-    return Move;
+    return TouchManager;
 }(_Engine.Component);
 
-exports.default = Move;
+exports.default = TouchManager;
 
 /***/ })
 /******/ ]);

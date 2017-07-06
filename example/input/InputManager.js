@@ -1,4 +1,7 @@
-import { Component, input, keyCode, types } from '../../src/Engine.js';
+import { GameObject, Component, keyCode, Input, types } from '../../src/Engine.js';
+
+import store from '../../src/utils/store';
+
 // 取出自己想要的类
 // fetch needing class.
 // const { Component, types: { Vector2 } } = Engine;
@@ -14,6 +17,9 @@ export default class InputManager extends Component {
         this.speed = 50;
     }
     update(e) {
+
+        const gameObjects = store(this.targetObject.scene)('gameObject').getAll();
+        this.input = gameObjects.find(x=>x.name=='input').input;
         const conditions = {
             [keyCode.W]: new Vector2({x: 0, y: -this.speed * e.deltaTime}),
             [keyCode.S]: new Vector2({x: 0, y: this.speed * e.deltaTime}),
@@ -21,15 +27,15 @@ export default class InputManager extends Component {
             [keyCode.D]: new Vector2({x: this.speed * e.deltaTime, y: 0})
         };
         for (let condition in conditions) {
-            if (input.getKey(condition)) {
+            if (this.input.getKey(condition)) {
                 this.move(conditions[condition]);
             }
         }
 
-        if (input.getKeyDown(keyCode.J)) {
+        if (this.input.getKeyDown(keyCode.J)) {
             this.targetObject.transform.rotation = 45 + this.targetObject.transform.rotation;
         }
-        if (input.getKeyUp(keyCode.J)) {
+        if (this.input.getKeyUp(keyCode.J)) {
             this.targetObject.transform.rotation = 45 + this.targetObject.transform.rotation;
         }
     }

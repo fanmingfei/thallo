@@ -1,4 +1,6 @@
 import { Transform, Renderer } from '../components/components';
+import Input from '../components/Input';
+import Touch from '../components/Touch';
 import store from '../utils/store';
 export default class GameObject {
     constructor({
@@ -40,6 +42,12 @@ export default class GameObject {
                 ...obj
             };
             const component = new Component(arg);
+            if (component instanceof Input) {
+                this.input = component;
+            }
+            if (component instanceof Touch) {
+                this.touch = component;
+            }
             if (this.componentsStore) {
                 this.componentsStore.push(component);
             }

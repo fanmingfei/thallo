@@ -1,5 +1,5 @@
-import { GameObject, Camera, Canvas, Scene, types, components, Input } from '../../src/Engine.js';
-import InputManager from './InputManager.js';
+import { GameObject, Camera, Canvas, Scene, types, components, Touch } from '../../src/Engine.js';
+import TouchManager from './TouchManager.js';
 
 const { Img } = components;
 const { Vector2, Rect} = types;
@@ -50,7 +50,7 @@ const firstGameObject = new GameObject({
             }
         },
         {
-            component: InputManager,
+            component: TouchManager,
             arguments: {
                 dir: -1,
                 speed: 50
@@ -59,9 +59,9 @@ const firstGameObject = new GameObject({
     ]
 });
 
-const input = new Input({canvas: canvasObj});
+const touch = new Touch({canvas: canvasObj});
 
-scene.addGameObjects(input, firstGameObject);
+scene.addGameObjects(touch, firstGameObject);
 
 
 
