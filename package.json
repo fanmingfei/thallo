@@ -1,0 +1,43 @@
+{
+  "name": "thallo",
+  "version": "0.1.0",
+  "description": "A simple game framework",
+  "main": "lib/index.js",
+  "scripts": {
+    "start": "webpack-dev-server -d --quiet & http-server example -c-1 -p 8081",
+    "build-release": "webpack --env.production",
+    "lint": "eslint 'lib/**/*.js' --fix",
+    "flow": "flow",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fanmingfei/thallo.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/fanmingfei/thallo/issues"
+  },
+  "homepage": "https://github.com/fanmingfei/thallo#readme",
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-core": "^6.25.0",
+    "babel-eslint": "^7.2.3",
+    "babel-loader": "^7.1.1",
+    "babel-plugin-transform-flow-strip-types": "^6.22.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-env": "^1.6.0",
+    "babel-preset-flow": "^6.23.0",
+    "babel-preset-stage-0": "^6.24.1",
+    "eslint": "^4.3.0",
+    "eslint-config-airbnb-base": "^11.3.1",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-vue": "^2.1.0",
+    "flow-bin": "^0.51.0",
+    "http-server": "^0.10.0",
+    "webpack": "^3.3.0",
+    "webpack-dev-server": "^2.6.1"
+  },
+  "dependencies": {}
+}
