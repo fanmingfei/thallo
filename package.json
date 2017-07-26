@@ -8,7 +8,7 @@
     "build-release": "webpack --env.production",
     "lint": "eslint 'lib/**/*.js' --fix",
     "flow": "flow",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npm run lint && npm run flow"
   },
   "repository": {
     "type": "git",
