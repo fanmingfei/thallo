@@ -105,6 +105,8 @@ module.exports = {
     'no-underscore-dangle': ['off', { allowAfterThis: false }],
     // 在声明之前不可以使用变量和类，但是函数除外
     'no-use-before-define': ['error', { functions: false, classes: true, variables: true }],
+    'no-useless-constructor': 'off',
+    'no-empty-function': 'warn',
     // ✘ : 关闭对强制行的最大长度的监控
     // 传参很多就很方啊，尤其加上默认参数的时候
     'max-len': 'off',

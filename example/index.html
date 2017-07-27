@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>index</title>
+</head>
+<body>
+<div id="canvas"></div>
+<script src="js/index.js"></script>
+<script>
+
+    // 创建游戏实例
+    const game = thallo.createGame('#canvas', 500, 500)
+
+    function loadIndexPage() {
+
+        // 创建一个新场景
+        const gameScene = new Scene(1500, 1500)
+
+        // 创建相机
+        const camera = new Camera(new Transform({
+            size: new Vector(500,500),
+            position: new Vector2(250, 250),
+            anchor: new Vector2(0.5, 0.5),
+            rotation: 0,
+            scale: new Vector(1, 1),
+            skew: new Vector2(0, 0)
+        }))
+
+        // 创建玩家
+        const player = new GameObject(new Transform({
+            size: new Vector(150, 150),
+            position: new Vector2(22, 22),
+            anchor: new Vector2(0.5, 0.5),
+            rotation: 0
+        }))
+
+        // 玩家的帽子
+        const hat = new GameObject(new Transform({
+            size: new Vector(50, 50),
+            position: new Vector2(11, 0),
+            anchor: new Vector2(0.5, 1),
+            rotation: 0
+        }))
+
+        // 把帽子给玩家带上
+        player.addChild(hat)
+
+        // 把相机和玩家添加到场景里
+        scene.add([camera, player])
+
+        // 创建第二个场景，这个场景放一些玩家信息
+        const infoScene = new Scene(500, 500)
+
+        // 创建一个UI画布，用来展示用户信息
+        const info = new UICanvas(new Transform({
+            size: new Vector(500, 500),
+            position: new Vector2(250, 250),
+            anchor: new Vector2(0.5, 0.5)
+        }))
+
+        // 创建用户名字的文本对象
+        const name = new GameObject(new Transform({
+            size: new Vector(100, 40),
+            position: new Vector2(500, 500),
+            anchor: new Vector2(1, 0)
+        }))
+
+        // 添加组件
+        name.addComponent(new Text({
+            text: 'username',
+            font: '16px arial',
+            color: 'blue'
+        })
+
+        const picture = new GameObject(new Transform({
+            size: new Vector(100, 40),
+            position: new Vector2(500, 500),
+            anchor: new Vector2(1, 0)
+        }))
+
+        // 添加组件
+        picture.addComponent(new Image({
+            texture: new Texture('./image/head.jpg')
+        }))
+
+        // 将用户名添加到UI画布上
+        info.addChild([name, picture])
+
+        // 将UI画布添加到场景
+        infoScene.add(info)
+
+
+       /*
+        * 第一个参数是场景，第二个参数是是否在当前场景上叠加
+        */
+        game.loadScene(scene)
+        game.loadScene(infoScene, true)
+
+    }
+
+
+    loadIndexPage()
+
+
+</script>
+</body>
+</html>
